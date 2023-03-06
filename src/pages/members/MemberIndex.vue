@@ -28,7 +28,6 @@
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
-
     </div>
   </div>
 </template>
