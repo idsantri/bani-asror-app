@@ -25,7 +25,7 @@
 <script setup>
 import { api } from 'src/boot/axios';
 import { useRouter } from 'vue-router';
-import { ref, reactive } from 'vue';
+import { ref } from 'vue';
 import { toArray } from '../../utils/array';
 const router = useRouter()
 const username = ref('')
@@ -33,7 +33,6 @@ const email = ref('');
 const password = ref('');
 const password_confirm = ref('')
 const emit = defineEmits(['title'])
-
 emit('title', "Daftar")
 
 const register = async () => {

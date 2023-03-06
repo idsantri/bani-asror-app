@@ -52,10 +52,6 @@ const handleTitle = (value) => {
   max-width: 400px
 }
 
-/* ::v-deep(a) {
-  text-decoration: none;
-} */
-
 .alert {
   background: red;
 }
