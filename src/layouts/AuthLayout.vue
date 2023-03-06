@@ -3,27 +3,58 @@
     <q-card-section class="no-padding q-mb-md">
       <h1 class="title">Bani Asror</h1>
       <h2 class="sub-title">{{ title }}</h2>
-      <!-- <q-separator dark /> -->
     </q-card-section>
-    <!-- <q-card-section v-if="errors.length > 0" class="no-padding q-mb-lg bg-red-2 text-red">
-      <ul>
-        <li v-for="error in errors" :key="error"><span v-html="error" class="anchorErrorResponse"></span></li>
-      </ul>
-    </q-card-section> -->
+
+    <q-card flat v-if="errors.length > 0" class="q-ma-xs" id="error">
+      <q-card-section class="q-pa-xs bg-red-2 text-red">
+        <ul class="q-my-xs">
+          <li v-for="error in errors" :key="error"><span v-html="error" class="anchorErrorResponse"
+              @click="clickAnchor"></span></li>
+        </ul>
+      </q-card-section>
+    </q-card>
 
     <q-card-section class="no-padding no-margin">
-      <router-view @title="handleTitle" />
+      <router-view @title="handleTitle" @errors="handleErrors" />
     </q-card-section>
   </q-card>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { api } from 'src/boot/axios';
+import { toArray } from 'src/utils/array';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const title = ref("Autentikasi")
-const handleTitle = (value) => {
-  title.value = value
+const handleTitle = value => title.value = value
+
+const errors = ref([])
+const handleErrors = value => errors.value = value
+
+const clickAnchor = e => {
+  const anchor = e.target.querySelector('a');
+  // console.log(anchor);
+  e.preventDefault()
+  if (anchor) {
+    e.target.addEventListener('click', async e => {
+      console.log('anchor clicked');
+      errors.value = []
+      e.preventDefault()
+      const href = anchor.href.replace('%2540', '@')
+      try {
+        const response = await api.get(href)
+        // console.log("res", response);
+        alert(response.data.message)
+        await router.push('/login')
+      } catch (error) {
+        errors.value = toArray(error.response.data.message)
+      }
+    })
+  }
 }
+
 </script>
 
 <style scoped>

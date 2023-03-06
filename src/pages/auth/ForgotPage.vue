@@ -32,10 +32,12 @@ import { ref } from 'vue';
 import { toArray } from '../../utils/array';
 const router = useRouter()
 const email = ref('')
-const emit = defineEmits(['title'])
+const emit = defineEmits(['title', 'errors'])
 emit('title', "Lupa Kata Sandi?")
+emit('errors', [])
 
 const reset = async () => {
+  emit('errors', [])
   try {
     const response = await api.post('forgot', {
       email: email.value,
@@ -43,9 +45,10 @@ const reset = async () => {
     alert(response.data.message)
     router.push('/reset')
   } catch (error) {
-    toArray(error.response.data.message).forEach(error => {
-      alert(error)
-    });
+    emit('errors', toArray(error.response.data.message))
+    // toArray(error.response.data.message).forEach(error => {
+    //   alert(error)
+    // });
   }
 }
 

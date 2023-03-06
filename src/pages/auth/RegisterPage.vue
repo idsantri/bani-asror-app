@@ -32,10 +32,12 @@ const username = ref('')
 const email = ref('');
 const password = ref('');
 const password_confirm = ref('')
-const emit = defineEmits(['title'])
+const emit = defineEmits(['title', 'errors'])
 emit('title', "Daftar")
+emit('errors', [])
 
 const register = async () => {
+  emit('errors', [])
   try {
     const response = await api.post('register', {
       username: username.value,
@@ -46,9 +48,10 @@ const register = async () => {
     alert(response.data.message)
     router.push({ name: 'Login' })
   } catch (error) {
-    toArray(error.response.data.message).forEach(error => {
-      alert(error)
-    });
+    emit('errors', toArray(error.response.data.message))
+    // toArray(error.response.data.message).forEach(error => {
+    //   alert(error)
+    // });
   }
 }
 </script>

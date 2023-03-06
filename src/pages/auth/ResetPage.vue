@@ -32,10 +32,11 @@ const token = ref('')
 const email = ref('');
 const password = ref('');
 const password_confirm = ref('')
-const emit = defineEmits(['title'])
+const emit = defineEmits(['title', 'errors'])
 emit('title', "Reset Password")
-
+emit('errors', [])
 const reset = async () => {
+  emit('errors', [])
   try {
     const response = await api.post('reset-password', {
       token: token.value,
@@ -46,9 +47,10 @@ const reset = async () => {
     alert(response.data.message)
     router.push({ name: 'Login' })
   } catch (error) {
-    toArray(error.response.data.message).forEach(error => {
-      alert(error)
-    });
+    emit('errors', toArray(error.response.data.message))
+    // toArray(error.response.data.message).forEach(error => {
+    //   alert(error)
+    // });
   }
 }
 

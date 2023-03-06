@@ -28,10 +28,12 @@ const router = useRouter()
 const username = ref('')
 const password = ref('');
 
-const emit = defineEmits(['title'])
+const emit = defineEmits(['title', 'errors'])
 emit('title', "Login")
+emit('errors', [])
 
 const login = async () => {
+  emit('errors', [])
   try {
     const response = await api.post('login', {
       login: username.value,
@@ -42,10 +44,7 @@ const login = async () => {
     localStorage.setItem('userGroup', JSON.stringify(response.data.data.group));
     router.push('/members/0')
   } catch (error) {
-    toArray(error.response.data.message).forEach(error => {
-      alert(error)
-    });
+    emit('errors', toArray(error.response.data.message))
   }
 }
-
 </script>
