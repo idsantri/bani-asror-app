@@ -4,12 +4,12 @@ const useUserStore = defineStore("user", {
   state: () => ({
     token: null,
     user: null,
-    group: null
+    group: null,
   }),
   getters: {
     getUser: (state) => state.user,
     getToken: (state) => state.token,
-    getGroup: (state) => state.group
+    getGroup: (state) => state.group,
   },
   actions: {
     setUser(payload) {
@@ -23,9 +23,9 @@ const useUserStore = defineStore("user", {
       this.group = null;
       this.user = null;
       this.token = null;
-    }
+    },
   },
-  persist: true
+  persist: true,
 });
 
 export default useUserStore;

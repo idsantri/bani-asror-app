@@ -1,46 +1,74 @@
 <template>
   <div class="sidebar-menu">
     <ul class="menu">
-      <li class='sidebar-title'>Bani</li>
+      <li class="sidebar-title">Bani</li>
       <li class="sidebar-item">
-        <router-link to="/members/1" class='sidebar-link'>
-          <img src="../assets/avatars/male.svg" alt="ikon pria" style="height:18px;">
+        <router-link to="/members/1" class="sidebar-link">
+          <img
+            src="../assets/avatars/male.svg"
+            alt="ikon pria"
+            style="height: 18px"
+          />
           <span>Asyiq</span>
         </router-link>
       </li>
       <li class="sidebar-item">
-        <router-link to="/members/2" class='sidebar-link'>
-          <img src="../assets/avatars/male.svg" alt="ikon pria" style="height:18px;">
+        <router-link to="/members/2" class="sidebar-link">
+          <img
+            src="../assets/avatars/male.svg"
+            alt="ikon pria"
+            style="height: 18px"
+          />
           <span>Nur Khotim</span>
         </router-link>
       </li>
       <li class="sidebar-item">
-        <router-link to="/members/3" class='sidebar-link'>
-          <img src="../assets/avatars/male.svg" alt="ikon pria" style="height:18px;">
+        <router-link to="/members/3" class="sidebar-link">
+          <img
+            src="../assets/avatars/male.svg"
+            alt="ikon pria"
+            style="height: 18px"
+          />
           <span>Umar</span>
         </router-link>
       </li>
       <li class="sidebar-item">
-        <router-link to="/members/4" class='sidebar-link'>
-          <img src="../assets/avatars/male.svg" alt="ikon pria" style="height:18px;">
+        <router-link to="/members/4" class="sidebar-link">
+          <img
+            src="../assets/avatars/male.svg"
+            alt="ikon pria"
+            style="height: 18px"
+          />
           <span>Muhyiddin</span>
         </router-link>
       </li>
       <li class="sidebar-item">
-        <router-link to="/members/5" class='sidebar-link'>
-          <img src="../assets/avatars/female.svg" alt="ikon wanita" style="height:18px;">
+        <router-link to="/members/5" class="sidebar-link">
+          <img
+            src="../assets/avatars/female.svg"
+            alt="ikon wanita"
+            style="height: 18px"
+          />
           <span>Bintu Asror 1</span>
         </router-link>
       </li>
       <li class="sidebar-item">
-        <router-link to="/members/6" class='sidebar-link'>
-          <img src="../assets/avatars/female.svg" alt="ikon wanita" style="height:18px;">
+        <router-link to="/members/6" class="sidebar-link">
+          <img
+            src="../assets/avatars/female.svg"
+            alt="ikon wanita"
+            style="height: 18px"
+          />
           <span>Bintu Asror 2</span>
         </router-link>
       </li>
       <li class="sidebar-item">
-        <router-link to="/members/7" class='sidebar-link'>
-          <img src="../assets/avatars/female.svg" alt="ikon wanita" style="height:18px;">
+        <router-link to="/members/7" class="sidebar-link">
+          <img
+            src="../assets/avatars/female.svg"
+            alt="ikon wanita"
+            style="height: 18px"
+          />
           <span>Bintu Asror 3</span>
         </router-link>
       </li>
@@ -70,8 +98,8 @@
   margin-top: 2rem;
 
   .sidebar-title {
-    padding: .7rem 1.5rem;
-    font-size: .8rem;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: #888;
     text-transform: uppercase;
@@ -79,11 +107,11 @@
 
   .sidebar-link {
     display: block;
-    padding: .7rem 1.5rem;
-    font-size: .85rem;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.85rem;
     display: flex;
     align-items: center;
-    transition: all .5s;
+    transition: all 0.5s;
     text-decoration: none;
 
     &:hover {
@@ -92,7 +120,7 @@
       }
     }
 
-    &>span {
+    & > span {
       color: #053382;
       font-weight: 500;
       margin-left: 1rem;
@@ -102,7 +130,7 @@
 
   .sidebar-item {
     list-style: none;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     position: relative;
 
     &.has-sub {
@@ -122,14 +150,14 @@
       }
 
       .sidebar-link:before {
-        content: '';
+        content: "";
         position: absolute;
         left: 0;
         height: 100%;
         top: 0;
         bottom: 0;
-        background-color: rgba(#2EAAF4, .5);
-        width: 5px
+        background-color: rgba(#2eaaf4, 0.5);
+        width: 5px;
       }
     }
   }
@@ -147,16 +175,16 @@
 
     li {
       a {
-        padding: .7rem 3rem;
+        padding: 0.7rem 3rem;
         display: block;
         color: #676767;
-        font-size: .75rem;
+        font-size: 0.75rem;
         font-weight: 500;
-        letter-spacing: .5px;
-        transition: all .2s;
+        letter-spacing: 0.5px;
+        transition: all 0.2s;
 
         &:hover {
-          margin-left: .3rem;
+          margin-left: 0.3rem;
         }
       }
     }

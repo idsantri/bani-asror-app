@@ -6,7 +6,7 @@
 
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
           </q-avatar>
           Title
         </q-toolbar-title>
@@ -15,9 +15,7 @@
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
       <q-list>
-        <q-item-label header>
-          Bani Asror
-        </q-item-label>
+        <q-item-label header> Bani Asror </q-item-label>
 
         <aside-content />
       </q-list>
@@ -33,10 +31,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import AsideContent from 'src/components/AsideContent.vue'
+import { ref } from "vue";
+import AsideContent from "src/components/AsideContent.vue";
 
-const leftDrawerOpen = ref(false)
-const toggleLeftDrawer = () => leftDrawerOpen.value = !leftDrawerOpen.value
-
+const leftDrawerOpen = ref(false);
+const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 </script>

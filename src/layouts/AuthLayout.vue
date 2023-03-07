@@ -8,8 +8,13 @@
     <q-card flat v-if="errors.length > 0" class="q-ma-xs" id="error">
       <q-card-section class="q-pa-xs bg-red-2 text-red">
         <ul class="q-my-xs">
-          <li v-for="error in errors" :key="error"><span v-html="error" class="anchorErrorResponse"
-              @click="clickAnchor"></span></li>
+          <li v-for="error in errors" :key="error">
+            <span
+              v-html="error"
+              class="anchorErrorResponse"
+              @click="clickAnchor"
+            ></span>
+          </li>
         </ul>
       </q-card-section>
     </q-card>
@@ -21,40 +26,39 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { api } from 'src/boot/axios';
-import { toArray } from 'src/utils/array';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { api } from "src/boot/axios";
+import { toArray } from "src/utils/array";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
-const title = ref("Autentikasi")
-const handleTitle = value => title.value = value
+const router = useRouter();
+const title = ref("Autentikasi");
+const handleTitle = (value) => (title.value = value);
 
-const errors = ref([])
-const handleErrors = value => errors.value = value
+const errors = ref([]);
+const handleErrors = (value) => (errors.value = value);
 
-const clickAnchor = e => {
-  const anchor = e.target.querySelector('a');
+const clickAnchor = (e) => {
+  const anchor = e.target.querySelector("a");
   // console.log(anchor);
-  e.preventDefault()
+  e.preventDefault();
   if (anchor) {
-    e.target.addEventListener('click', async e => {
-      console.log('anchor clicked');
-      errors.value = []
-      e.preventDefault()
-      const href = anchor.href.replace('%2540', '@')
+    e.target.addEventListener("click", async (e) => {
+      console.log("anchor clicked");
+      errors.value = [];
+      e.preventDefault();
+      const href = anchor.href.replace("%2540", "@");
       try {
-        const response = await api.get(href)
+        const response = await api.get(href);
         // console.log("res", response);
-        alert(response.data.message)
-        await router.push('/login')
+        alert(response.data.message);
+        await router.push("/login");
       } catch (error) {
-        errors.value = toArray(error.response.data.message)
+        errors.value = toArray(error.response.data.message);
       }
-    })
+    });
   }
-}
-
+};
 </script>
 
 <style scoped>
@@ -80,7 +84,7 @@ const clickAnchor = e => {
   margin: 2em auto;
   margin-top: 10vh;
   width: 100%;
-  max-width: 400px
+  max-width: 400px;
 }
 
 .alert {

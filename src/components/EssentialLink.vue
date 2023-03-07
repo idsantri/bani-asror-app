@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="link">
+  <q-item clickable tag="a" target="_blank" :href="link">
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
@@ -8,12 +8,9 @@
       <q-item-label>{{ title }}</q-item-label>
       <q-item-label caption>{{ caption }}</q-item-label>
     </q-item-section>
-  </router-link>
+  </q-item>
 </template>
-<!-- <router-link to="/members/3" class='sidebar-link'>
-  <img src="" alt="ikon pria" style="height:18px;">
-  <span>Umar</span>
-</router-link> -->
+
 <script>
 import { defineComponent } from "vue";
 
