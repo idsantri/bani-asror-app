@@ -37,16 +37,17 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     children: [
-      // {
-      //   path: "home",
-      //   name: "Home",
-      //   component: () => import("./components/pages/home")
-      //   // beforeEnter: (to, from, next) => {
-      //   // 	console.log('from ', from);
-      //   // 	console.log('to ', to);
-      //   // 	next();
-      //   // },
-      // },
+      {
+        path: "search",
+        name: "Search",
+        component: () => import("../pages/search/SearchMember.vue"),
+        meta: { title: "Cari Anggota" }
+        // beforeEnter: (to, from, next) => {
+        // 	console.log('from ', from);
+        // 	console.log('to ', to);
+        // 	next();
+        // },
+      },
       {
         path: "members/:id",
         name: "Members",
