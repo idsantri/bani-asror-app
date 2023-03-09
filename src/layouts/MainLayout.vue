@@ -1,9 +1,9 @@
 <template>
   <q-layout view="hHh LpR lFf">
     <q-header elevated class="bg-green-9 text-green-1">
+      <button @click="forceRerender" id="btn-force-rerender" style="display: none;">rerender</button>
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" color="green-4" />
-
         <q-toolbar-title class="no-padding">
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" alt="logo" />
@@ -21,7 +21,7 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container :key="componentKey">
       <router-view :key="$route.fullPath" @page-title="handlePageTitle" />
     </q-page-container>
     <q-footer bordered class="bg-green-9 text-white">
@@ -42,4 +42,9 @@ const handlePageTitle = (value) => {
   // console.log('val', value);
   pageTitle.value = value
 }
+
+const componentKey = ref(0);
+const forceRerender = () => {
+  componentKey.value++;
+};
 </script>

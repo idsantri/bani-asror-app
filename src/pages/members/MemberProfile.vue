@@ -20,18 +20,18 @@
       </template>
       <div class="row">
         <div class="col-2">
-          <p class="no-margin q-pa-xs">Ayah:</p>
-          <p class="no-margin q-pa-xs">Ibu:</p>
+          <p class="no-margin q-pb-sm">Ayah:</p>
+          <p class="no-margin q-pb-sm">Ibu:</p>
         </div>
         <div class="col">
-          <p class="no-margin q-pa-xs">
+          <p class="no-margin q-pb-sm">
             <span v-if="!ayah_id">-</span>
             <span v-if="ayah_id"> <router-link :to="ayah_id">{{
               ayah
             }}</router-link></span>
           </p>
 
-          <p class="no-margin q-pa-xs">
+          <p class="no-margin q-pb-sm">
             <span v-if="!ibu_id">-</span>
             <span v-if="ibu_id > 0"> <router-link :to="ibu_id">{{ ibu }}</router-link></span>
           </p>
@@ -58,20 +58,26 @@
       </template>
     </q-banner>
 
-    <q-btn class="glossy btn-float" round color="green-10" icon="edit">
+    <q-btn class="glossy btn-float" round color="green-10" icon="edit" @click="showModal = true">
       <q-tooltip class="bg-white text-dark">Edit data</q-tooltip>
     </q-btn>
   </q-card-section>
+  <q-dialog v-model="showModal" persistent>
+    <member-modal-edit :member="member" modal-title="Edit Anggota" :is-new="false" @new-member="handleNewMember" />
+  </q-dialog>
 </template>
 
 <script setup>
 import { api } from "../../boot/axios";
 import { toRefs, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
+import MemberModalEdit from "./MemberModalEdit.vue";
+
 const member = reactive({});
 const route = useRoute();
 const memberId = route.params.id;
 const sexIcon = ref('')
+const showModal = ref(false);
 // emit data dari modal ketika sukses
 const handleNewMember = (newMember) => {
   Object.assign(member, newMember);
@@ -110,7 +116,7 @@ const {
 
 .float-bl {
   position: relative;
-  top: 5px;
+  top: 3px;
   text-align: end;
 }
 </style>
