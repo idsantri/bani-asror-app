@@ -48,11 +48,9 @@
 import memberState from '../../stores/member-store'
 import { toRefs, reactive, ref, computed } from 'vue';
 import { api } from '../../boot/axios';
-import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../../utils/array';
 import { useQuasar } from 'quasar'
-// import { notifySuccess } from '../../utils/notify'
 
 const $q = useQuasar()
 const route = useRoute()
@@ -109,7 +107,6 @@ const saveMember = async () => {
     try {
       const response = await api.put(`members/${memberId}`, data)
       closeModal()
-      // notifySuccess(response.data.message)
       notifySuccess(response.data.message)
       emit('newMember', response.data.data.member)
     } catch (error) {
@@ -120,7 +117,7 @@ const saveMember = async () => {
 
 function notifySuccess(message) {
   $q.notify({
-    color: 'green-6',
+    color: 'green-7',
     textColor: 'white',
     icon: 'cloud_done',
     message: message
