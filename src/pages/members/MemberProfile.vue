@@ -19,21 +19,18 @@
         <q-avatar rounded icon="diversity_3" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
       </template>
       <div class="row">
-        <div class="col-2">
-          <p class="no-margin q-pb-sm">Ayah:</p>
-          <p class="no-margin q-pb-sm">Ibu:</p>
-        </div>
         <div class="col">
-          <p class="no-margin q-pb-sm">
+          <p class="no-margin">
+            <span class="parent-label">Ayah:</span>
             <span v-if="!ayah_id">-</span>
-            <span v-if="ayah_id"> <router-link :to="ayah_id">{{
-              ayah
-            }}</router-link></span>
+            <q-btn v-if="ayah_id > 0" :to="ayah_id" flat class="q-tab--no-caps q-pl-none" color="green-10">{{ ayah
+            }}</q-btn>
           </p>
-
-          <p class="no-margin q-pb-sm">
+          <p class="no-margin">
+            <span class="parent-label">Ibu:</span>
             <span v-if="!ibu_id">-</span>
-            <span v-if="ibu_id > 0"> <router-link :to="ibu_id">{{ ibu }}</router-link></span>
+            <q-btn v-if="ibu_id > 0" :to="ibu_id" flat class="q-tab--no-caps q-pl-none" color="green-10">{{ ibu
+            }}</q-btn>
           </p>
         </div>
         <div class="col-2">
@@ -49,7 +46,8 @@
     <q-banner class="q-pa-sm bg-green-4 text-dark q-mt-md">
       <div>
         <p class="no-margin q-pb-xs"><span class="text-weight-light">Tanggal Wafat: </span>{{ tgl_wafat }}</p>
-        <p class="no-margin q-pb-xs"><span class="text-weight-light">Usia Wafat: </span>{{ (usia_wafat > 0 ? usia_wafat +
+        <p class="no-margin q-pb-xs"><span class="text-weight-light">Usia Wafat: </span>{{ (usia_wafat > 0 ?
+          usia_wafat +
           " tahun" : "-") }}</p>
         <p class="no-margin text-weight-light"><em>{{ (catatan ? catatan : 'Catatan: -') }}</em></p>
       </div>
@@ -118,5 +116,10 @@ const {
   position: relative;
   top: 3px;
   text-align: end;
+}
+
+.parent-label {
+  display: inline-block;
+  width: 50px;
 }
 </style>

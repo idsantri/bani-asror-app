@@ -1,9 +1,28 @@
 <template>
   <q-card-section class="bg-green-7">
     <q-banner class="q-pa-sm bg-green-3 text-dark">
-      <template #avatar>
-        <q-avatar icon="child_care" color="green-10" text-color="green-2" rounded font-size=".7em"></q-avatar>
-      </template>
+
+      <div class="q-pa-sm">
+        <q-list bordered separator>
+          <div v-if="children.length > 0">
+            <q-item v-for="(child, index) in children" :key="index" clickable v-ripple>
+              <q-avatar>
+                <q-badge align="middle" color="green-8">{{ parseInt(index) + 1 }}</q-badge>
+              </q-avatar>
+              <q-item-section>
+                <q-btn :to="/members/ + child.anak_id" flat>
+                  {{ child.anak }}
+                </q-btn>
+
+              </q-item-section>
+            </q-item>
+
+          </div>
+        </q-list>
+      </div>
+
+
+
       <div>
         <table class="table mb-0">
           <thead>

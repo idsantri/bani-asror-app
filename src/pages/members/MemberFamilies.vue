@@ -1,52 +1,37 @@
 <template>
   <q-card-section class="bg-green-7">
     <q-banner class="q-pa-sm bg-green-3 text-dark">
-      <template #avatar>
-        <q-avatar icon="diversity_1" color="green-10" text-color="green-2" rounded font-size=".7em"></q-avatar>
-      </template>
-      <div>
+      <div class="q-pa-sm">
+        <q-list v-if="families.length > 0" separator>
+          <q-item v-for="(family, index) in families" :key="index">
+            <q-item-section>
+              <q-item-label>
+                <div v-if="family.pasangan_id">
+                  <q-btn :to="/members/ + family.pasangan_id" flat class="q-pl-none q-pb-none q-tab--no-caps">{{
+                    family.pasangan
+                  }}</q-btn>
+                </div>
+                <div v-else>?</div>
+              </q-item-label>
+              <q-item-label caption class="no-margin">Jumlah anak: {{ family.children_count }}</q-item-label>
+            </q-item-section>
+            <q-item-section avatar>
+              <q-btn :to="/families/ + family.family_id" color="green-8" icon="diversity_1" />
+            </q-item-section>
+          </q-item>
+        </q-list>
 
-        <table>
-          <thead>
-            <tr>
-              <td class="text-center" style="width: 60px;">No</td>
-              <td>Suami/Istri</td>
-              <td>Anak</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody v-if="families.length == 0">
-            <tr>
-              <td class="text-center">#</td>
-              <td>-</td>
-              <td>-</td>
-              <td class="text-end">
-                <span class="btn btn-outline-secondary btn-sm disabled">
-                  <i class="fa-solid fa-circle-info me-1"></i>detail
-                </span>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <tr v-for="(family, index) in families" :key="index">
-              <td class="text-center">{{ parseInt(index) + 1 }}</td>
-              <td v-if="family.pasangan_id">
-                <router-link :to="/members/ + family.pasangan_id">
-                  {{ family.pasangan }}
-                </router-link>
-              </td>
-              <td v-else>-</td>
-              <td>{{ family.children_count }}</td>
-              <td class="text-end">
-                <router-link :to="/families/ + family.family_id" class="btn btn-outline-info btn-sm">
-                  <i class="fa-solid fa-circle-info me-1"></i>detail
-                </router-link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-
+        <q-list v-else>
+          <q-item>
+            <q-item-section>
+              <q-item-label>-</q-item-label>
+              <q-item-label caption class="no-margin">Jumlah anak: -</q-item-label>
+            </q-item-section>
+            <q-item-section avatar>
+              <q-btn color="green-8" icon="diversity_1" disable />
+            </q-item-section>
+          </q-item>
+        </q-list>
       </div>
     </q-banner>
     <q-btn class="glossy btn-float" round color="green-10" icon="add" @click="createFamily">

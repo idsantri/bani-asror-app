@@ -41,7 +41,6 @@ export default route(function (/* { store, ssrContext } */) {
         localStorage.setItem("user", "");
         next("/login");
       } else {
-        // useRouter().go(-1);
         history.go(-1);
       }
     }
@@ -56,11 +55,8 @@ export default route(function (/* { store, ssrContext } */) {
       next("/login");
     } else if (toAuthRoutes && isAuthenticate) {
       console.log("not");
-      // useRouter().go(-1);
       history.go(-1);
     } else {
-      // axios.defaults.headers.common["Authorization"] =
-      //   "Bearer " + localStorage.getItem("token");
       next();
     }
   });
