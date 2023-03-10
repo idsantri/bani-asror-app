@@ -47,8 +47,8 @@
     <!-- OTHERS -->
     <q-banner class="q-pa-sm bg-green-4 text-dark q-mt-md">
       <div>
-        <p class="no-margin q-pb-xs"><span class="text-weight-light">Tanggal Wafat: </span>{{ tgl_wafat }}</p>
-        <p class="no-margin q-pb-xs"><span class="text-weight-light">Usia Wafat: </span>{{ (usia_wafat > 0 ?
+        <p class="no-margin q-pb-xs"><span class="text-weight-light">Wafat: </span>{{ tgl_wafat }}</p>
+        <p class="no-margin q-pb-xs"><span class="text-weight-light">Usia: </span>{{ (usia_wafat > 0 ?
           usia_wafat +
           " tahun" : "-") }}</p>
         <p class="no-margin text-weight-light"><em>{{ (catatan ? catatan : 'Catatan: -') }}</em></p>
@@ -74,6 +74,7 @@ import { toRefs, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import MemberModalEdit from "./MemberModalEdit.vue";
 import ParentComponent from "src/components/ParentComponent.vue";
+import memberState from '../../stores/member-store'
 
 const member = reactive({});
 const parent = reactive({});
@@ -90,6 +91,8 @@ try {
   const response = await api.get(`members/${memberId}`);
   Object.assign(member, response.data.data.member);
   Object.assign(parent, response.data.data.member);
+  memberState().member = member;
+
   if (member.lp.toUpperCase() == 'L') sexIcon.value = 'man'
   if (member.lp.toUpperCase() == 'P') sexIcon.value = 'woman'
 } catch (error) {

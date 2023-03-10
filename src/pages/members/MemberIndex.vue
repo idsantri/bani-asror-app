@@ -1,59 +1,55 @@
 <template>
-  <div class="q-pa-md">
-    <div class="q-gutter-y-md">
-      <q-card class="bg-green-8 text-green-1">
-        <q-tabs v-model="tab" class="text-green-5" active-color="white" indicator-color="green-3" align="justify"
-          narrow-indicator>
-          <q-tab name="profile" label="Profil" />
-          <q-tab name="family" label="Keluarga" />
-          <q-tab name="child" label="Anak" />
-        </q-tabs>
+  <q-card class="bg-green-8 text-green-1">
+    <q-tabs v-model="tab" class="text-green-5" active-color="white" indicator-color="green-3" align="justify"
+      narrow-indicator>
+      <q-tab name="profile" label="Profil" />
+      <q-tab name="family" label="Keluarga" />
+      <q-tab name="child" label="Anak" />
+    </q-tabs>
 
-        <q-separator dark />
+    <q-separator dark />
 
-        <q-tab-panels v-model="tab" animated class="bg-green-6">
-          <q-tab-panel name="profile" class="no-padding no-margin">
-            <Suspense>
-              <template #default>
-                <member-profile />
-              </template>
-              <template #fallback>
-                <div class="spinner">
-                  <q-spinner-cube color="green-2" size="8em" />
-                </div>
-              </template>
-            </Suspense>
-          </q-tab-panel>
+    <q-tab-panels v-model="tab" animated class="bg-green-6">
+      <q-tab-panel name="profile" class="no-padding no-margin">
+        <Suspense>
+          <template #default>
+            <member-profile />
+          </template>
+          <template #fallback>
+            <div class="spinner">
+              <q-spinner-cube color="green-2" size="8em" />
+            </div>
+          </template>
+        </Suspense>
+      </q-tab-panel>
 
-          <q-tab-panel name="family" class="no-padding no-margin">
-            <Suspense>
-              <template #default>
-                <member-families />
-              </template>
-              <template #fallback>
-                <div class="spinner">
-                  <q-spinner-cube color="green-2" size="8em" />
-                </div>
-              </template>
-            </Suspense>
-          </q-tab-panel>
+      <q-tab-panel name="family" class="no-padding no-margin">
+        <Suspense>
+          <template #default>
+            <member-families />
+          </template>
+          <template #fallback>
+            <div class="spinner">
+              <q-spinner-cube color="green-2" size="8em" />
+            </div>
+          </template>
+        </Suspense>
+      </q-tab-panel>
 
-          <q-tab-panel name="child" class="no-padding no-margin">
-            <Suspense>
-              <template #default>
-                <member-children />
-              </template>
-              <template #fallback>
-                <div class="spinner">
-                  <q-spinner-cube color="green-2" size="8em" />
-                </div>
-              </template>
-            </Suspense>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card>
-    </div>
-  </div>
+      <q-tab-panel name="child" class="no-padding no-margin">
+        <Suspense>
+          <template #default>
+            <member-children />
+          </template>
+          <template #fallback>
+            <div class="spinner">
+              <q-spinner-cube color="green-2" size="8em" />
+            </div>
+          </template>
+        </Suspense>
+      </q-tab-panel>
+    </q-tab-panels>
+  </q-card>
 </template>
 
 <script setup>
@@ -62,7 +58,7 @@ import MemberProfile from "./MemberProfile.vue";
 import MemberFamilies from "./MemberFamilies.vue";
 import MemberChildren from "./MemberChildren.vue";
 
-const emit = defineEmits(["pageTitle"]);
+const emit = defineEmits(["pageTitle", 'pageSubTitle']);
 emit("pageTitle", "Data Anggota");
 
 const tab = ref("profile");
