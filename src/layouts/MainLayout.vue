@@ -47,4 +47,5 @@ const componentKey = ref(0);
 const forceRerender = () => {
   componentKey.value++;
 };
+
 </script>

@@ -1,52 +1,27 @@
 <template>
   <q-card-section class="bg-green-7">
     <q-banner class="q-pa-sm bg-green-3 text-dark">
+      <q-list v-if="children.length > 0" bordered separator>
+        <q-item v-for="(child, index) in children" :key="index" clickable v-ripple :to="/members/ + child.anak_id">
+          <q-avatar>
+            <q-badge align="middle" color="green-8">{{ parseInt(index) + 1 }}</q-badge>
+          </q-avatar>
+          <q-item-section>
+            <q-item-label> {{ child.anak }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
 
-      <div class="q-pa-sm">
-        <q-list bordered separator>
-          <div v-if="children.length > 0">
-            <q-item v-for="(child, index) in children" :key="index" clickable v-ripple>
-              <q-avatar>
-                <q-badge align="middle" color="green-8">{{ parseInt(index) + 1 }}</q-badge>
-              </q-avatar>
-              <q-item-section>
-                <q-btn :to="/members/ + child.anak_id" flat>
-                  {{ child.anak }}
-                </q-btn>
-
-              </q-item-section>
-            </q-item>
-
-          </div>
-        </q-list>
-      </div>
-
-
-
-      <div>
-        <table class="table mb-0">
-          <thead>
-            <tr>
-              <td class="text-center" style="width: 60px;">No</td>
-              <td>Anak</td>
-            </tr>
-          </thead>
-          <tbody v-if="children.length == 0">
-            <tr>
-              <td class="text-center">#</td>
-              <td>-</td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <tr v-for="(child, index) in children" :key="index">
-              <td class="text-center">{{ parseInt(index) + 1 }}</td>
-              <td>
-                <router-link :to="/members/ + child.anak_id">{{ child.anak }}</router-link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <q-list v-else bordered separator>
+        <q-item>
+          <q-avatar>
+            <q-badge align="middle" color="green-8">0</q-badge>
+          </q-avatar>
+          <q-item-section>
+            <q-item-label>-</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
     </q-banner>
   </q-card-section>
 </template>

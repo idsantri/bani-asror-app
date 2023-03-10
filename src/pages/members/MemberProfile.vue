@@ -1,4 +1,5 @@
 <template>
+  <!-- PROFILE -->
   <q-card-section class="bg-green-7">
     <q-banner class="q-pa-sm bg-green-2 text-dark">
       <template #avatar>
@@ -14,35 +15,36 @@
       </div>
     </q-banner>
 
+    <!-- PARENT -->
     <q-banner class="q-pa-sm bg-green-3 text-dark q-mt-md">
       <template #avatar>
         <q-avatar rounded icon="diversity_3" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
       </template>
-      <div class="row">
-        <div class="col">
-          <p class="no-margin">
-            <span class="parent-label">Ayah:</span>
-            <span v-if="!ayah_id">-</span>
-            <q-btn v-if="ayah_id > 0" :to="ayah_id" flat class="q-tab--no-caps q-pl-none" color="green-10">{{ ayah
-            }}</q-btn>
-          </p>
-          <p class="no-margin">
-            <span class="parent-label">Ibu:</span>
-            <span v-if="!ibu_id">-</span>
-            <q-btn v-if="ibu_id > 0" :to="ibu_id" flat class="q-tab--no-caps q-pl-none" color="green-10">{{ ibu
-            }}</q-btn>
-          </p>
-        </div>
-        <div class="col-2">
-          <span v-if="keluarga_id" class="float-bl">
-            <router-link :to="/families/ + keluarga_id">
+      <q-list>
+        <q-item class="no-padding">
+          <q-item-section>
+            <q-list>
+              <q-item clickable v-ripple :to="ayah_id" class="no-padding" dense>
+                <q-item-label><span class="parent-label">Ayah:</span>{{ ayah }}</q-item-label>
+              </q-item>
+              <q-item clickable v-ripple :to="ibu_id" class="no-padding" dense>
+                <q-item-label><span class="parent-label">Ibu:</span>{{ ibu }}</q-item-label>
+              </q-item>
+            </q-list>
+          </q-item-section>
+          <q-item-section v-if="keluarga_id > 0" avatar>
+            <q-btn :to="/families/ + keluarga_id" flat>
               <q-icon name="play_circle_filled" size="3.5em" color="green-10" />
-            </router-link>
-          </span>
-        </div>
-      </div>
+            </q-btn>
+          </q-item-section>
+        </q-item>
+      </q-list>
     </q-banner>
+    <q-banner class="q-pa-sm bg-green-3 text-dark q-mt-md">
 
+      <parent-component :parent="parent" />
+    </q-banner>
+    <!-- OTHERS -->
     <q-banner class="q-pa-sm bg-green-4 text-dark q-mt-md">
       <div>
         <p class="no-margin q-pb-xs"><span class="text-weight-light">Tanggal Wafat: </span>{{ tgl_wafat }}</p>
@@ -60,6 +62,7 @@
       <q-tooltip class="bg-white text-dark">Edit data</q-tooltip>
     </q-btn>
   </q-card-section>
+
   <q-dialog v-model="showModal" persistent>
     <member-modal-edit :member="member" modal-title="Edit Anggota" :is-new="false" @new-member="handleNewMember" />
   </q-dialog>
@@ -70,8 +73,10 @@ import { api } from "../../boot/axios";
 import { toRefs, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import MemberModalEdit from "./MemberModalEdit.vue";
+import ParentComponent from "src/components/ParentComponent.vue";
 
 const member = reactive({});
+const parent = reactive({});
 const route = useRoute();
 const memberId = route.params.id;
 const sexIcon = ref('')
@@ -84,6 +89,7 @@ const handleNewMember = (newMember) => {
 try {
   const response = await api.get(`members/${memberId}`);
   Object.assign(member, response.data.data.member);
+  Object.assign(parent, response.data.data.member);
   if (member.lp.toUpperCase() == 'L') sexIcon.value = 'man'
   if (member.lp.toUpperCase() == 'P') sexIcon.value = 'woman'
 } catch (error) {
@@ -110,12 +116,6 @@ const {
   position: absolute;
   bottom: 10px;
   right: 10px;
-}
-
-.float-bl {
-  position: relative;
-  top: 3px;
-  text-align: end;
 }
 
 .parent-label {

@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <div class="q-gutter-y-md" style="max-width: 600px;">
+    <div class="q-gutter-y-md">
       <q-card class="bg-green-8 text-green-1">
         <q-tabs v-model="tab" class="text-green-5" active-color="white" indicator-color="green-3" align="justify"
           narrow-indicator>
@@ -18,7 +18,9 @@
                 <member-profile />
               </template>
               <template #fallback>
-                <p>loading...</p>
+                <div class="spinner">
+                  <q-spinner-cube color="green-2" size="8em" />
+                </div>
               </template>
             </Suspense>
           </q-tab-panel>
@@ -29,7 +31,9 @@
                 <member-families />
               </template>
               <template #fallback>
-                <p>loading...</p>
+                <div class="spinner">
+                  <q-spinner-cube color="green-2" size="8em" />
+                </div>
               </template>
             </Suspense>
           </q-tab-panel>
@@ -40,7 +44,9 @@
                 <member-children />
               </template>
               <template #fallback>
-                <p>loading...</p>
+                <div class="spinner">
+                  <q-spinner-cube color="green-2" size="8em" />
+                </div>
               </template>
             </Suspense>
           </q-tab-panel>
@@ -61,4 +67,9 @@ emit("pageTitle", "Data Anggota");
 
 const tab = ref("profile");
 </script>
-<style></style>
+<style scoped>
+.spinner {
+  text-align: center;
+  margin: 30px auto;
+}
+</style>
