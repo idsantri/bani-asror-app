@@ -4,71 +4,43 @@
       <li class="sidebar-title">Bani</li>
       <li class="sidebar-item">
         <router-link to="/members/1" class="sidebar-link">
-          <img
-            src="../assets/avatars/male.svg"
-            alt="ikon pria"
-            style="height: 18px"
-          />
+          <img src="../assets/avatars/male.svg" alt="ikon pria" style="height: 18px" />
           <span>Asyiq</span>
         </router-link>
       </li>
       <li class="sidebar-item">
         <router-link to="/members/2" class="sidebar-link">
-          <img
-            src="../assets/avatars/male.svg"
-            alt="ikon pria"
-            style="height: 18px"
-          />
+          <img src="../assets/avatars/male.svg" alt="ikon pria" style="height: 18px" />
           <span>Nur Khotim</span>
         </router-link>
       </li>
       <li class="sidebar-item">
         <router-link to="/members/3" class="sidebar-link">
-          <img
-            src="../assets/avatars/male.svg"
-            alt="ikon pria"
-            style="height: 18px"
-          />
+          <img src="../assets/avatars/male.svg" alt="ikon pria" style="height: 18px" />
           <span>Umar</span>
         </router-link>
       </li>
       <li class="sidebar-item">
         <router-link to="/members/4" class="sidebar-link">
-          <img
-            src="../assets/avatars/male.svg"
-            alt="ikon pria"
-            style="height: 18px"
-          />
+          <img src="../assets/avatars/male.svg" alt="ikon pria" style="height: 18px" />
           <span>Muhyiddin</span>
         </router-link>
       </li>
       <li class="sidebar-item">
         <router-link to="/members/5" class="sidebar-link">
-          <img
-            src="../assets/avatars/female.svg"
-            alt="ikon wanita"
-            style="height: 18px"
-          />
+          <img src="../assets/avatars/female.svg" alt="ikon wanita" style="height: 18px" />
           <span>Bintu Asror 1</span>
         </router-link>
       </li>
       <li class="sidebar-item">
         <router-link to="/members/6" class="sidebar-link">
-          <img
-            src="../assets/avatars/female.svg"
-            alt="ikon wanita"
-            style="height: 18px"
-          />
+          <img src="../assets/avatars/female.svg" alt="ikon wanita" style="height: 18px" />
           <span>Bintu Asror 2</span>
         </router-link>
       </li>
       <li class="sidebar-item">
         <router-link to="/members/7" class="sidebar-link">
-          <img
-            src="../assets/avatars/female.svg"
-            alt="ikon wanita"
-            style="height: 18px"
-          />
+          <img src="../assets/avatars/female.svg" alt="ikon wanita" style="height: 18px" />
           <span>Bintu Asror 3</span>
         </router-link>
       </li>
@@ -120,7 +92,7 @@
       }
     }
 
-    & > span {
+    &>span {
       color: #053382;
       font-weight: 500;
       margin-left: 1rem;

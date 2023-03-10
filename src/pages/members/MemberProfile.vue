@@ -72,7 +72,7 @@
 import { api } from "../../boot/axios";
 import { toRefs, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
-import MemberModalEdit from "./MemberModalEdit.vue";
+import MemberModalEdit from "../../components/MemberModal.vue";
 import ParentComponent from "src/components/ParentComponent.vue";
 import memberState from '../../stores/member-store'
 

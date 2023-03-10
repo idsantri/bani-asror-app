@@ -18,10 +18,10 @@
             </q-item>
           </q-list>
         </q-toolbar-title>
-        <q-btn round flat dense icon="notifications" disabled>
-          <q-badge floating color="primary" rounded />
+        <q-btn round flat dense icon="notifications" disabled color="green-1">
+          <q-badge floating color="info" rounded />
         </q-btn>
-        <q-btn-dropdown flat round dense dropdown-icon="more_vert" class="q-pl-md">
+        <q-btn-dropdown flat round dense dropdown-icon="more_vert" class="q-pl-md" color="green-1">
 
           <q-list>
             <q-item clickable v-close-popup to="/profile">
@@ -43,9 +43,9 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated class="bg-green-1">
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated class="bg-green-7">
       <q-list>
-        <q-item-label header> Bani Asror </q-item-label>
+        <q-item-label header class="text-white"> Bani Asror </q-item-label>
         <aside-content />
       </q-list>
     </q-drawer>
