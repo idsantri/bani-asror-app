@@ -81,7 +81,6 @@
       <q-card-section class="bg-green-8 text-green-1 q-pa-sm">
         <div class="text-h6 text-weight-light">Cari Anggota</div>
       </q-card-section>
-
       <q-card-section style="max-height: 75vh" class="scroll">
         <search-member />
       </q-card-section>
