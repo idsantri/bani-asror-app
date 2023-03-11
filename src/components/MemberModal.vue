@@ -35,8 +35,9 @@
           placeholder="Tulis catatan (biografi singkat) disini!" autogrow />
       </q-card-section>
 
-      <q-card-actions align="right" class="bg-green-10">
-        <q-btn label="Hapus" color="negative" class="text-weight-light to-left" @click="deleteMember(id)" />
+      <q-card-actions class="bg-green-10">
+        <q-btn label="Hapus" color="negative" class="text-weight-light" @click="deleteMember(id)" />
+        <q-space />
         <q-btn label="Simpan" color="green-9" class="text-weight-light" type="submit" />
         <q-btn label="Gagal" color="secondary" class="text-weight-light" v-close-popup id="btn-close-modal" />
       </q-card-actions>
@@ -144,10 +145,4 @@ const deleteMember = async (id) => {
 
 </script>
 
-<style scoped>
-.to-left {
-  position: absolute;
-  left: 0;
-  margin: 10px;
-}
-</style>
+<style scoped></style>

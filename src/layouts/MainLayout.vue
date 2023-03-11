@@ -1,19 +1,21 @@
 <template>
-  <q-layout view="hHh LpR lFf">
+  <q-layout view="lHh LpR lFf">
     <q-header elevated class="bg-green-10 text-green-1">
       <button @click="forceRerender" id="btn-force-rerender" style="display: none;">rerender</button>
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" color="green-4" />
-        <q-avatar>
-          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+        <q-avatar class="bg-green-1">
+          <img src="../assets/logo-circle.png">
         </q-avatar>
 
-        <q-toolbar-title>
+        <q-toolbar-title class="no-padding q-ml-sm">
           <q-list>
             <q-item clickable v-ripple class="no-padding" to="/">
               <q-item-section>
-                <q-item-label>Silsilah Bani Asror</q-item-label>
-                <q-item-label caption class="text-green-1 text-italic no-margin">(Bujuk Langgundih)</q-item-label>
+                <q-item-label class="q-py-sm">
+                  <p class="header header-1"><span class="header-span">Silsilah</span> Bani Asror</p>
+                  <p class="header header-2">(Bujuk Langgundih)</p>
+                </q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -43,11 +45,14 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated class="bg-green-7">
-      <q-list>
-        <q-item-label header class="text-white"> Bani Asror </q-item-label>
-        <aside-content />
-      </q-list>
+    <q-drawer width="250" show-if-above v-model="leftDrawerOpen" side="left" elevated class="bg-green-7">
+
+      <q-banner class="bg-transparent q-mt-md">
+        <img src="../assets/logo.png" style="height: 100px; object-fit: cover;">
+        <p class="text-green-1 text-h6 text-weight-medium no-margin">Silsilah Bani Asror</p>
+        <p class="text-green-1 text-subtitle1 text-weight-light text-italic">(Bujuk Langgundih)</p>
+      </q-banner>
+      <aside-content />
     </q-drawer>
 
     <q-page-container :key="componentKey">
@@ -85,3 +90,24 @@ const forceRerender = () => componentKey.value++;
 
 watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
 </script>
+<style scoped >
+.header {
+  margin: 0;
+  padding: 0;
+}
+
+
+.header-1 {
+  font-weight: 500;
+}
+
+.header-2 {
+  font-weight: 100;
+  font-size: .7em;
+  font-style: italic;
+}
+
+.header-span {
+  font-weight: 100;
+}
+</style>
