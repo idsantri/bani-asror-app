@@ -1,9 +1,7 @@
-// not work
+import { Notify } from "quasar";
 
-import { useQuasar } from "quasar";
 const notifySuccess = (message) => {
-  const $q = useQuasar();
-  $q.notify({
+  Notify.create({
     color: "green-6",
     textColor: "white",
     icon: "cloud_done",

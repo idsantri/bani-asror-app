@@ -4,12 +4,12 @@
       <data-table class="display table" :options="options" id="member-table">
         <thead>
           <tr>
-            <th class="text-center">!</th>
+            <th style="text-align: center;">!</th>
             <th>Nama</th>
             <th>Pasangan</th>
-            <th>data-1</th>
-            <th>data-2</th>
-            <th>data-3</th>
+            <th>Ortu-1</th>
+            <th>Ortu-2</th>
+            <th>Ortu-3</th>
           </tr>
         </thead>
       </data-table>
@@ -59,7 +59,7 @@ const options = ref({
     info: "Menampilkan _START_ hingga _END_, dari total _TOTAL_ data",
     // info: 'Halaman _PAGE_ dari _PAGES_ halaman',
     infoFiltered: "(disaring dari _MAX_ total data)",
-    paginate: { first: "|<", previous: "<<", next: ">>", last: ">|" },
+    paginate: { first: "|<", previous: "«", next: "»", last: ">|" },
     lengthMenu: "_MENU_ Perhalaman",
   },
 });

@@ -45,11 +45,12 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer width="250" show-if-above v-model="leftDrawerOpen" side="left" elevated class="bg-green-7">
+    <q-drawer :width="250" show-if-above v-model="leftDrawerOpen" side="left" elevated class="bg-green-7">
 
       <q-banner class="bg-transparent q-mt-md">
         <img src="../assets/logo.png" style="height: 100px; object-fit: cover;">
-        <p class="text-green-1 text-h6 text-weight-medium no-margin">Silsilah Bani Asror</p>
+        <p class="text-green-1 text-h6 text-weight-medium no-margin"> <span class="text-weight-light">Silsilah</span> Bani
+          Asror</p>
         <p class="text-green-1 text-subtitle1 text-weight-light text-italic">(Bujuk Langgundih)</p>
       </q-banner>
       <aside-content />
@@ -61,8 +62,9 @@
           <q-banner class="bg-green-9 text-green-1" inline-actions>
             <h2 class="text-h6 no-margin text-weight-light">{{ pageTitle }}</h2>
             <p class="no-margin text-weight-light">{{ pageSubTitle }}</p>
+            <!-- tombol cari -->
             <template v-slot:action>
-              <q-btn flat color="white" icon="search" />
+              <q-btn flat color="white" icon="search" @click="modalCari = true" />
             </template>
           </q-banner>
           <router-view :key="$route.fullPath" @page-title="handlePageTitle" />
@@ -73,22 +75,46 @@
       <p class="text-center no-margin q-pa-sm">by idsantri</p>
     </q-footer>
   </q-layout>
+
+  <q-dialog v-model="modalCari" full-width>
+    <q-card>
+      <q-card-section class="bg-green-8 text-green-1 q-pa-sm">
+        <div class="text-h6 text-weight-light">Cari Anggota</div>
+      </q-card-section>
+
+      <q-card-section style="max-height: 75vh" class="scroll">
+        <search-member />
+      </q-card-section>
+
+      <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
+        <q-btn label="Baru" color="secondary" v-close-popup />
+        <q-space />
+        <q-btn label="Tutup" color="green-10" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
 import { ref, watchEffect } from "vue";
 import AsideContent from "src/components/AsideContent.vue";
 import memberState from '../../src/stores/member-store'
+import SearchMember from "src/pages/search/SearchMember.vue";
+// import { useRoute } from 'vue-router'
+
 const pageTitle = ref("Data")
 const pageSubTitle = ref('Nama')
 const leftDrawerOpen = ref(false);
 const componentKey = ref(0);
+const modalCari = ref(false)
 
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value
 const forceRerender = () => componentKey.value++;
 
 watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
+// console.log(useRoute().meta);
+// if(useRoute().n)
 </script>
 <style scoped >
 .header {

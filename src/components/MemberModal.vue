@@ -52,6 +52,7 @@ import { api } from '../boot/axios';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../utils/array';
 import { useQuasar } from 'quasar'
+import { notifySuccess } from '../utils/notify'
 
 const $q = useQuasar()
 const route = useRoute()
@@ -114,15 +115,6 @@ const saveMember = async () => {
       errors.value = toArray(error.response.data.message)
     }
   }
-}
-
-function notifySuccess(message) {
-  $q.notify({
-    color: 'green-7',
-    textColor: 'white',
-    icon: 'cloud_done',
-    message: message
-  })
 }
 
 function closeModal() {

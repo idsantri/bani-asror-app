@@ -10,27 +10,27 @@ const routes = [
         path: "register",
         name: "Register",
         component: () => import("../pages/auth/RegisterPage.vue"),
-        meta: { title: "Registrasi" },
+        meta: { title: "Registrasi" }
       },
       {
         path: "login",
         name: "Login",
         component: () => import("../pages/auth/LoginPage.vue"),
-        meta: { title: "Login" },
+        meta: { title: "Login" }
       },
       {
         path: "forgot",
         name: "Forgot",
         component: () => import("../pages/auth/ForgotPage.vue"),
-        meta: { title: "Lupa Password" },
+        meta: { title: "Lupa Password" }
       },
       {
         path: "reset",
         name: "Reset",
         component: () => import("../pages/auth/ResetPage.vue"),
-        meta: { title: "Ganti Password" },
-      },
-    ],
+        meta: { title: "Ganti Password" }
+      }
+    ]
   },
   {
     path: "/",
@@ -41,7 +41,7 @@ const routes = [
         path: "search",
         name: "Search",
         component: () => import("../pages/search/SearchMember.vue"),
-        meta: { title: "Cari Anggota" },
+        meta: { title: "Cari Anggota" }
         // beforeEnter: (to, from, next) => {
         // 	console.log('from ', from);
         // 	console.log('to ', to);
@@ -52,14 +52,14 @@ const routes = [
         path: "members/:id",
         name: "Members",
         component: () => import("../pages/members/MemberIndex.vue"),
-        meta: { title: "Halaman Anggota" },
+        meta: { title: "Halaman Anggota" }
       },
-      // {
-      //   path: "families/:id",
-      //   name: "Families",
-      //   component: () => import("./components/pages/families"),
-      //   meta: { title: "Halaman Keluarga" }
-      // },
+      {
+        path: "families/:id",
+        name: "Families",
+        component: () => import("../pages/families/FamilyIndex.vue"),
+        meta: { title: "Halaman Keluarga" }
+      }
       // {
       //   path: "profile",
       //   name: "Profile",
@@ -72,15 +72,15 @@ const routes = [
       //   component: () => import("./components/pages/about"),
       //   meta: { title: "Tentang Kami" }
       // }
-    ],
+    ]
   },
 
   // Always leave this as last one,
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
-    component: () => import("src/pages/error/ErrorNotFound.vue"),
-  },
+    component: () => import("src/pages/error/ErrorNotFound.vue")
+  }
 ];
 
 export default routes;
