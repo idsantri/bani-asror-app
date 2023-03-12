@@ -76,13 +76,15 @@
     </q-footer>
   </q-layout>
 
+
+  <!-- modal cari member -->
   <q-dialog v-model="modalCari" full-width>
     <q-card>
       <q-card-section class="bg-green-8 text-green-1 q-pa-sm">
         <div class="text-h6 text-weight-light">Cari Anggota</div>
       </q-card-section>
       <q-card-section style="max-height: 75vh" class="scroll">
-        <search-member />
+        <data-tabele-member />
       </q-card-section>
 
       <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
@@ -98,7 +100,7 @@
 import { ref, watchEffect } from "vue";
 import AsideContent from "src/components/AsideContent.vue";
 import memberState from '../../src/stores/member-store'
-import SearchMember from "src/pages/search/SearchMember.vue";
+import DataTabeleMember from '../components/DataTablesMember.vue'
 // import { useRoute } from 'vue-router'
 
 const pageTitle = ref("Data")

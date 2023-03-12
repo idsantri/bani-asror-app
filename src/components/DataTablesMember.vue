@@ -24,10 +24,10 @@
 import DataTable from "datatables.net-vue3";
 import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-import memberState from '../../stores/member-store'
+import memberState from '../stores/member-store'
 import { useRouter } from 'vue-router';
-import { api } from '../../boot/axios';
-import { toArray } from '../../utils/array';
+import { api } from '../boot/axios';
+import { toArray } from '../utils/array';
 const router = useRouter()
 
 //pinia state
