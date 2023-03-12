@@ -43,8 +43,9 @@
 <script setup>
 import { ref } from "vue";
 import FamilyProfile from "./FamilyProfile.vue";
-const emit = defineEmits(["pageTitle", 'pageSubTitle']);
-emit("pageTitle", "Data Keluarga");
+const emit = defineEmits(["pageTitle", "pageSubTitle"]);
+emit("pageTitle", "Data Anggota");
+emit("pageSubTitle", null);
 
 const tab = ref("profile");
 </script>

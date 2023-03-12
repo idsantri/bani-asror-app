@@ -1,7 +1,7 @@
 <template>
   <q-card-section class="bg-green-7">
 
-    <!-- PARENT -->
+    <!-- SUAMI -->
     <div class="">
       <q-banner class="q-pa-sm bg-green-2 text-dark">
         <template #avatar>
@@ -42,6 +42,7 @@
       </q-banner>
     </div>
 
+    <!-- ISTRI -->
     <div class="q-mt-md">
       <q-banner class="q-pa-sm bg-green-2 text-dark">
         <template #avatar>
