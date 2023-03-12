@@ -53,15 +53,20 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import MemberProfile from "./MemberProfile.vue";
 import MemberFamilies from "./MemberFamilies.vue";
 import MemberChildren from "./MemberChildren.vue";
-
-const emit = defineEmits(["pageTitle", 'pageSubTitle']);
-emit("pageTitle", "Data Anggota");
-
+import memberState from '../../stores/member-store'
 const tab = ref("profile");
+const pageSubTitle = ref(null)
+watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
+
+const emit = defineEmits(["pageTitle", "pageSubTitle"]);
+emit("pageTitle", "Data Anggota");
+emit("pageSubTitle", pageSubTitle);
+
+
 </script>
 <style scoped>
 .spinner {

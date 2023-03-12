@@ -61,13 +61,13 @@
         <div class="q-gutter-y-sm">
           <q-banner class="bg-green-9 text-green-1" inline-actions>
             <h2 class="text-h6 no-margin text-weight-light">{{ pageTitle }}</h2>
-            <p class="no-margin text-weight-light">{{ pageSubTitle }}</p>
+            <p class="no-margin text-weight-light" v-if="pageSubTitle">{{ pageSubTitle.value }}</p>
             <!-- tombol cari -->
             <template v-slot:action>
               <q-btn flat color="white" icon="search" @click="modalCari = true" />
             </template>
           </q-banner>
-          <router-view :key="$route.fullPath" @page-title="handlePageTitle" />
+          <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle" />
         </div>
       </div>
     </q-page-container>
@@ -97,23 +97,23 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
+import { ref, } from "vue";
 import AsideContent from "src/components/AsideContent.vue";
-import memberState from '../../src/stores/member-store'
 import MemberDataTable from '../components/MemberDataTables.vue'
 // import { useRoute } from 'vue-router'
 
 const pageTitle = ref("Data")
-const pageSubTitle = ref('Nama')
+const pageSubTitle = ref('')
 const leftDrawerOpen = ref(false);
 const componentKey = ref(0);
 const modalCari = ref(false)
 
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value
+const handlePageSubTitle = (value) => pageSubTitle.value = value
 const forceRerender = () => componentKey.value++;
 
-watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
+// watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
 // console.log(useRoute().meta);
 // if(useRoute().n)
 </script>
