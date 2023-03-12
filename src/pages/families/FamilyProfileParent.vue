@@ -1,29 +1,52 @@
 <template>
-  <q-card-section class="bg-green-7">
-    <q-banner class="q-pa-sm bg-green-2 text-dark">
-      <template #avatar>
-        <q-avatar icon="main" color="green-10" text-color="green-2" rounded font-size=".7em"></q-avatar>
-      </template>
-      <div>
-        <h3 class="text-h6 no-margin">abdm</h3>
-        <!-- <p class="no-margin text-body2 text-weight-light text-italic" v-if="alias">({{
-          alias
-        }})</p> -->
-        <!-- <p class="no-margin text-h7" v-if="nama_arab">{{ member.nama_arab }}</p>
-        <p class="no-margin" v-if="alamat">{{ alamat }}</p> -->
-      </div>
-    </q-banner>
-  </q-card-section>
+  <q-banner class="q-pa-sm bg-green-2 text-dark">
+    <template #avatar>
+      <q-avatar rounded :icon="memberSex == 'L' ? 'man' : 'woman'" color="green-10" text-color="green-3"
+        font-size=".6em"></q-avatar>
+    </template>
+    <q-list>
+      <q-item class="no-padding">
+        <q-item-section>
+          <q-list>
+            <q-item clickable v-ripple class="no-padding" dense :to="urlMember">
+              <q-item-section>
+                <q-item-label caption>{{ memberSex == 'L' ? 'Suami' : 'Istri' }}</q-item-label>
+                <q-item-label class="text-h5 no-margin">{{ nama ? nama : '?' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-item-section>
+
+        <q-item-section avatar>
+          <q-fab v-model="fab" icon="keyboard_arrow_left" direction="left" padding="sm" color="green-9">
+            <q-fab-action padding="5px" external-label label-position="bottom" color="orange" icon="edit" label="Edit" />
+            <q-fab-action padding="5px" external-label label-position="bottom" color="negative" icon="delete"
+              label="Hapus" />
+          </q-fab>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </q-banner>
+
+  <!-- ORTU  -->
+  <q-banner class="q-pa-sm bg-green-3 text-dark">
+    <parent-component :parent="parent" />
+  </q-banner>
 </template>
 
 <script setup>
-import { reactive, toRefs } from 'vue'
+
+
+import { reactive, toRefs, ref } from 'vue'
 import api from '../../utils/api-tokened'
 import memberState from '../../stores/member-store';
 import { toArray } from '../../utils/array';
+import ParentComponent from 'src/components/ParentComponent.vue';
 
+const fab = ref(false)
+const urlMember = ref(null)
 const member = reactive({})
-// eslint-disable-next-line no-undef
+const parent = reactive({});
 const props = defineProps({
   memberId: { type: Number, default: null },
   familyId: { type: Number, default: null },
@@ -34,6 +57,8 @@ if (props.memberId || props.memberId === 0) {
     const response = await api.get(`members/${props.memberId}`)
     // console.log(response.data.data.member);
     Object.assign(member, response.data.data.member)
+    Object.assign(parent, response.data.data.member);
+    if (member.id) urlMember.value = '/members/' + member.id
   } catch (error) {
     console.log("Not Found: member -> detail", error.response);
   }
@@ -83,12 +108,8 @@ const deletePasangan = async () => {
 </script>
 
 <style scoped>
-h4 {
-  font-weight: 300;
-  font-size: larger;
-}
-
-#nama {
-  font-weight: 500;
+.parent-label {
+  display: inline-block;
+  width: 50px;
 }
 </style>

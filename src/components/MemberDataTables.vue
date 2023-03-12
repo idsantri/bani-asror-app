@@ -1,7 +1,7 @@
 <template>
   <Suspense>
     <template #default>
-      <data-table class="display table" :options="options" id="member-table">
+      <data-table class="display table" :options="options" id="member-data-table">
         <thead>
           <tr>
             <th style="text-align: center;">!</th>
@@ -73,7 +73,7 @@ const options = ref({
     {
       targets: 1,
       render: function (data, type, row) {
-        const result = `<span class="nama" onClick='goToMember(${row[0]})'>${row[1]}</span>`
+        const result = `<span class="nama-link" onClick='goToMember(${row[0]})'>${row[1]}</span>`
         return result
       },
     },
@@ -143,52 +143,4 @@ const addNew = () => {
 </script>
 <style lang="scss">
 @import "datatables.net-dt";
-
-.nama {
-  color: rgb(17, 77, 17);
-  cursor: pointer;
-}
-
-
-@media screen and (max-width: 480px) {
-  table>tbody>tr:nth-child(odd)>td {
-    padding: 4px;
-  }
-
-  table>tbody>tr:nth-child(even)>td {
-    padding: 4px;
-  }
-}
-
-.btn {
-  border-radius: 10px;
-  border-style: none;
-  border-color: transparent;
-  outline: 0;
-  padding: 5px;
-  margin: 5px;
-  display: inline-block;
-  width: 30px;
-  cursor: pointer;
-}
-
-.btn-copy {
-  background-color: teal;
-
-  &::before {
-    content: '\e14d';
-    font-family: 'Material Icons';
-    color: lightgreen;
-  }
-}
-
-.btn-add {
-  background-color: indigo;
-
-  &::before {
-    content: '\e7fe';
-    font-family: 'Material Icons';
-    color: lightgreen;
-  }
-}
 </style>

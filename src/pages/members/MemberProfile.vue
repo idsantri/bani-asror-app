@@ -16,34 +16,9 @@
     </q-banner>
 
     <!-- PARENT -->
-    <q-banner class="q-pa-sm bg-green-3 text-dark q-mt-md">
-      <template #avatar>
-        <q-avatar rounded icon="diversity_3" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
-      </template>
-      <q-list>
-        <q-item class="no-padding">
-          <q-item-section>
-            <q-list>
-              <q-item clickable v-ripple :to="ayah_id" class="no-padding" dense>
-                <q-item-label><span class="parent-label">Ayah:</span>{{ ayah }}</q-item-label>
-              </q-item>
-              <q-item clickable v-ripple :to="ibu_id" class="no-padding" dense>
-                <q-item-label><span class="parent-label">Ibu:</span>{{ ibu }}</q-item-label>
-              </q-item>
-            </q-list>
-          </q-item-section>
-          <q-item-section v-if="keluarga_id > 0" avatar>
-            <q-btn :to="/families/ + keluarga_id" flat>
-              <q-icon name="play_circle_filled" size="3.5em" color="green-10" />
-            </q-btn>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-banner>
-    <q-banner class="q-pa-sm bg-green-3 text-dark q-mt-md">
-
+    <div class="q-pa-sm bg-green-3 text-dark q-mt-md">
       <parent-component :parent="parent" />
-    </q-banner>
+    </div>
     <!-- OTHERS -->
     <q-banner class="q-pa-sm bg-green-4 text-dark q-mt-md">
       <div>

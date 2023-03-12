@@ -2,98 +2,26 @@
   <q-card-section class="bg-green-7">
 
     <!-- SUAMI -->
-    <div class="">
-      <q-banner class="q-pa-sm bg-green-2 text-dark">
-        <template #avatar>
-          <q-avatar rounded icon="man" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
-        </template>
-        <q-list>
-          <q-item class="no-padding" clickable v-ripple>
-            <q-item-section>
-              <q-item-label caption>Suami</q-item-label>
-              <q-item-label class="text-h5">Fulan bin Fulan</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-banner>
-      <q-banner class="q-pa-sm bg-green-3 text-dark">
-        <template #avatar>
-          <q-avatar rounded icon="diversity_3" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
-        </template>
-        <q-list>
-          <q-item class="no-padding">
-            <q-item-section>
-              <q-list>
-                <q-item clickable v-ripple class="no-padding" dense>
-                  <q-item-label><span class="parent-label">Ayah:</span>Fulan</q-item-label>
-                </q-item>
-                <q-item clickable v-ripple class="no-padding" dense>
-                  <q-item-label><span class="parent-label">Ibu:</span>Fulanah</q-item-label>
-                </q-item>
-              </q-list>
-            </q-item-section>
-            <q-item-section avatar>
-              <q-btn flat>
-                <q-icon name="play_circle_filled" size="3.5em" color="green-10" />
-              </q-btn>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-banner>
+    <div>
+      <family-profile-parent :member-id="parseInt(suami_id)" :family-id="parseInt(id)" member-sex="L" />
     </div>
 
     <!-- ISTRI -->
     <div class="q-mt-md">
-      <q-banner class="q-pa-sm bg-green-2 text-dark">
-        <template #avatar>
-          <q-avatar rounded icon="woman" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
-        </template>
-        <q-list>
-          <q-item class="no-padding" clickable v-ripple>
-            <q-item-section>
-              <q-item-label caption>istri</q-item-label>
-              <q-item-label class="text-h5">Fulanah bin Fulan</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-banner>
-      <q-banner class="q-pa-sm bg-green-3 text-dark">
-        <template #avatar>
-          <q-avatar rounded icon="diversity_3" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
-        </template>
-        <q-list>
-          <q-item class="no-padding">
-            <q-item-section>
-              <q-list>
-                <q-item clickable v-ripple class="no-padding" dense>
-                  <q-item-label><span class="parent-label">Ayah:</span>Fulan</q-item-label>
-                </q-item>
-                <q-item clickable v-ripple class="no-padding" dense>
-                  <q-item-label><span class="parent-label">Ibu:</span>Fulanah</q-item-label>
-                </q-item>
-              </q-list>
-            </q-item-section>
-            <q-item-section avatar>
-              <q-btn flat>
-                <q-icon name="play_circle_filled" size="3.5em" color="green-10" />
-              </q-btn>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-banner>
+      <family-profile-parent :member-id="parseInt(istri_id)" :family-id="parseInt(id)" member-sex="P" />
     </div>
 
-
+    <!-- alamat -->
     <q-banner class="q-pa-sm bg-green-4 text-dark q-mt-md">
       <template #avatar>
         <q-avatar rounded icon="info" color="green-10" text-color="green-3" font-size=".85em"></q-avatar>
       </template>
-      <p class="no-margin q-pb-xs"><span class="text-weight-light">Alamat: </span></p>
+      <p class="no-margin q-pb-xs"><span class="text-weight-light">Alamat: </span>{{ alamat }}</p>
     </q-banner>
 
 
-    <q-btn class="glossy btn-float" round color="green-10" icon="edit" @click="showModal = true">
-      <q-tooltip class="bg-white text-dark">Edit data</q-tooltip>
+    <q-btn class="glossy btn-float" round color="negative" icon="delete" @click="showModal = true">
+      <q-tooltip class="bg-white text-dark">Hapus keluarga ini</q-tooltip>
     </q-btn>
   </q-card-section>
 </template>
@@ -107,6 +35,7 @@ import FamilyProfileParent from './FamilyProfileParent.vue';
 const family = reactive({})
 const route = useRoute()
 const familyId = route.params.id
+
 
 try {
   const response = await api.get(`families/${familyId}`)
@@ -152,15 +81,11 @@ const deleteFamily = async () => {
 }
 
 </script>
-<style scoped>
+
+<style lang="scss" scoped>
 .btn-float {
   position: absolute;
   bottom: 10px;
   right: 10px;
-}
-
-.parent-label {
-  display: inline-block;
-  width: 50px;
 }
 </style>

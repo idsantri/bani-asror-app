@@ -22,8 +22,6 @@
         </suspense>
       </q-tab-panel>
 
-
-
       <q-tab-panel name="child" class="no-padding no-margin">
         <suspense>
           <template #default>
@@ -44,7 +42,7 @@
 import { ref } from "vue";
 import FamilyProfile from "./FamilyProfile.vue";
 const emit = defineEmits(["pageTitle", "pageSubTitle"]);
-emit("pageTitle", "Data Anggota");
+emit("pageTitle", "Data Keluarga");
 emit("pageSubTitle", null);
 
 const tab = ref("profile");

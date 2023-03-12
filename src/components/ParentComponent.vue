@@ -6,27 +6,28 @@
     <q-list>
       <q-item class="no-padding">
         <q-item-section>
+
           <q-list>
-            <q-item clickable v-ripple :to="ayah_id" class="no-padding" dense>
-              <q-item-label><span class="parent-label">Ayah:</span>{{ ayah }}</q-item-label>
+            <q-item clickable v-ripple :to="urlAyah" class="no-padding" dense>
+              <q-item-label><span class="parent-label">Ayah:</span>{{ ayah ? ayah : '-' }}</q-item-label>
             </q-item>
-            <q-item clickable v-ripple :to="ibu_id" class="no-padding" dense>
-              <q-item-label><span class="parent-label">Ibu:</span>{{ ibu }}</q-item-label>
+            <q-item clickable v-ripple :to="urlIbu" class="no-padding" dense>
+              <q-item-label><span class="parent-label">Ibu:</span>{{ ibu ? ibu : '-' }}</q-item-label>
             </q-item>
           </q-list>
         </q-item-section>
+
         <q-item-section v-if="keluarga_id > 0" avatar>
-          <q-btn :to="/families/ + keluarga_id" flat>
-            <q-icon name="play_circle_filled" size="3.5em" color="green-10" />
+          <q-btn :to="/families/ + keluarga_id" color="green-2" round>
+            <q-icon name="play_circle_filled" color="green-9" size="3em" />
           </q-btn>
         </q-item-section>
       </q-item>
     </q-list>
-    -----------DARI LUAR -------------
   </q-banner>
 </template>
 <script setup>
-import { reactive, toRefs } from 'vue'
+import { reactive, toRefs, ref } from 'vue'
 const props = defineProps({
   parent: { type: Object },
 })
@@ -41,6 +42,11 @@ const parent = reactive({
 
 Object.assign(parent, props.parent)
 const { keluarga_id, ayah_id, ibu_id, ayah, ibu } = toRefs(parent)
+
+const urlAyah = ref(null)
+const urlIbu = ref(null)
+if (ayah_id.value) urlAyah.value = '/members/' + ayah_id.value
+if (ibu_id.value) urlIbu.value = '/members/' + ibu_id.value
 
 </script>
 <style scoped>
