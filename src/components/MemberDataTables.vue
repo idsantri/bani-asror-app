@@ -26,8 +26,9 @@ import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import memberState from '../stores/member-store'
 import { useRouter } from 'vue-router';
-import { api } from '../boot/axios';
+import api from '../utils/api-tokened'
 import { toArray } from '../utils/array';
+import { notifySuccess } from "src/utils/notify";
 const router = useRouter()
 
 //pinia state
@@ -44,7 +45,7 @@ let isSearch = ref(true)
 watch([refHusband, refWife, refChild], ([newHusband, newWife, newChild]) => isSearch.value = !newHusband && !newWife && !newChild)
 
 const url = `${api.defaults.baseURL}/members/search`
-const headers = { Authorization: 'Bearer ' + localStorage.getItem('token') }
+const headers = { Authorization: api.defaults.headers.common.Authorization }
 
 DataTable.use(DataTablesLib);
 const options = ref({
@@ -64,8 +65,8 @@ const options = ref({
       className: 'dt-body-center',
       render: function (data, type, row) {
         const name = row[1].replace(/['"]+/g, '')
-        let button = `<button type='button' class='btn btn-outline-success btn-sm m-1' onclick='copyMemberId(${row[0]})'><i class='fa-regular fa-copy'></i></button>`
-        button += `<button type='button' class='btn btn-outline-primary btn-sm m-1' onclick='addMemberTo(${row[0]},"${name}")'><i class="fa-solid fa-circle-check"></i></button>`
+        let button = `<button type='button' class='btn btn-copy' onclick='copyMemberId(${row[0]})'></button>`
+        button += `<button type='button' class='btn btn-add' onclick='addMemberTo(${row[0]},"${name}")'></button>`
         return button
       },
     },
@@ -119,7 +120,7 @@ onMounted(() => {
 
   document.copyMemberId = (id) => {
     navigator.clipboard.writeText(id);
-    alert(`ID Member (${id}) sudah disalin/dicopy ke clipboard`);
+    notifySuccess(`ID Member (${id}) sudah disalin/dicopy ke clipboard`)
   };
 
   document.goToMember = (id) => {
@@ -140,7 +141,7 @@ const addNew = () => {
   document.getElementById('add-new-member').click()
 }
 </script>
-<style>
+<style lang="scss">
 @import "datatables.net-dt";
 
 .nama {
@@ -160,12 +161,34 @@ const addNew = () => {
 }
 
 .btn {
-  border-radius: 5px;
-  border-style: solid;
-  border: yellow;
-  color: brown;
-  background-color: rgb(146, 146, 110);
+  border-radius: 10px;
+  border-style: none;
+  border-color: transparent;
+  outline: 0;
   padding: 5px;
-  margin: 2px;
+  margin: 5px;
+  display: inline-block;
+  width: 30px;
+  cursor: pointer;
+}
+
+.btn-copy {
+  background-color: teal;
+
+  &::before {
+    content: '\e14d';
+    font-family: 'Material Icons';
+    color: lightgreen;
+  }
+}
+
+.btn-add {
+  background-color: indigo;
+
+  &::before {
+    content: '\e7fe';
+    font-family: 'Material Icons';
+    color: lightgreen;
+  }
 }
 </style>

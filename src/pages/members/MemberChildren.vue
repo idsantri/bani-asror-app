@@ -26,7 +26,7 @@
   </q-card-section>
 </template>
 <script setup>
-import { api } from '../../boot/axios';
+import api from '../../utils/api-tokened';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 

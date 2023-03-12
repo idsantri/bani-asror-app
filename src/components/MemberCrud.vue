@@ -48,7 +48,7 @@
 <script setup>
 import memberState from '../stores/member-store';
 import { toRefs, reactive, ref, computed } from 'vue';
-import { api } from '../boot/axios';
+import api from '../utils/api-tokened';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../utils/array';
 import { useQuasar } from 'quasar'

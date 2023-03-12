@@ -84,7 +84,7 @@
         <div class="text-h6 text-weight-light">Cari Anggota</div>
       </q-card-section>
       <q-card-section style="max-height: 75vh" class="scroll">
-        <data-tabele-member />
+        <member-data-table />
       </q-card-section>
 
       <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
@@ -100,7 +100,7 @@
 import { ref, watchEffect } from "vue";
 import AsideContent from "src/components/AsideContent.vue";
 import memberState from '../../src/stores/member-store'
-import DataTabeleMember from '../components/DataTablesMember.vue'
+import MemberDataTable from '../components/MemberDataTables.vue'
 // import { useRoute } from 'vue-router'
 
 const pageTitle = ref("Data")

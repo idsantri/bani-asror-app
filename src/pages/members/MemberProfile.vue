@@ -69,10 +69,10 @@
 </template>
 
 <script setup>
-import { api } from "../../boot/axios";
+import apiTokened from "../../utils/api-tokened";
 import { toRefs, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
-import MemberModalEdit from "../../components/MemberModal.vue";
+import MemberModalEdit from "../../components/MemberCrud.vue";
 import ParentComponent from "src/components/ParentComponent.vue";
 import memberState from '../../stores/member-store'
 
@@ -88,7 +88,7 @@ const handleNewMember = (newMember) => {
 };
 
 try {
-  const response = await api.get(`members/${memberId}`);
+  const response = await apiTokened.get(`members/${memberId}`);
   Object.assign(member, response.data.data.member);
   Object.assign(parent, response.data.data.member);
   memberState().member = member;

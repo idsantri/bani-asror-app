@@ -9,8 +9,6 @@ import axios from "axios";
 // for each client)
 const api = axios.create({ baseURL: "https://api.baniasror.net" });
 api.defaults.withCredentials = true;
-api.defaults.headers.common["Authorization"] =
-  "Bearer " + localStorage.getItem("token");
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

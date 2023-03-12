@@ -85,7 +85,7 @@
     </q-item>
 
     <q-separator />
-    <q-item clickable v-ripple to="/members/7">
+    <q-item clickable v-ripple to="">
       <q-item-section avatar>
         <q-avatar color="green-3" text-color="green-10">
           <q-icon name="manage_accounts" size="sm" />
@@ -96,7 +96,8 @@
         <q-item-label caption>Pengaturan Pengguna</q-item-label>
       </q-item-section>
     </q-item>
-    <q-item clickable v-ripple to="/members/7">
+
+    <q-item clickable v-ripple to="" @click="idsantri">
       <q-item-section avatar>
         <q-avatar color="green-3" text-color="green-10">
           <q-icon name="contact_mail" size="sm" />
@@ -107,7 +108,11 @@
         <q-item-label caption>Hubungi Kami</q-item-label>
       </q-item-section>
     </q-item>
+
   </q-list>
 </template>
+<script setup>
+const idsantri = () => window.location.replace("https://fb.me/idsantri.page");
 
+</script>
 <style lang="scss" scoped></style>
