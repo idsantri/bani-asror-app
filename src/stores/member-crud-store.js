@@ -7,6 +7,7 @@ export default defineStore("memberCRUD", {
       isHusband: false,
       isWife: false,
       isChild: false,
+      isNew: false,
       member: {}
     };
   },
@@ -16,6 +17,7 @@ export default defineStore("memberCRUD", {
     getIsHusband: (state) => state.isHusband,
     getIsWife: (state) => state.isWife,
     getIsChild: (state) => state.isChild,
+    getIsNew: (state) => state.isChild || state.isHusband || state.isWife,
     getMember: (state) => state.member
   },
   persist: true

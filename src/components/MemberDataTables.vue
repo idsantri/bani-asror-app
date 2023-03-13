@@ -93,7 +93,8 @@ const options = ref({
 })
 
 onMounted(() => {
-
+  // console.log(isChild.value);
+  // if (memberState().getIsNew) document.getElementById('btn-add-new-member').style.display = 'block'
   document.addMemberTo = async (memberId, memberName) => {
     // console.group(isHusband.value, isWife.value, isChild.value)
     const isConfirmed = confirm(`Tambahkan ${memberName}`)

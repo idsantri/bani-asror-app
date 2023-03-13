@@ -88,7 +88,7 @@
       </q-card-section>
 
       <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
-        <q-btn label="Baru" color="secondary" v-close-popup />
+        <q-btn label="Baru" color="secondary" v-close-popup id="btn-add-new-member" style="display: none;" />
         <q-space />
         <q-btn label="Tutup" color="green-10" v-close-popup />
       </q-card-actions>
@@ -112,7 +112,6 @@ const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value
 const handlePageSubTitle = (value) => pageSubTitle.value = value
 const forceRerender = () => componentKey.value++;
-
 // watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
 // console.log(useRoute().meta);
 // if(useRoute().n)
