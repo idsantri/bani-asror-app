@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-export default defineStore("member", {
+export default defineStore("memberCRUD", {
   state: () => {
     return {
       title: "Anggota",
@@ -17,5 +17,6 @@ export default defineStore("member", {
     getIsWife: (state) => state.isWife,
     getIsChild: (state) => state.isChild,
     getMember: (state) => state.member
-  }
+  },
+  persist: true
 });

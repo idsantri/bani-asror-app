@@ -46,13 +46,14 @@
   </q-card>
 </template>
 <script setup>
-import memberState from '../stores/member-store';
+import memberState from '../stores/member-crud-store';
 import { toRefs, reactive, ref, computed } from 'vue';
 import api from '../utils/api-tokened';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../utils/array';
 import { useQuasar } from 'quasar'
 import { notifySuccess } from '../utils/notify'
+import { forceRerender } from '../utils/buttons-click';
 
 const $q = useQuasar()
 const route = useRoute()
@@ -100,7 +101,7 @@ const saveMember = async () => {
       const response = await api.post(url, data)
       closeModal()
       notifySuccess(response.data.message)
-      document.getElementById('btn-force-rerender').click()
+      forceRerender()
     } catch (error) {
       errors.value = toArray(error.response.data.message)
     }
@@ -117,10 +118,6 @@ const saveMember = async () => {
   }
 }
 
-function closeModal() {
-  document.getElementById('btn-close-modal').click()
-}
-
 const deleteMember = async (id) => {
   const isConfirmed = confirm("Hapus anggota? \nAksi ini tidak dapat dibatalkan.\nData keluarga yang terhubung dengan ID ini juga akan terpengaruh.")
   if (isConfirmed) {
@@ -135,6 +132,9 @@ const deleteMember = async (id) => {
   }
 }
 
+function closeModal() {
+  document.getElementById("btn-close-modal").click();
+};
 </script>
 
 <style scoped></style>

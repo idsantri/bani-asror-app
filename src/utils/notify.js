@@ -8,4 +8,10 @@ const notifySuccess = (message) => {
     message: message
   });
 };
-export { notifySuccess };
+const notifyError = (message) => {
+  Notify.create({
+    type: "negative",
+    message: message
+  });
+};
+export { notifySuccess, notifyError };

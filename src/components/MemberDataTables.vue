@@ -24,11 +24,12 @@
 import DataTable from "datatables.net-vue3";
 import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-import memberState from '../stores/member-store'
+import memberState from '../stores/member-crud-store'
 import { useRouter } from 'vue-router';
 import api from '../utils/api-tokened'
 import { toArray } from '../utils/array';
 import { notifySuccess } from "src/utils/notify";
+import { forceRerender } from '../utils/buttons-click'
 const router = useRouter()
 
 //pinia state
@@ -109,7 +110,7 @@ onMounted(() => {
       document.getElementById('close-modal-search').click()
       alert(response.data.message)
 
-      document.getElementById('btn-force-rerender').click()
+      forceRerender()
 
     } catch (error) {
       toArray(error.response.data.message).forEach((errorMessage) => {

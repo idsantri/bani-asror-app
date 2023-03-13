@@ -20,7 +20,7 @@
     </q-banner>
 
 
-    <q-btn class="glossy btn-float" round color="negative" icon="delete" @click="showModal = true">
+    <q-btn class="glossy btn-float" round color="negative" icon="delete" @click="deleteFamily">
       <q-tooltip class="bg-white text-dark">Hapus keluarga ini</q-tooltip>
     </q-btn>
   </q-card-section>
@@ -31,7 +31,8 @@ import { toArray } from '../../utils/array';
 import api from '../../utils/api-tokened';
 import { toRefs, reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import FamilyProfileParent from './FamilyProfileParent.vue';
+import { notifySuccess, notifyError } from 'src/utils/notify';
+import FamilyProfileParent from './FamilyProfileSplit.vue';
 const family = reactive({})
 const route = useRoute()
 const familyId = route.params.id
@@ -55,10 +56,10 @@ const submitAlamat = async () => {
       alamat: alamat.value,
     })
     // console.log(response.data);
-    alert(response.data.message)
+    notifySuccess(response.data.message)
   } catch (error) {
     toArray(error.response.data.message).forEach((errorMessage) => {
-      alert(errorMessage)
+      notifyError(errorMessage)
     })
   }
 }
@@ -68,13 +69,13 @@ const deleteFamily = async () => {
   if (!isConfirmed) return
   try {
     const response = await api.delete(`families/${familyId}`)
-    console.log('hapus family', response.data);
-    alert(response.data.message)
+    // console.log('hapus family', response.data);
+    notifySuccess(response.data.message)
     history.back();
   } catch (error) {
     // console.log("error create family:", error.response);
     toArray(error.response.data.message).forEach((errorMessage) => {
-      alert(errorMessage)
+      notifyError(errorMessage)
     })
   }
 }

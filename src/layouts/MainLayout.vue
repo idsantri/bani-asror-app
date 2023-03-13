@@ -64,7 +64,7 @@
             <p class="no-margin text-weight-light" v-if="pageSubTitle">{{ pageSubTitle.value }}</p>
             <!-- tombol cari -->
             <template v-slot:action>
-              <q-btn flat color="white" icon="search" @click="modalCari = true" />
+              <q-btn flat color="white" icon="search" @click="modalCari = true" id="btn-show-modal-search" />
             </template>
           </q-banner>
           <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle" />

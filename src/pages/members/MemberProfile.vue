@@ -34,12 +34,12 @@
       </template>
     </q-banner>
 
-    <q-btn class="glossy btn-float" round color="green-10" icon="edit" @click="showModal = true">
+    <q-btn class="glossy btn-float" round color="green-10" icon="edit" @click="showModalCrud = true">
       <q-tooltip class="bg-white text-dark">Edit data</q-tooltip>
     </q-btn>
   </q-card-section>
 
-  <q-dialog v-model="showModal" persistent>
+  <q-dialog v-model="showModalCrud" persistent>
     <member-modal-edit :member="member" modal-title="Edit Anggota" :is-new="false" @new-member="handleNewMember" />
   </q-dialog>
 </template>
@@ -50,14 +50,14 @@ import { toRefs, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import MemberModalEdit from "../../components/MemberCrud.vue";
 import ParentComponent from "src/components/ParentComponent.vue";
-import memberState from '../../stores/member-store'
+import memberState from '../../stores/member-crud-store'
 
 const member = reactive({});
 const parent = reactive({});
 const route = useRoute();
 const memberId = route.params.id;
 const sexIcon = ref('')
-const showModal = ref(false);
+const showModalCrud = ref(false);
 // emit data dari modal ketika sukses
 const handleNewMember = (newMember) => {
   Object.assign(member, newMember);

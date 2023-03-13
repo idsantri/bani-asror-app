@@ -42,7 +42,7 @@
       </q-list>
     </q-banner>
 
-    <q-btn class="glossy btn-float" round color="secondary" icon="add" @click="showModal = true">
+    <q-btn class="glossy btn-float" round color="secondary" icon="add" @click="addChild">
       <q-tooltip class="bg-white text-dark">Tambahkan anak</q-tooltip>
     </q-btn>
 
@@ -53,8 +53,11 @@
 import api from '../../utils/api-tokened';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import memberState from '../../stores/member-store';
+import memberState from '../../stores/member-crud-store';
 import { toArray } from '../../utils/array';
+import { notifyError, notifySuccess } from 'src/utils/notify';
+import { forceRerender } from 'src/utils/buttons-click';
+import { showModalSearch } from 'src/utils/buttons-click';
 
 const children = reactive([])
 const route = useRoute()
@@ -63,7 +66,7 @@ const familyId = route.params.id.toString()
 try {
   const response = await api.get(`families/${familyId}/children`)
   Object.assign(children, response.data.data.children)
-  console.log(response.data.data.children);
+  // console.log(response.data.data.children);
 } catch (error) {
   console.log("Not Found: family -> children", error.response)
 }
@@ -74,23 +77,30 @@ const deleteChild = async (id) => {
   try {
     const response = await api.delete(`children/${id}`)
     // console.log(response.data);
-    alert(response.data.message)
+    notifySuccess(response.data.message)
+    forceRerender()
 
-    document.getElementById('btn-force-rerender').click()
   } catch (error) {
     // console.log("error hapus pasangan:", error.response);
     toArray(error.response.data.message).forEach((errorMessage) => {
-      alert(errorMessage)
+      // alert(errorMessage)
+      notifyError(errorMessage)
     })
   }
 
 }
-const showModal = () => {
-  memberState().$reset()
-  memberState().familyId = familyId
-  memberState().title = `Anak`
-  memberState().isChild = true
-
+const addChild = () => {
+  showModalSearch(
+    {
+      familyId: familyId,
+      title: 'Anak',
+      isChild: true
+    }
+  )
+  // memberState().$reset()
+  // memberState().familyId = familyId
+  // memberState().title = `Anak`
+  // memberState().isChild = true
 }
 
 const urutChildren = async () => {

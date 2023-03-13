@@ -19,9 +19,10 @@
 
         <q-item-section avatar>
           <q-fab v-model="fab" icon="keyboard_arrow_left" direction="left" padding="sm" color="green-9">
-            <q-fab-action padding="5px" external-label label-position="bottom" color="orange" icon="edit" label="Edit" />
+            <q-fab-action padding="5px" external-label label-position="bottom" color="orange" icon="edit" label="Edit"
+              @click="editPasangan" />
             <q-fab-action padding="5px" external-label label-position="bottom" color="negative" icon="delete"
-              label="Hapus" />
+              label="Hapus" @click="deletePasangan" />
           </q-fab>
         </q-item-section>
       </q-item>
@@ -39,9 +40,11 @@
 
 import { reactive, toRefs, ref } from 'vue'
 import api from '../../utils/api-tokened'
-import memberState from '../../stores/member-store';
+import memberState from '../../stores/member-crud-store';
 import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
+import { notifySuccess, notifyError } from '../../utils/notify';
+import { showModalSearch, forceRerender } from 'src/utils/buttons-click';
 
 const fab = ref(false)
 const member = reactive({})
@@ -63,7 +66,8 @@ if (props.memberId || props.memberId === 0) {
 }
 const { id, nama, ayah, ayah_id, ibu, ibu_id, keluarga_id, avatar, lp } = toRefs(member)
 
-const showModal = () => {
+const editPasangan = () => {
+  showModalSearch()
   memberState().$reset()
   memberState().familyId = props.familyId
   if (props.memberSex.toLowerCase() == 'suami') {
@@ -77,6 +81,8 @@ const showModal = () => {
 }
 
 const deletePasangan = async () => {
+  if (!props.memberId) return
+
   let pasangan
   let data
   if (lp.value.toLowerCase() == 'l') {
@@ -89,17 +95,14 @@ const deletePasangan = async () => {
   }
   const isConfirmed = confirm(`Hapus ${pasangan}?`)
   if (!isConfirmed) return
-
   try {
     const response = await api.put(`families/${props.familyId}`, data)
     // console.log('hapus pasangan', response.data);
-    alert(response.data.message)
-
-    document.getElementById('btn-force-rerender').click()
-
+    notifySuccess(response.data.message)
+    forceRerender()
   } catch (error) {
     toArray(error.response.data.message).forEach((errorMessage) => {
-      alert(errorMessage)
+      notifyError(errorMessage)
     })
   }
 }
