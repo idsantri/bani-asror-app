@@ -8,7 +8,7 @@
       <q-item class="no-padding">
         <q-item-section>
           <q-list>
-            <q-item clickable v-ripple class="no-padding" dense :to="urlMember">
+            <q-item clickable v-ripple class="no-padding" dense :to="id ? '/members/' + id : null">
               <q-item-section>
                 <q-item-label caption>{{ memberSex == 'L' ? 'Suami' : 'Istri' }}</q-item-label>
                 <q-item-label class="text-h5 no-margin">{{ nama ? nama : '?' }}</q-item-label>
@@ -44,7 +44,6 @@ import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
 
 const fab = ref(false)
-const urlMember = ref(null)
 const member = reactive({})
 const parent = reactive({});
 const props = defineProps({
@@ -58,7 +57,6 @@ if (props.memberId || props.memberId === 0) {
     // console.log(response.data.data.member);
     Object.assign(member, response.data.data.member)
     Object.assign(parent, response.data.data.member);
-    if (member.id) urlMember.value = '/members/' + member.id
   } catch (error) {
     console.log("Not Found: member -> detail", error.response);
   }

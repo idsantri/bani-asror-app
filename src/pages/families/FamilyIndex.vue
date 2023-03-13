@@ -25,7 +25,7 @@
       <q-tab-panel name="child" class="no-padding no-margin">
         <suspense>
           <template #default>
-            halo anak
+            <family-children />
           </template>
           <template #fallback>
             <div class="spinner">
@@ -41,6 +41,8 @@
 <script setup>
 import { ref } from "vue";
 import FamilyProfile from "./FamilyProfile.vue";
+import FamilyChildren from "./FamilyChildren.vue";
+
 const emit = defineEmits(["pageTitle", "pageSubTitle"]);
 emit("pageTitle", "Data Keluarga");
 emit("pageSubTitle", null);

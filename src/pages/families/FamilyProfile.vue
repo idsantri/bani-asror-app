@@ -63,7 +63,6 @@ const submitAlamat = async () => {
   }
 }
 
-
 const deleteFamily = async () => {
   const isConfirmed = confirm('Hapus Keluaga? \nAksi ini tidak dapat dibatalkan.\nData anak yang terhubung dengan id ini juga akan terhapus')
   if (!isConfirmed) return

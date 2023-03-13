@@ -19,6 +19,7 @@
     <div class="q-pa-sm bg-green-3 text-dark q-mt-md">
       <parent-component :parent="parent" />
     </div>
+
     <!-- OTHERS -->
     <q-banner class="q-pa-sm bg-green-4 text-dark q-mt-md">
       <div>
@@ -73,21 +74,9 @@ try {
 } catch (error) {
   console.log("Not Found: member -> detail", error.response);
 }
-const {
-  alamat,
-  alias,
-  ayah,
-  ayah_id,
-  ibu,
-  ibu_id,
-  nama,
-  nama_arab,
-  tgl_wafat,
-  usia_wafat,
-  catatan,
-  lp,
-  keluarga_id,
-} = toRefs(member);
+
+const { alamat, alias, ayah, ayah_id, ibu, ibu_id, nama, nama_arab, tgl_wafat, usia_wafat, catatan, lp, keluarga_id, } = toRefs(member);
+
 </script>
 <style scoped>
 .btn-float {
