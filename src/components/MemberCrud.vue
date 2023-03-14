@@ -112,6 +112,7 @@ const saveMember = async () => {
       const response = await api.put(`members/${memberId}`, data)
       closeModal()
       notifySuccess(response.data.message)
+      forceRerender()
       emit('newMember', response.data.data.member)
     } catch (error) {
       errors.value = toArray(error.response.data.message)

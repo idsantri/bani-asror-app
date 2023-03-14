@@ -5,7 +5,6 @@ const forceRerender = () => {
 
 const crud = (param = {}) => {
   // memberCrudState().$reset();
-  memberCrudState().title = param.title || "";
   memberCrudState().familyId = param.familyId || null;
   memberCrudState().isHusband = param.isHusband || false;
   memberCrudState().isWife = param.isWife || false;

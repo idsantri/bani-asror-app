@@ -71,11 +71,11 @@ const editPasangan = () => {
   memberCrudState().$reset()
   memberCrudState().familyId = props.familyId
   if (props.memberSex.toLowerCase() == 'suami') {
-    memberCrudState().title = `Suami`
+    memberCrudState().searchTitle = `Suami`
     memberCrudState().isHusband = true
   }
   if (props.memberSex.toLowerCase() == 'istri') {
-    memberCrudState().title = `Istri`
+    memberCrudState().searchTitle = `Istri`
     memberCrudState().isWife = true
   }
 }

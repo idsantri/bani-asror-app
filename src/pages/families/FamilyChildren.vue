@@ -89,13 +89,10 @@ const deleteChild = async (id) => {
 
 }
 const addChild = () => {
-  showModalSearch(
-    {
-      familyId: familyId,
-      title: 'Anak',
-      isChild: true
-    }
-  )
+  showModalSearch({
+    familyId: familyId,
+    isChild: true
+  })
 }
 
 const urutChildren = async () => {

@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 export default defineStore("memberCRUD", {
   state: () => {
     return {
-      title: "",
       familyId: null,
       isHusband: false,
       isWife: false,
@@ -12,7 +11,6 @@ export default defineStore("memberCRUD", {
     };
   },
   getters: {
-    getTitle: (state) => state.title,
     getFamilyId: (state) => state.familyId,
     getIsHusband: (state) => state.isHusband,
     getIsWife: (state) => state.isWife,

@@ -70,38 +70,41 @@
         </div>
       </div>
     </q-page-container>
+
+    <!-- modal cari member -->
+    <q-dialog v-model="showSearch" full-width>
+      <q-card>
+        <q-card-section class="bg-green-8 text-green-1 q-pa-sm">
+          <div class="text-h6 text-weight-light">{{ searchTitle }}</div>
+        </q-card-section>
+        <q-card-section style="max-height: 75vh" class="scroll">
+          <member-data-table />
+        </q-card-section>
+
+        <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
+          <q-btn :style="styleButtonNew" label="Baru" color="secondary" @click="addNew" />
+          <q-space />
+          <q-btn label="Tutup" color="green-10" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <!-- modal crud member -->
+    <q-dialog v-model="showCrud" persistent>
+      <member-crud :member="member" modal-title="Edit Anggota" :is-new="false" @new-member="handleNewMember" />
+    </q-dialog>
+
+    <!-- hidden elements -->
+    <div style="display: none;">
+      <button @click="forceRerender" id="btn-force-rerender">rerender</button>
+      <button @click="showSearch = true" id="btn-show-modal-search">show search</button>
+      <button @click="showCrud = true" id="btn-show-modal-crud">show crud</button>
+    </div>
+
     <q-footer bordered class="bg-green-9 text-white">
       <p class="text-center no-margin q-pa-sm">by idsantri</p>
     </q-footer>
   </q-layout>
-
-
-  <!-- modal cari member -->
-  <q-dialog v-model="showSearch" full-width>
-    <q-card>
-      <q-card-section class="bg-green-8 text-green-1 q-pa-sm">
-        <div class="text-h6 text-weight-light">{{ modalTitle }}</div>
-      </q-card-section>
-      <q-card-section style="max-height: 75vh" class="scroll">
-        <member-data-table />
-      </q-card-section>
-
-      <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
-        <q-btn :style="styleButtonNew" label="Baru" color="secondary" id="btn-add-new-member" />
-        <q-space />
-        <q-btn label="Tutup" color="green-10" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
-
-  <q-dialog v-model="showCrud" persistent>
-    <member-crud :member="member" modal-title="Edit Anggota" :is-new="false" @new-member="handleNewMember" />
-  </q-dialog>
-
-  <!-- hidden elements -->
-  <button @click="forceRerender" id="btn-force-rerender" style="display: none;">rerender</button>
-  <button @click="showSearch = true" id="btn-show-modal-search" style="display: none;">button tampil pencarian</button>
-  <button @click="showCrud = true" id="btn-show-modal-crud" style="display: none;">button tampil input member</button>
 </template>
 
 <script setup>
@@ -118,9 +121,17 @@ const leftDrawerOpen = ref(false);
 const componentKey = ref(0);
 const showSearch = ref(false)
 const showCrud = ref(false)
-const modalTitle = ref('')
+const searchTitle = ref('')
 const styleButtonNew = ref({ display: 'none' })
-
+const addNew = () => {
+  showSearch.value = false
+  showModalCrud({
+    familyId: memberCrudState().getFamilyId,
+    isHusband: memberCrudState().getIsHusband,
+    isWife: memberCrudState().getIsWife,
+    isChild: memberCrudState().getIsChild,
+  })
+}
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value
 const handlePageSubTitle = (value) => pageSubTitle.value = value
@@ -129,15 +140,17 @@ const clickSearch = () => showModalSearch()
 
 watchEffect(() => {
   let title = 'Cari Anggota'
-  if (memberCrudState().getIsNew) {
-    modalTitle.value = title + ' (' + memberCrudState().getTitle + ')'
+  const { getIsNew, getIsHusband, getIsWife, getIsChild, } = memberCrudState()
+  if (getIsNew) {
     styleButtonNew.value = { display: 'inline-flex' }
+    if (getIsHusband) searchTitle.value = `${title} (Suami)`
+    if (getIsWife) searchTitle.value = `${title} (Istri)`
+    if (getIsChild) searchTitle.value = `${title} (Anak)`
   } else {
-    modalTitle.value = title
     styleButtonNew.value = { display: 'none' }
+    searchTitle.value = title
   }
 })
-
 
 </script>
 <style scoped >
