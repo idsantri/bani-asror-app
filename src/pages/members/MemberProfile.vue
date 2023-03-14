@@ -51,6 +51,7 @@ import { useRoute } from "vue-router";
 import MemberModalEdit from "../../components/MemberCrud.vue";
 import ParentComponent from "src/components/ParentComponent.vue";
 import memberState from '../../stores/member-store'
+import memberCrudState from '../../stores/member-crud-store'
 import { showModalCrud } from "src/utils/buttons-click";
 
 const member = reactive({});
@@ -58,7 +59,10 @@ const parent = reactive({});
 const route = useRoute();
 const memberId = route.params.id;
 const sexIcon = ref('')
-const editMember = () => showModalCrud({ member })
+const editMember = () => {
+  showModalCrud(true)
+  memberCrudState().member = member
+}
 
 
 // const showModalCrud = ref(false);

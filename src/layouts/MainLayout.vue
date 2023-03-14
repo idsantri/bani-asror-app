@@ -125,12 +125,7 @@ const searchTitle = ref('')
 const styleButtonNew = ref({ display: 'none' })
 const addNew = () => {
   showSearch.value = false
-  showModalCrud({
-    familyId: memberCrudState().getFamilyId,
-    isHusband: memberCrudState().getIsHusband,
-    isWife: memberCrudState().getIsWife,
-    isChild: memberCrudState().getIsChild,
-  })
+  showModalCrud(false)
 }
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value

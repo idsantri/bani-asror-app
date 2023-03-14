@@ -3,7 +3,7 @@ const forceRerender = () => {
   document.getElementById("btn-force-rerender").click();
 };
 
-const crud = (param = {}) => {
+const crudState = (param = {}) => {
   // memberCrudState().$reset();
   memberCrudState().familyId = param.familyId || null;
   memberCrudState().isHusband = param.isHusband || false;
@@ -11,13 +11,14 @@ const crud = (param = {}) => {
   memberCrudState().isChild = param.isChild || false;
   memberCrudState().member = param.member || {};
 };
+
 const showModalSearch = (param = {}) => {
-  crud(param);
+  crudState(param);
   document.getElementById("btn-show-modal-search").click();
 };
 
-const showModalCrud = (param = {}) => {
-  crud(param);
+const showModalCrud = (reset = true) => {
+  if (reset) crudState();
   document.getElementById("btn-show-modal-crud").click();
 };
 
