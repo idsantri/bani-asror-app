@@ -6,12 +6,11 @@
     <q-list>
       <q-item class="no-padding">
         <q-item-section>
-
           <q-list>
-            <q-item clickable v-ripple :to="urlAyah" class="no-padding" dense>
+            <q-item clickable v-ripple :to="ayah_id ? '/members/' + ayah_id : null" class="no-padding" dense>
               <q-item-label><span class="parent-label">Ayah:</span>{{ ayah ? ayah : '-' }}</q-item-label>
             </q-item>
-            <q-item clickable v-ripple :to="urlIbu" class="no-padding" dense>
+            <q-item clickable v-ripple :to="ibu_id ? '/members/' + ibu_id : null" class="no-padding" dense>
               <q-item-label><span class="parent-label">Ibu:</span>{{ ibu ? ibu : '-' }}</q-item-label>
             </q-item>
           </q-list>
@@ -27,7 +26,7 @@
   </q-banner>
 </template>
 <script setup>
-import { reactive, toRefs, ref } from 'vue'
+import { reactive, toRefs, } from 'vue'
 const props = defineProps({
   parent: { type: Object },
 })
@@ -42,11 +41,6 @@ const parent = reactive({
 
 Object.assign(parent, props.parent)
 const { keluarga_id, ayah_id, ibu_id, ayah, ibu } = toRefs(parent)
-
-const urlAyah = ref(null)
-const urlIbu = ref(null)
-if (ayah_id.value) urlAyah.value = '/members/' + ayah_id.value
-if (ibu_id.value) urlIbu.value = '/members/' + ibu_id.value
 
 </script>
 <style scoped>

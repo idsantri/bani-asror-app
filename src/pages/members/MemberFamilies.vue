@@ -5,15 +5,16 @@
         <q-list v-if="families.length > 0" separator>
           <q-item v-for="(family, index) in families" :key="index">
             <q-item-section>
-              <q-item-label>
-                <div v-if="family.pasangan_id">
-                  <q-btn :to="/members/ + family.pasangan_id" flat class="q-pl-none q-pb-none q-tab--no-caps">{{
-                    family.pasangan
-                  }}</q-btn>
-                </div>
-                <div v-else>?</div>
-              </q-item-label>
-              <q-item-label caption class="no-margin">Jumlah anak: {{ family.children_count }}</q-item-label>
+
+              <q-item clickable v-ripple class="no-padding" dense
+                :to="family.pasangan_id ? '/members/' + family.pasangan_id : null">
+                <q-item-section>
+                  <q-item-label class="text-h5 no-margin">
+                    {{ family.pasangan_id ? family.pasangan : '?' }}
+                  </q-item-label>
+                  <q-item-label caption>Jumlah anak: {{ family.children_count }}</q-item-label>
+                </q-item-section>
+              </q-item>
             </q-item-section>
             <q-item-section avatar>
               <q-btn :to="/families/ + family.family_id" color="green-8" icon="diversity_1" />
