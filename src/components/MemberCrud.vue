@@ -75,7 +75,8 @@ const isWife = computed(() => memberCrudState().getIsWife)
 const isChild = computed(() => memberCrudState().getIsChild)
 
 const copyMember = reactive({ alamat: '', alias: '', nama: '', nama_arab: '', tgl_wafat: '', usia_wafat: '', id: null, catatan: '', lp: null })
-Object.assign(copyMember, props.member)
+// Object.assign(copyMember, props.member)
+Object.assign(copyMember, memberCrudState().getMember)
 const { alamat, alias, nama, nama_arab, tgl_wafat, usia_wafat, id, catatan, lp } = toRefs(copyMember)
 
 const emit = defineEmits(['newMember'])

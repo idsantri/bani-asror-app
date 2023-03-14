@@ -1,7 +1,6 @@
 <template>
   <q-layout view="lHh LpR lFf">
     <q-header elevated class="bg-green-10 text-green-1">
-      <button @click="forceRerender" id="btn-force-rerender" style="display: none;">rerender</button>
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" color="green-4" />
         <q-avatar class="bg-green-1">
@@ -78,36 +77,49 @@
 
 
   <!-- modal cari member -->
-  <q-btn flat color="white" icon="search" @click="showModal = true" id="btn-show-modal-search" style="display: none;" />
-  <q-dialog v-model="showModal" full-width>
+  <q-dialog v-model="showSearch" full-width>
     <q-card>
       <q-card-section class="bg-green-8 text-green-1 q-pa-sm">
-        <div class="text-h6 text-weight-light">Cari Anggota</div>
+        <div class="text-h6 text-weight-light">{{ modalTitle }}</div>
       </q-card-section>
       <q-card-section style="max-height: 75vh" class="scroll">
         <member-data-table />
       </q-card-section>
 
       <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
-        <q-btn label="Baru" color="secondary" v-close-popup id="btn-add-new-member" style="display: none;" />
+        <q-btn :style="styleButtonNew" label="Baru" color="secondary" id="btn-add-new-member" />
         <q-space />
         <q-btn label="Tutup" color="green-10" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="showCrud" persistent>
+    <member-crud :member="member" modal-title="Edit Anggota" :is-new="false" @new-member="handleNewMember" />
+  </q-dialog>
+
+  <!-- hidden elements -->
+  <button @click="forceRerender" id="btn-force-rerender" style="display: none;">rerender</button>
+  <button @click="showSearch = true" id="btn-show-modal-search" style="display: none;">button tampil pencarian</button>
+  <button @click="showCrud = true" id="btn-show-modal-crud" style="display: none;">button tampil input member</button>
 </template>
 
 <script setup>
-import { ref, } from "vue";
+import { ref, watchEffect } from "vue";
 import AsideContent from "src/components/AsideContent.vue";
 import MemberDataTable from '../components/MemberDataTables.vue'
-import { showModalSearch } from 'src/utils/buttons-click';
+import { showModalSearch, showModalCrud } from 'src/utils/buttons-click';
+import memberCrudState from '../stores/member-crud-store'
+import MemberCrud from "src/components/MemberCrud.vue";
 
 const pageTitle = ref("Data")
 const pageSubTitle = ref('')
 const leftDrawerOpen = ref(false);
 const componentKey = ref(0);
-const showModal = ref(false)
+const showSearch = ref(false)
+const showCrud = ref(false)
+const modalTitle = ref('')
+const styleButtonNew = ref({ display: 'none' })
 
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value
@@ -115,7 +127,16 @@ const handlePageSubTitle = (value) => pageSubTitle.value = value
 const forceRerender = () => componentKey.value++;
 const clickSearch = () => showModalSearch()
 
-// watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
+watchEffect(() => {
+  let title = 'Cari Anggota'
+  if (memberCrudState().getIsNew) {
+    modalTitle.value = title + ' (' + memberCrudState().getTitle + ')'
+    styleButtonNew.value = { display: 'inline-flex' }
+  } else {
+    modalTitle.value = title
+    styleButtonNew.value = { display: 'none' }
+  }
+})
 
 
 </script>
