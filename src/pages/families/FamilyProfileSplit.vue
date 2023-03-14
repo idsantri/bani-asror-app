@@ -40,7 +40,7 @@
 
 import { reactive, toRefs, ref } from 'vue'
 import api from '../../utils/api-tokened'
-import memberState from '../../stores/member-crud-store';
+import memberCrudState from '../../stores/member-crud-store';
 import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
 import { notifySuccess, notifyError } from '../../utils/notify';
@@ -68,15 +68,15 @@ const { id, nama, ayah, ayah_id, ibu, ibu_id, keluarga_id, avatar, lp } = toRefs
 
 const editPasangan = () => {
   showModalSearch()
-  memberState().$reset()
-  memberState().familyId = props.familyId
+  memberCrudState().$reset()
+  memberCrudState().familyId = props.familyId
   if (props.memberSex.toLowerCase() == 'suami') {
-    memberState().title = `Suami`
-    memberState().isHusband = true
+    memberCrudState().title = `Suami`
+    memberCrudState().isHusband = true
   }
   if (props.memberSex.toLowerCase() == 'istri') {
-    memberState().title = `Istri`
-    memberState().isWife = true
+    memberCrudState().title = `Istri`
+    memberCrudState().isWife = true
   }
 }
 

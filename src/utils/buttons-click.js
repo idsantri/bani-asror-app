@@ -1,18 +1,16 @@
-import memberState from "../stores/member-crud-store";
+import memberCrudState from "../stores/member-crud-store";
 const forceRerender = () => {
   document.getElementById("btn-force-rerender").click();
 };
 
-const showModalSearch = (param) => {
-  memberState().$reset();
-  memberState().familyId = param.familyId;
-  memberState().title = param.title;
-  memberState().isChild = param.isChild;
+const showModalSearch = (param = {}) => {
+  memberCrudState().$reset();
+  memberCrudState().title = param.title || memberCrudState().getTitle;
+  memberCrudState().familyId = param.familyId || null;
+  memberCrudState().isHusband = param.isHusband || false;
+  memberCrudState().isWife = param.isWife || false;
+  memberCrudState().isChild = param.isChild || false;
   document.getElementById("btn-show-modal-search").click();
-  // console.log(document.getElementById("btn-add-new-member"));
-  // if (memberState().getIsNew) {
-  //   document.getElementById("btn-add-new-member").style.display = "block";
-  // }
 };
 
 export { forceRerender, showModalSearch };

@@ -64,7 +64,7 @@
             <p class="no-margin text-weight-light" v-if="pageSubTitle">{{ pageSubTitle.value }}</p>
             <!-- tombol cari -->
             <template v-slot:action>
-              <q-btn flat color="white" icon="search" @click="modalCari = true" id="btn-show-modal-search" />
+              <q-btn flat color="white" icon="search" @click="clickSearch" />
             </template>
           </q-banner>
           <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle" />
@@ -78,7 +78,8 @@
 
 
   <!-- modal cari member -->
-  <q-dialog v-model="modalCari" full-width>
+  <q-btn flat color="white" icon="search" @click="showModal = true" id="btn-show-modal-search" style="display: none;" />
+  <q-dialog v-model="showModal" full-width>
     <q-card>
       <q-card-section class="bg-green-8 text-green-1 q-pa-sm">
         <div class="text-h6 text-weight-light">Cari Anggota</div>
@@ -100,21 +101,23 @@
 import { ref, } from "vue";
 import AsideContent from "src/components/AsideContent.vue";
 import MemberDataTable from '../components/MemberDataTables.vue'
-// import { useRoute } from 'vue-router'
+import { showModalSearch } from 'src/utils/buttons-click';
 
 const pageTitle = ref("Data")
 const pageSubTitle = ref('')
 const leftDrawerOpen = ref(false);
 const componentKey = ref(0);
-const modalCari = ref(false)
+const showModal = ref(false)
 
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value
 const handlePageSubTitle = (value) => pageSubTitle.value = value
 const forceRerender = () => componentKey.value++;
+const clickSearch = () => showModalSearch()
+
 // watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
-// console.log(useRoute().meta);
-// if(useRoute().n)
+
+
 </script>
 <style scoped >
 .header {

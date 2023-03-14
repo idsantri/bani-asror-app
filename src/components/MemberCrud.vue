@@ -46,7 +46,7 @@
   </q-card>
 </template>
 <script setup>
-import memberState from '../stores/member-crud-store';
+import memberCrudState from '../stores/member-crud-store';
 import { toRefs, reactive, ref, computed } from 'vue';
 import api from '../utils/api-tokened';
 import { useRoute, useRouter } from 'vue-router';
@@ -68,11 +68,11 @@ const props = defineProps({
   isNew: { type: Boolean, default: true }
 })
 
-const title = computed(() => memberState().getTitle)
-const familyId = computed(() => memberState().getFamilyId)
-const isHusband = computed(() => memberState().getIsHusband)
-const isWife = computed(() => memberState().getIsWife)
-const isChild = computed(() => memberState().getIsChild)
+const title = computed(() => memberCrudState().getTitle)
+const familyId = computed(() => memberCrudState().getFamilyId)
+const isHusband = computed(() => memberCrudState().getIsHusband)
+const isWife = computed(() => memberCrudState().getIsWife)
+const isChild = computed(() => memberCrudState().getIsChild)
 
 const copyMember = reactive({ alamat: '', alias: '', nama: '', nama_arab: '', tgl_wafat: '', usia_wafat: '', id: null, catatan: '', lp: null })
 Object.assign(copyMember, props.member)

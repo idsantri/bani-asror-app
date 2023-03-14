@@ -53,7 +53,6 @@
 import api from '../../utils/api-tokened';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import memberState from '../../stores/member-crud-store';
 import { toArray } from '../../utils/array';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
@@ -97,10 +96,6 @@ const addChild = () => {
       isChild: true
     }
   )
-  // memberState().$reset()
-  // memberState().familyId = familyId
-  // memberState().title = `Anak`
-  // memberState().isChild = true
 }
 
 const urutChildren = async () => {

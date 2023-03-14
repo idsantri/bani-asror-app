@@ -24,18 +24,18 @@
 import DataTable from "datatables.net-vue3";
 import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-import memberState from '../../stores/member-crud-store'
+import memberCrudState from '../../stores/member-crud-store'
 import { useRouter } from 'vue-router';
 import { api } from '../../boot/axios';
 import { toArray } from '../../utils/array';
 const router = useRouter()
 
 //pinia state
-const title = computed(() => memberState().getTitle)
-const familyId = computed(() => memberState().getFamilyId)
-const isHusband = computed(() => memberState().getIsHusband)
-const isWife = computed(() => memberState().getIsWife)
-const isChild = computed(() => memberState().getIsChild)
+const title = computed(() => memberCrudState().getTitle)
+const familyId = computed(() => memberCrudState().getFamilyId)
+const isHusband = computed(() => memberCrudState().getIsHusband)
+const isWife = computed(() => memberCrudState().getIsWife)
+const isChild = computed(() => memberCrudState().getIsChild)
 
 let refHusband = ref(isHusband)
 let refWife = ref(isWife)
