@@ -91,7 +91,7 @@
 
     <!-- modal crud member -->
     <q-dialog v-model="showCrud" persistent>
-      <member-crud :member="member" modal-title="Edit Anggota" :is-new="false" @new-member="handleNewMember" />
+      <member-crud />
     </q-dialog>
 
     <!-- hidden elements -->

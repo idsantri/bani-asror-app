@@ -67,9 +67,9 @@ const editMember = () => {
 
 // const showModalCrud = ref(false);
 // emit data dari modal ketika sukses
-const handleNewMember = (newMember) => {
-  Object.assign(member, newMember);
-};
+// const handleNewMember = (newMember) => {
+//   Object.assign(member, newMember);
+// };
 
 try {
   const response = await apiTokened.get(`members/${memberId}`);

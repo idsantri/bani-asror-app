@@ -24,7 +24,7 @@
 
           <q-item-section avatar>
             <q-btn color="green-2" round>
-              <q-icon name="delete" color="negative" size="2em" />
+              <q-icon name="delete" color="negative" size="2em" @click="deleteChild(child.id)" />
             </q-btn>
           </q-item-section>
         </q-item>
@@ -80,9 +80,8 @@ const deleteChild = async (id) => {
     forceRerender()
 
   } catch (error) {
-    // console.log("error hapus pasangan:", error.response);
+    // console.log("error hapus anak:", error.response);
     toArray(error.response.data.message).forEach((errorMessage) => {
-      // alert(errorMessage)
       notifyError(errorMessage)
     })
   }

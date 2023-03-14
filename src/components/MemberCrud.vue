@@ -2,9 +2,7 @@
   <q-card style="width: 600px; max-width: 90vw;">
     <q-form @submit.prevent="saveMember" accept-charset="utf-8">
       <q-card-section class="bg-green-10 text-green-1">
-        <h6 class="text-h6 no-margin text-weight-light">{{ modalTitle }}
-          <span v-if="isNew">({{ title }})</span>
-        </h6>
+        <h6 class="text-h6 no-margin text-weight-light">{{ crudTitle }}</h6>
       </q-card-section>
 
       <q-card-section class="q-pa-sm bg-green-1">
@@ -36,7 +34,8 @@
       </q-card-section>
 
       <q-card-actions class="bg-green-10">
-        <q-btn label="Hapus" color="negative" class="text-weight-light" @click="deleteMember(id)" />
+        <q-btn :style="styleButtonDelete" label="Hapus" color="negative" class="text-weight-light"
+          @click="deleteMember(id)" />
         <q-space />
         <q-btn label="Simpan" color="green-9" class="text-weight-light" type="submit" />
         <q-btn label="Gagal" color="secondary" class="text-weight-light" v-close-popup id="btn-close-modal" />
@@ -47,12 +46,12 @@
 </template>
 <script setup>
 import memberCrudState from '../stores/member-crud-store';
-import { toRefs, reactive, ref, computed } from 'vue';
+import { toRefs, reactive, ref, computed, watchEffect } from 'vue';
 import api from '../utils/api-tokened';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../utils/array';
 import { useQuasar } from 'quasar'
-import { notifySuccess } from '../utils/notify'
+import { notifyError, notifySuccess } from '../utils/notify'
 import { forceRerender } from '../utils/buttons-click';
 
 const $q = useQuasar()
@@ -61,26 +60,33 @@ const router = useRouter()
 const memberId = route.params.id
 const errors = ref('')
 const optionsSex = ref([{ label: 'Laki-Laki', value: 'L' }, { label: 'Perempuan', value: 'P' },])
+const styleButtonDelete = ref({ display: 'none' })
+const crudTitle = ref('')
 
-const props = defineProps({
-  member: { type: Object },
-  modalTitle: { type: String, default: "Anggota" },
-  isNew: { type: Boolean, default: true }
+watchEffect(() => {
+  const { getIsNew, getIsHusband, getIsWife, getIsChild, } = memberCrudState()
+  if (getIsNew) {
+    styleButtonDelete.value = { display: 'none' }
+    if (getIsHusband) crudTitle.value = `Tambah Anggota (Suami)`
+    if (getIsWife) crudTitle.value = `Tambah Anggota (Istri)`
+    if (getIsChild) crudTitle.value = `Tambah Anggota (Anak)`
+  } else {
+    styleButtonDelete.value = { display: 'inline-flex' }
+    crudTitle.value = 'Edit Anggota'
+  }
 })
 
-const title = computed(() => memberCrudState().getTitle)
-const familyId = computed(() => memberCrudState().getFamilyId)
-const isHusband = computed(() => memberCrudState().getIsHusband)
-const isWife = computed(() => memberCrudState().getIsWife)
-const isChild = computed(() => memberCrudState().getIsChild)
-
 const copyMember = reactive({ alamat: '', alias: '', nama: '', nama_arab: '', tgl_wafat: '', usia_wafat: '', id: null, catatan: '', lp: null })
-// Object.assign(copyMember, props.member)
 Object.assign(copyMember, memberCrudState().getMember)
 const { alamat, alias, nama, nama_arab, tgl_wafat, usia_wafat, id, catatan, lp } = toRefs(copyMember)
 
-const emit = defineEmits(['newMember'])
 const saveMember = async () => {
+  const familyId = computed(() => memberCrudState().getFamilyId)
+  const isHusband = computed(() => memberCrudState().getIsHusband)
+  const isWife = computed(() => memberCrudState().getIsWife)
+  const isChild = computed(() => memberCrudState().getIsChild)
+  const isNew = computed(() => memberCrudState().getIsNew)
+
   errors.value = []
   const data = {
     alamat: alamat.value,
@@ -92,11 +98,11 @@ const saveMember = async () => {
     catatan: catatan.value,
     lp: lp.value,
   }
-  if (props.isNew) {
+  if (isNew.value) {
     let url = null;
-    if (isHusband.value) url = `members/suami/${familyId.value}`
-    if (isWife.value) url = `members/istri/${familyId.value}`
-    if (isChild.value) url = `members/anak/${familyId.value}`
+    if (isHusband.value) url = `members/husband/${familyId.value}`
+    if (isWife.value) url = `members/wife/${familyId.value}`
+    if (isChild.value) url = `members/child/${familyId.value}`
     try {
       //is new
       const response = await api.post(url, data)
@@ -105,6 +111,7 @@ const saveMember = async () => {
       forceRerender()
     } catch (error) {
       errors.value = toArray(error.response.data.message)
+      // console.log(error.response.data);
     }
   } else {
     //not new
@@ -113,7 +120,6 @@ const saveMember = async () => {
       closeModal()
       notifySuccess(response.data.message)
       forceRerender()
-      emit('newMember', response.data.data.member)
     } catch (error) {
       errors.value = toArray(error.response.data.message)
     }
@@ -129,7 +135,7 @@ const deleteMember = async (id) => {
       notifySuccess(response.data.message)
       router.go(-2)
     } catch (error) {
-      alert(error.response.data.message);
+      notifyError(error.response.data.message)
     }
   }
 }

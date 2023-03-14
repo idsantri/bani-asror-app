@@ -46,13 +46,16 @@ import api from '../../utils/api-tokened';
 import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../../utils/array';
+import memberState from '../../stores/member-store'
+import { notifyError } from 'src/utils/notify';
+
 const families = reactive([])
 const router = useRouter()
 const route = useRoute()
-const idMember = route.params.id.toString()
+const memberId = route.params.id.toString()
 
 try {
-  const response = await api.get(`members/${idMember}/families`)
+  const response = await api.get(`members/${memberId}/families`)
   Object.assign(families, response.data.data.families)
   // console.log(families)
 } catch (error) {
@@ -60,18 +63,20 @@ try {
 }
 
 const createFamily = async () => {
-  const isConfirmed = confirm('Buat kelurga baru untuk member ini?')
+  const nama = memberState().getMember.nama
+  const pasangan = memberState().getMember.lp.toUpperCase() == 'L' ? 'istri' : 'suami'
+  const isConfirmed = confirm(`Tambahkan keluarga baru (${pasangan}) untuk ${nama}?`)
   if (!isConfirmed) return
   try {
-    const response = await axios.post('families', { member_id: idMember })
-    console.log('new family', response.data)
+    const response = await api.post('families', { member_id: memberId })
+    // console.log('new family', response.data)
     const familyId = response.data.data.family.id
     // console.log(familyId);
     router.push(`/families/${familyId}`)
   } catch (error) {
     // console.log("error create family:", error.response);
     toArray(error.response.data.message).forEach((errorMessage) => {
-      alert(errorMessage)
+      notifyError(errorMessage)
     })
   }
 }

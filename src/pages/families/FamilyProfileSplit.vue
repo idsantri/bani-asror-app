@@ -21,7 +21,7 @@
           <q-fab v-model="fab" icon="keyboard_arrow_left" direction="left" padding="sm" color="green-9">
             <q-fab-action padding="5px" external-label label-position="bottom" color="orange" icon="edit" label="Edit"
               @click="editPasangan" />
-            <q-fab-action padding="5px" external-label label-position="bottom" color="negative" icon="delete"
+            <q-fab-action v-if="id" padding="5px" external-label label-position="bottom" color="negative" icon="delete"
               label="Hapus" @click="deletePasangan" />
           </q-fab>
         </q-item-section>
@@ -67,17 +67,10 @@ if (props.memberId || props.memberId === 0) {
 const { id, nama, ayah, ayah_id, ibu, ibu_id, keluarga_id, avatar, lp } = toRefs(member)
 
 const editPasangan = () => {
-  showModalSearch()
-  memberCrudState().$reset()
-  memberCrudState().familyId = props.familyId
-  if (props.memberSex.toLowerCase() == 'suami') {
-    memberCrudState().searchTitle = `Suami`
-    memberCrudState().isHusband = true
-  }
-  if (props.memberSex.toLowerCase() == 'istri') {
-    memberCrudState().searchTitle = `Istri`
-    memberCrudState().isWife = true
-  }
+  const args = { familyId: props.familyId, }
+  if (props.memberSex.toUpperCase() == 'L') args.isHusband = true
+  if (props.memberSex.toUpperCase() == 'P') args.isWife = true
+  showModalSearch(args)
 }
 
 const deletePasangan = async () => {
