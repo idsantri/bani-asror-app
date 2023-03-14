@@ -7,7 +7,7 @@
             <q-item-section>
               <q-item-label>
                 <div v-if="family.pasangan_id">
-                  <q-btn :to="/families/ + family.pasangan_id" flat class="q-pl-none q-pb-none q-tab--no-caps">{{
+                  <q-btn :to="/members/ + family.pasangan_id" flat class="q-pl-none q-pb-none q-tab--no-caps">{{
                     family.pasangan
                   }}</q-btn>
                 </div>

@@ -50,7 +50,7 @@ import { toRefs, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import MemberModalEdit from "../../components/MemberCrud.vue";
 import ParentComponent from "src/components/ParentComponent.vue";
-import memberState from '../../stores/member-crud-store'
+import memberState from '../../stores/member-store'
 
 const member = reactive({});
 const parent = reactive({});
