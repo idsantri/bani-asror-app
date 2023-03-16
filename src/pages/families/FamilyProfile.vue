@@ -16,7 +16,19 @@
       <template #avatar>
         <q-avatar rounded icon="info" color="green-10" text-color="green-3" font-size=".85em"></q-avatar>
       </template>
-      <p class="no-margin q-pb-xs"><span class="text-weight-light">Alamat: </span>{{ alamat }}</p>
+      <!-- <p class="no-margin q-pb-xs"><span class="text-weight-light">Alamat: </span>{{ alamat }}</p> -->
+      <div class="cursor-pointer">
+        Alamat: {{ alamat }}
+        <q-popup-edit v-model="alamat" v-slot="scope" @save="submitAlamat">
+          <q-input autofocus dense v-model="scope.value" :model-value="scope.value" hint="Alamat tinggal pasangan">
+            <template v-slot:after>
+              <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
+              <q-btn flat dense color="positive" icon="check_circle" @click.stop.prevent="scope.set" />
+            </template>
+          </q-input>
+        </q-popup-edit>
+      </div>
+
     </q-banner>
 
 
@@ -29,14 +41,13 @@
 <script setup>
 import { toArray } from '../../utils/array';
 import api from '../../utils/api-tokened';
-import { toRefs, reactive } from 'vue';
+import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { notifySuccess, notifyError } from 'src/utils/notify';
 import FamilyProfileParent from './FamilyProfileSplit.vue';
 const family = reactive({})
 const route = useRoute()
 const familyId = route.params.id
-
 
 try {
   const response = await api.get(`families/${familyId}`)
@@ -50,7 +61,9 @@ try {
 }
 const { suami_id, istri_id, id, alamat } = toRefs(family)
 const submitAlamat = async () => {
-  // alert(id.value);
+  alert(id.value);
+  console.log(alamat);
+  console.log(alamat.value);
   try {
     const response = await api.put(`families/${id.value}`, {
       alamat: alamat.value,
