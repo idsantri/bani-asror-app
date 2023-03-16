@@ -4,7 +4,18 @@
       <q-list v-if="children.length > 0" bordered separator>
         <q-item v-for="(child, index) in children" :key="index">
           <q-avatar>
-            <q-badge align="middle" color="green-8">{{ child.urut ? child.urut : "-" }}</q-badge>
+            <q-badge align="middle" color="green-8">{{ child.urut ? child.urut : "-" }}
+
+              <q-popup-edit v-model="child.urut" buttons v-slot="scope" @save="submitUrut(child.id, child.urut)"
+                :validate="val => val > 0">
+                <q-input v-model="scope.value" dense autofocus @keyup.enter="scope.set" type="number"
+                  hint="Tetapkan nomor urut!" :rules="[
+                    val => scope.validate(val) || 'Jangan 0'
+                  ]" @update:modelValue="child.urut = scope.value" />
+              </q-popup-edit>
+
+
+            </q-badge>
           </q-avatar>
           <q-item-section>
 
@@ -85,13 +96,27 @@ const deleteChild = async (id) => {
       notifyError(errorMessage)
     })
   }
-
 }
+
 const addChild = () => {
   showModalSearch({
     familyId: familyId,
     isChild: true
   })
+}
+
+const submitUrut = async (id, urut) => {
+  try {
+    const response = await api.put(`children/${id}/short`, { urut: urut })
+    // console.log(response.data);
+    notifySuccess(response.data.message)
+    // document.getElementById('btn-force-rerender').click()
+    forceRerender()
+  } catch (error) {
+    toArray(error.response.data.message).forEach((errorMessage) => {
+      notifyError(errorMessage)
+    })
+  }
 }
 
 const urutChildren = async () => {
@@ -108,7 +133,6 @@ const urutChildren = async () => {
     const response = await api.put('children/urut', data)
     // console.log(response.data);
     alert(response.data.message)
-
     // document.getElementById('btn-force-rerender').click()
   } catch (error) {
     toArray(error.response.data.message).forEach((errorMessage) => {

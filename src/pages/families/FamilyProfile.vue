@@ -18,9 +18,10 @@
       </template>
       <!-- <p class="no-margin q-pb-xs"><span class="text-weight-light">Alamat: </span>{{ alamat }}</p> -->
       <div class="cursor-pointer">
-        Alamat: {{ alamat }}
-        <q-popup-edit v-model="alamat" v-slot="scope" @save="submitAlamat">
-          <q-input autofocus dense v-model="scope.value" :model-value="scope.value" hint="Alamat tinggal pasangan">
+        Alamat: {{ alamat ? alamat : '-' }}
+        <q-popup-edit v-model="alamat" v-slot="scope" @save="submitAlamat(alamat)">
+          <q-input autofocus dense v-model="scope.value" :model-value="scope.value" hint="Alamat tinggal pasangan"
+            @update:modelValue="alamat = scope.value">
             <template v-slot:after>
               <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
               <q-btn flat dense color="positive" icon="check_circle" @click.stop.prevent="scope.set" />
@@ -28,9 +29,7 @@
           </q-input>
         </q-popup-edit>
       </div>
-
     </q-banner>
-
 
     <q-btn class="glossy btn-float" round color="negative" icon="delete" @click="deleteFamily">
       <q-tooltip class="bg-white text-dark">Hapus keluarga ini</q-tooltip>
@@ -60,15 +59,14 @@ try {
   })
 }
 const { suami_id, istri_id, id, alamat } = toRefs(family)
-const submitAlamat = async () => {
-  alert(id.value);
-  console.log(alamat);
-  console.log(alamat.value);
+const submitAlamat = async (alamat) => {
+  // console.log(alamat);
+  // return
   try {
     const response = await api.put(`families/${id.value}`, {
-      alamat: alamat.value,
+      alamat: alamat,
     })
-    // console.log(response.data);
+    Object.assign(family, response.data.data.family)
     notifySuccess(response.data.message)
   } catch (error) {
     toArray(error.response.data.message).forEach((errorMessage) => {
