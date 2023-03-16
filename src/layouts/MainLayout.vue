@@ -102,7 +102,7 @@
     </div>
 
     <q-footer bordered class="bg-green-9 text-white">
-      <p class="text-center no-margin q-pa-sm">by idsantri</p>
+      <p class="text-center no-margin q-pa-xs">by idsantri</p>
     </q-footer>
   </q-layout>
 </template>

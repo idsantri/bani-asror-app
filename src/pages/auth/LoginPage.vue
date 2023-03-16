@@ -2,29 +2,11 @@
   <div class="q-pa-xs">
     <form @submit.prevent="login">
       <div class="q-gutter-y-md column">
-        <q-input
-          bg-color="white"
-          outlined
-          v-model="username"
-          required
-          label="Login"
-          placeholder="Masukkan username atau email Anda!"
-        />
-        <q-input
-          bg-color="white"
-          outlined
-          v-model="password"
-          type="password"
-          required
-          label="Password"
-          placeholder="Masukkan password!"
-        />
-        <q-btn
-          type="submit"
-          class="full-width q-pa-sm"
-          color="primary"
-          label="Login"
-        />
+        <q-input bg-color="white" outlined v-model="username" required label="Login"
+          placeholder="Masukkan username atau email Anda!" autocomplete="" />
+        <q-input bg-color="white" outlined v-model="password" type="password" required label="Password"
+          placeholder="Masukkan password!" autocomplete="" />
+        <q-btn type="submit" class="full-width q-pa-sm" color="primary" label="Login" />
         <q-separator dark />
         <q-card class="my-card" flat>
           <q-card-section class="text-black text-center no-padding no-margin">

@@ -35,15 +35,6 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from, next) => {
-    if (to.fullPath == "/logout") {
-      if (confirm("Keluar dari situs ini?") == true) {
-        localStorage.setItem("token", "");
-        localStorage.setItem("user", "");
-        next("/login");
-      } else {
-        history.go(-1);
-      }
-    }
     if (to.fullPath == "/") {
       return next("/members/0");
     }

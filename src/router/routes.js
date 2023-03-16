@@ -29,6 +29,12 @@ const routes = [
         name: "Reset",
         component: () => import("../pages/auth/ResetPage.vue"),
         meta: { title: "Ganti Password" }
+      },
+      {
+        path: "logout",
+        name: "Logout",
+        component: () => import("../pages/auth/LogoutPage.vue"),
+        meta: { title: "Logout" }
       }
     ]
   },
