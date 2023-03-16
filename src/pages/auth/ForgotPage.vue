@@ -3,7 +3,7 @@
   <div class="q-pa-xs">
     <q-card class="my-card q-mb-lg" flat>
       <q-card-section class="no-padding no-margin">
-        <p class="q-pa-sm no-margin text-green text-justify">
+        <p class="q-pa-sm no-margin text-green-10 text-justify bg-green-1">
           Tidak masalah. Masukkan email Anda di bawah ini dan kami akan
           mengirimkan instruksi untuk mengatur ulang kata sandi Anda.
         </p>
@@ -11,29 +11,20 @@
     </q-card>
     <form @submit.prevent="reset">
       <div class="q-gutter-y-md column">
-        <q-input
-          class="no-margin no-padding"
-          bg-color="white"
-          outlined
-          v-model="email"
-          required
-          label="Email"
-          placeholder="Masukkan email Anda!"
-        />
-        <q-btn
-          type="submit"
-          class="full-width q-pa-sm"
-          color="primary"
-          label="Kirim instruksi"
-        />
-        <q-separator dark />
+
+        <q-input class="no-margin no-padding" bg-color="green-1" filled outlined v-model="email" required label="Email"
+          placeholder="Masukkan email Anda!" type="email" />
+        <q-btn type="submit" class="full-width q-pa-sm text-green-10" color="green-3" label="Kirim instruksi" />
+
         <q-card class="my-card" flat>
-          <q-card-section class="text-black text-center no-padding no-margin">
-            <p class="q-pa-sm no-margin">
-              Kembali ke halaman <router-link to="/login">Login</router-link>
-            </p>
+          <q-card-section class="text-green-10 text-center bg-green-2 q-pa-sm">
+            <q-btn outline color="green-10" class="full-width text-weight-regular " no-caps to="/login"
+              label="Kembali ke halaman login" />
+            <q-btn outline color="green-10" class="full-width text-weight-regular q-mt-sm" no-caps to="/reset"
+              label="Atur ulang password" />
           </q-card-section>
         </q-card>
+
       </div>
     </form>
   </div>

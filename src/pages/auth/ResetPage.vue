@@ -2,54 +2,20 @@
   <div class="q-pa-xs">
     <form @submit.prevent="reset">
       <div class="q-gutter-y-md column">
-        <q-input
-          bg-color="white"
-          outlined
-          v-model="token"
-          required
-          label="Token"
-          placeholder="Masukkan token!"
-          hint="Token yang Anda dapatkan dari email"
-        />
-        <q-input
-          bg-color="white"
-          outlined
-          v-model="email"
-          type="email"
-          required
-          label="Email"
-          placeholder="Masukkan email!"
-        />
-        <q-input
-          bg-color="white"
-          outlined
-          v-model="password"
-          type="password"
-          required
-          label="Password"
-          placeholder="Masukkan password!"
-        />
-        <q-input
-          bg-color="white"
-          outlined
-          v-model="password_confirm"
-          type="password"
-          required
-          label="Konfirmasi Password"
-          placeholder="Ulangi password!"
-        />
-        <q-btn
-          type="submit"
-          class="full-width q-pa-sm"
-          color="primary"
-          label="Ganti Password"
-        />
-        <q-separator dark />
+        <q-input bg-color="green-1" filled outlined v-model="token" required label="Token" placeholder="Masukkan token!"
+          hint="Token yang Anda dapatkan dari email" />
+        <q-input bg-color="green-1" filled outlined v-model="email" type="email" required label="Email"
+          placeholder="Masukkan email!" />
+        <q-input bg-color="green-1" filled outlined v-model="password" type="password" required label="Password"
+          placeholder="Masukkan password!" />
+        <q-input bg-color="green-1" filled outlined v-model="password_confirm" type="password" required
+          label="Konfirmasi Password" placeholder="Ulangi password!" />
+        <q-btn type="submit" class="full-width q-pa-sm text-green-10" color="green-3" label="Ganti Password" />
+
         <q-card class="my-card" flat>
-          <q-card-section class="text-black text-center no-padding no-margin">
-            <p class="q-pa-sm no-margin">
-              Kembali ke halaman <router-link to="/login">Login</router-link>
-            </p>
+          <q-card-section class="text-green-10 text-center bg-green-2 q-pa-sm">
+            <q-btn outline color="green-10" class="full-width text-weight-regular " no-caps to="/login"
+              label="Kembali ke halaman Login" />
           </q-card-section>
         </q-card>
       </div>

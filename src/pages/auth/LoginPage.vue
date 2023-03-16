@@ -2,31 +2,32 @@
   <div class="q-pa-xs">
     <form @submit.prevent="login">
       <div class="q-gutter-y-md column">
-        <q-input bg-color="white" outlined v-model="username" required label="Login"
+        <q-input bg-color="green-1" filled outlined v-model="username" required label="Login"
           placeholder="Masukkan username atau email Anda!" autocomplete="" />
-        <q-input bg-color="white" outlined v-model="password" type="password" required label="Password"
+        <q-input bg-color="green-1" filled outlined v-model="password" type="password" required label="Password"
           placeholder="Masukkan password!" autocomplete="" />
-        <q-btn type="submit" class="full-width q-pa-sm" color="primary" label="Login" />
-        <q-separator dark />
+        <q-btn type="submit" class="full-width q-pa-sm text-green-10" color="green-3" label="Login" />
+
         <q-card class="my-card" flat>
-          <q-card-section class="text-black text-center no-padding no-margin">
-            <p class="q-pa-sm no-margin">
-              Belum punya akun? <router-link to="/register">Daftar</router-link>
-            </p>
-            <p class="q-pa-sm no-margin">
-              Lupa password? <router-link to="/forgot">Atur ulang</router-link>
-            </p>
+          <q-card-section class="text-green-10 text-center bg-green-2 q-pa-sm">
+            <q-btn outline color="green-10" class="full-width text-weight-regular " no-caps to="/register"
+              label="Belum punya akun? Daftar!" />
+            <q-btn outline color="green-10" class="full-width text-weight-regular q-mt-sm" no-caps to="/forgot"
+              label="Lupa password? Atur ulang!" />
           </q-card-section>
         </q-card>
       </div>
     </form>
+    <div class="spinner" id="spinner">
+      <q-spinner-cube color="green-2" size="16em" />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { api } from "src/boot/axios";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { toArray } from "../../utils/array";
 
 const router = useRouter();
@@ -37,7 +38,10 @@ const emit = defineEmits(["title", "errors"]);
 emit("title", "Login");
 emit("errors", []);
 
+onMounted(() => document.getElementById('spinner').classList.add('hide'))
+
 const login = async () => {
+  document.getElementById('spinner').classList.remove('hide')
   emit("errors", []);
   try {
     const response = await api.post("login", {
@@ -47,9 +51,32 @@ const login = async () => {
     localStorage.setItem("token", response.data.data.token);
     localStorage.setItem("user", JSON.stringify(response.data.data.user));
     localStorage.setItem("userGroup", JSON.stringify(response.data.data.group));
-    router.push("/members/0");
+
+    setTimeout(() => {
+      document.getElementById('spinner').classList.add('hide')
+      router.push("/members/0");
+    }, 2000);
+
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
+    document.getElementById('spinner').classList.add('hide')
   }
+
 };
 </script>
+<style scoped lang="scss">
+.spinner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hide {
+  display: none;
+}
+</style>

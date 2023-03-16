@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card bg-secondary text-white q-pa-lg">
+  <q-card class="my-card bg-secondary text-white q-pa-lg bg-green-8 text-green-1">
     <q-card-section class="no-padding q-mb-md">
       <h1 class="title">Bani Asror</h1>
       <h2 class="sub-title">{{ title }}</h2>
@@ -9,11 +9,7 @@
       <q-card-section class="q-pa-xs bg-red-2 text-red">
         <ul class="q-my-xs">
           <li v-for="error in errors" :key="error">
-            <span
-              v-html="error"
-              class="anchorErrorResponse"
-              @click="clickAnchor"
-            ></span>
+            <span v-html="error" class="anchorErrorResponse" @click="clickAnchor"></span>
           </li>
         </ul>
       </q-card-section>
@@ -72,9 +68,10 @@ const clickAnchor = (e) => {
 }
 
 .sub-title {
-  font-size: 1.5em;
+  font-size: 1.7em;
   margin: 0 auto;
   padding: 0;
+  font-weight: 500;
   text-align: center;
   height: 30px;
   line-height: 30px;
