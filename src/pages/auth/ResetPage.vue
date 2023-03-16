@@ -2,13 +2,13 @@
   <div class="q-pa-xs">
     <form @submit.prevent="reset">
       <div class="q-gutter-y-md column">
-        <q-input bg-color="green-1" filled outlined v-model="token" required label="Token" placeholder="Masukkan token!"
+        <q-input bg-color="green-1" outlined v-model="token" required label="Token" placeholder="Masukkan token!"
           hint="Token yang Anda dapatkan dari email" />
-        <q-input bg-color="green-1" filled outlined v-model="email" type="email" required label="Email"
+        <q-input bg-color="green-1" outlined v-model="email" type="email" required label="Email"
           placeholder="Masukkan email!" />
-        <q-input bg-color="green-1" filled outlined v-model="password" type="password" required label="Password"
+        <q-input bg-color="green-1" outlined v-model="password" type="password" required label="Password"
           placeholder="Masukkan password!" />
-        <q-input bg-color="green-1" filled outlined v-model="password_confirm" type="password" required
+        <q-input bg-color="green-1" outlined v-model="password_confirm" type="password" required
           label="Konfirmasi Password" placeholder="Ulangi password!" />
         <q-btn type="submit" class="full-width q-pa-sm text-green-10" color="green-3" label="Ganti Password" />
 

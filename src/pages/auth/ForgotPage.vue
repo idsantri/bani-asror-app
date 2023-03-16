@@ -12,7 +12,7 @@
     <form @submit.prevent="reset">
       <div class="q-gutter-y-md column">
 
-        <q-input class="no-margin no-padding" bg-color="green-1" filled outlined v-model="email" required label="Email"
+        <q-input class="no-margin no-padding" bg-color="green-1" outlined v-model="email" required label="Email"
           placeholder="Masukkan email Anda!" type="email" />
         <q-btn type="submit" class="full-width q-pa-sm text-green-10" color="green-3" label="Kirim instruksi" />
 
