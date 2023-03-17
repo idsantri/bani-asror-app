@@ -39,7 +39,7 @@
 
 
 import { reactive, toRefs, ref } from 'vue'
-import api from '../../utils/api-tokened'
+import api from '../../config/api-tokened'
 import memberCrudState from '../../stores/member-crud-store';
 import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';

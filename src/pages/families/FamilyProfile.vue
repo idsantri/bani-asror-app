@@ -39,7 +39,7 @@
 
 <script setup>
 import { toArray } from '../../utils/array';
-import api from '../../utils/api-tokened';
+import api from '../../config/api-tokened';
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { notifySuccess, notifyError } from 'src/utils/notify';

@@ -29,7 +29,7 @@ import { api } from "src/boot/axios";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { toArray } from "../../utils/array";
-import apiTokened from "src/utils/api-tokened";
+import apiTokened from "src/config/api-tokened";
 import authState from '../../stores/auth-store'
 
 const router = useRouter();

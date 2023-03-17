@@ -47,7 +47,7 @@
 <script setup>
 import memberCrudState from '../stores/member-crud-store';
 import { toRefs, reactive, ref, computed, watchEffect } from 'vue';
-import api from '../utils/api-tokened';
+import api from '../config/api-tokened';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../utils/array';
 import { useQuasar } from 'quasar'

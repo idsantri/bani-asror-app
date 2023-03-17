@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import api from '../../utils/api-tokened';
+import api from '../../config/api-tokened';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { toArray } from '../../utils/array';

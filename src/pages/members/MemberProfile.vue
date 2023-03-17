@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import apiTokened from "../../utils/api-tokened";
+import apiTokened from "../../config/api-tokened";
 import { toRefs, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import MemberModalEdit from "../../components/MemberCrud.vue";

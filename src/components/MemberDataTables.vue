@@ -26,7 +26,7 @@ import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import memberCrudState from '../stores/member-crud-store'
 import { useRouter } from 'vue-router';
-import api from '../utils/api-tokened'
+import api from '../config/api-tokened'
 import { toArray } from '../utils/array';
 import { notifySuccess } from "src/utils/notify";
 import { forceRerender } from '../utils/buttons-click'
