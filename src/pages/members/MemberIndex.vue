@@ -5,11 +5,29 @@
       <q-tab name="profile" label="Profil" />
       <q-tab name="family" label="Keluarga" />
       <q-tab name="child" label="Anak" />
+
+      <!-- <q-btn-dropdown flat round dense dropdown-icon="more_vert" class="q-pl-md" color="green-1">
+        <q-list>
+          <q-item clickable v-close-popup to="/profile">
+            <q-item-section>Cetak</q-item-section>
+            <q-item-section avatar>
+              <q-icon color="green" name="3p" />
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup to="/logout">
+            <q-item-section>Lapor</q-item-section>
+            <q-item-section avatar>
+              <q-icon color="red" name="logout" />
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown> -->
+
     </q-tabs>
 
     <q-separator dark />
 
-    <q-tab-panels v-model="tab" animated class="bg-green-6">
+    <q-tab-panels v-model="tab" animated class="bg-green-6" swipeable>
       <q-tab-panel name="profile" class="no-padding no-margin">
         <Suspense>
           <template #default>

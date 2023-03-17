@@ -65,7 +65,22 @@ const routes = [
         name: "Families",
         component: () => import("../pages/families/FamilyIndex.vue"),
         meta: { title: "Halaman Keluarga" }
+        // children: [
+        //   {
+        //     path: "profile",
+        //     name: "FamiliesProfile",
+        //     component: () => import("../pages/families/FamilyIndex.vue"),
+        //     meta: { title: "Halaman Keluarga" }
+        //   },
+        //   {
+        //     path: "children",
+        //     name: "FamiliesChildren",
+        //     component: () => import("../pages/families/FamilyIndex.vue"),
+        //     meta: { title: "Halaman Keluarga" }
+        //   }
+        // ]
       }
+
       // {
       //   path: "profile",
       //   name: "Profile",

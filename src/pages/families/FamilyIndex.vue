@@ -8,7 +8,7 @@
 
     <q-separator dark />
 
-    <q-tab-panels v-model="tab" animated class="bg-green-6">
+    <q-tab-panels v-model="tab" animated class="bg-green-6" swipeable>
       <q-tab-panel name="profile" class="no-padding no-margin">
         <suspense>
           <template #default>
