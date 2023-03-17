@@ -53,9 +53,6 @@ const login = async () => {
     authState().token = response.data.data.token
     authState().user = response.data.data.user
     authState().group = response.data.data.group
-    // localStorage.setItem("token", response.data.data.token);
-    // localStorage.setItem("user", JSON.stringify(response.data.data.user));
-    // localStorage.setItem("userGroup", JSON.stringify(response.data.data.group));
 
     apiTokened.defaults.headers.common["Authorization"] =
       "Bearer " + authState().getToken

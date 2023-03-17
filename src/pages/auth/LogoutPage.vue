@@ -14,9 +14,6 @@ import authState from '../../stores/auth-store';
       cancel: true,
       persistent: true
     }).onOk(() => {
-      // console.log('Keluar dari dari Aplikasi.')
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("user");
       authState().$reset()
       window.location.href = "/login";
     }).onOk(() => {
