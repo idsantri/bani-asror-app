@@ -34,8 +34,8 @@
           </q-item-section>
 
           <q-item-section avatar>
-            <q-btn color="green-2" round>
-              <q-icon name="delete" color="negative" size="2em" @click="deleteChild(child.id)" />
+            <q-btn color="green-2" round size=".8em">
+              <q-icon name="delete" color="negative" @click="deleteChild(child.id)" />
             </q-btn>
           </q-item-section>
         </q-item>
