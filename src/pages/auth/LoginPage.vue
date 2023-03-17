@@ -30,6 +30,7 @@ import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { toArray } from "../../utils/array";
 import apiTokened from "src/utils/api-tokened";
+import authState from '../../stores/auth-store'
 
 const router = useRouter();
 const username = ref("");
@@ -49,12 +50,15 @@ const login = async () => {
       login: username.value,
       password: password.value,
     });
-    localStorage.setItem("token", response.data.data.token);
-    localStorage.setItem("user", JSON.stringify(response.data.data.user));
-    localStorage.setItem("userGroup", JSON.stringify(response.data.data.group));
+    authState().token = response.data.data.token
+    authState().user = response.data.data.user
+    authState().group = response.data.data.group
+    // localStorage.setItem("token", response.data.data.token);
+    // localStorage.setItem("user", JSON.stringify(response.data.data.user));
+    // localStorage.setItem("userGroup", JSON.stringify(response.data.data.group));
 
     apiTokened.defaults.headers.common["Authorization"] =
-      "Bearer " + localStorage.getItem("token");
+      "Bearer " + authState().getToken
 
     setTimeout(() => {
       document.getElementById('spinner').classList.add('hide')

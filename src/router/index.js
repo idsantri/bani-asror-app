@@ -7,6 +7,7 @@ import {
 } from "vue-router";
 import routes from "./routes";
 import { nextTick } from "vue";
+import authStore from "../stores/auth-store";
 
 /*
  * If not building with SSR mode, you can
@@ -38,10 +39,12 @@ export default route(function (/* { store, ssrContext } */) {
     if (to.fullPath == "/") {
       return next("/members/0");
     }
+
+    const store = authStore();
     const authRoutes = ["Register", "Login", "Forgot", "Reset"];
     const toAuthRoutes = authRoutes.includes(to.name);
-    const isAuthenticate =
-      localStorage.getItem("token") && localStorage.getItem("token").length > 0;
+    const isAuthenticate = store.getToken && store.getToken.length > 0;
+
     if (!toAuthRoutes && !isAuthenticate) {
       next("/login");
     } else if (toAuthRoutes && isAuthenticate) {

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-const useUserStore = defineStore("user", {
+const useAuthStore = defineStore("auth", {
   state: () => ({
     token: null,
     user: null,
@@ -28,4 +28,4 @@ const useUserStore = defineStore("user", {
   persist: true,
 });
 
-export default useUserStore;
+export default useAuthStore;

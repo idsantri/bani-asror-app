@@ -5,6 +5,7 @@
 </template>
 <script setup>
 import { useQuasar } from 'quasar'
+import authState from '../../stores/auth-store';
 (() => {
   useQuasar()
     .dialog({
@@ -14,8 +15,9 @@ import { useQuasar } from 'quasar'
       persistent: true
     }).onOk(() => {
       // console.log('Keluar dari dari Aplikasi.')
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("user");
+      authState().$reset()
       window.location.href = "/login";
     }).onOk(() => {
       // useRouter().push('/login')
