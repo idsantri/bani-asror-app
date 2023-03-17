@@ -63,7 +63,7 @@
             <p class="no-margin text-weight-light" v-if="pageSubTitle">{{ pageSubTitle.value }}</p>
             <!-- tombol cari -->
             <template v-slot:action>
-              <q-btn flat color="white" icon="search" @click="clickSearch" />
+              <q-btn flat color="green-1" icon="search" @click="clickSearch" />
             </template>
           </q-banner>
           <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle" />
@@ -101,7 +101,7 @@
       <button @click="showCrud = true" id="btn-show-modal-crud">show crud</button>
     </div>
 
-    <q-footer bordered class="bg-green-9 text-white">
+    <q-footer bordered class="bg-green-9 text-green-1">
       <p class="text-center no-margin q-pa-xs">by idsantri</p>
     </q-footer>
   </q-layout>

@@ -36,7 +36,7 @@
       </div>
     </q-banner>
     <q-btn class="glossy btn-float" round color="green-10" icon="add" @click="createFamily">
-      <q-tooltip class="bg-white text-dark">Tambah pasangan</q-tooltip>
+      <q-tooltip class="bg-green-1 text-dark">Tambah pasangan</q-tooltip>
     </q-btn>
   </q-card-section>
 </template>

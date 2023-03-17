@@ -3,7 +3,7 @@ import { Notify } from "quasar";
 const notifySuccess = (message) => {
   Notify.create({
     color: "green-6",
-    textColor: "white",
+    textColor: "green-1",
     icon: "cloud_done",
     message: message
   });

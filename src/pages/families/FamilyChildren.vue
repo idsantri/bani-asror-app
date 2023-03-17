@@ -54,7 +54,7 @@
     </q-banner>
 
     <q-btn class="glossy btn-float" round color="secondary" icon="add" @click="addChild">
-      <q-tooltip class="bg-white text-dark">Tambahkan anak</q-tooltip>
+      <q-tooltip class="bg-green-1 text-dark">Tambahkan anak</q-tooltip>
     </q-btn>
 
   </q-card-section>

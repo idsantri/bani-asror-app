@@ -1,6 +1,6 @@
 <template>
   <q-card class="bg-green-8 text-green-1">
-    <q-tabs v-model="tab" class="text-green-5" active-color="white" indicator-color="green-3" align="justify"
+    <q-tabs v-model="tab" class="text-green-5" active-color="green-1" indicator-color="green-3" align="justify"
       narrow-indicator>
       <q-tab name="profile" label="Profil" />
       <q-tab name="family" label="Keluarga" />

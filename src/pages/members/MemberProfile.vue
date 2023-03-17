@@ -35,7 +35,7 @@
     </q-banner>
 
     <q-btn class="glossy btn-float" round color="green-10" icon="edit" @click="editMember">
-      <q-tooltip class="bg-white text-dark">Edit data</q-tooltip>
+      <q-tooltip class="bg-green-1 text-dark">Edit data</q-tooltip>
     </q-btn>
   </q-card-section>
 

@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card bg-secondary text-white q-pa-lg bg-green-8 text-green-1">
+  <q-card class="my-card bg-secondary text-green-1 q-pa-lg bg-green-8 text-green-1">
     <q-card-section class="no-padding q-mb-md">
       <h1 class="title">Bani Asror</h1>
       <h2 class="sub-title">{{ title }}</h2>

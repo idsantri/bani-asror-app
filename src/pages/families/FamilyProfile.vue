@@ -32,7 +32,7 @@
     </q-banner>
 
     <q-btn class="glossy btn-float" round color="negative" icon="delete" @click="deleteFamily">
-      <q-tooltip class="bg-white text-dark">Hapus keluarga ini</q-tooltip>
+      <q-tooltip class="bg-green-1 text-dark">Hapus keluarga ini</q-tooltip>
     </q-btn>
   </q-card-section>
 </template>
