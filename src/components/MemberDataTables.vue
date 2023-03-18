@@ -71,7 +71,7 @@ const options = ref({
       render: function (data, type, row, meta) {
         let result = null
         if (isNew.value) result = data
-        else result = `<span class="nama-link" onClick='goToMember(${row[0]})'>${row[1]}</span>`
+        else result = `<span class="nama-link" onclick='goToMember(${row[0]})'>${row[1]}</span>`
         return result
       },
     },
