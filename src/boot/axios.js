@@ -8,6 +8,7 @@ import axios from "axios";
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({ baseURL: "https://api.baniasror.net" });
+// const api = axios.create({ baseURL: "http://localhost:8080" });
 api.defaults.withCredentials = true;
 
 export default boot(({ app }) => {
