@@ -17,9 +17,13 @@ const showModalSearch = (param = {}) => {
   document.getElementById("btn-show-modal-search").click();
 };
 
+const closeModalSearch = () => {
+  document.getElementById("btn-close-modal-search").click();
+};
+
 const showModalCrud = (reset = true) => {
   if (reset) crudState();
   document.getElementById("btn-show-modal-crud").click();
 };
 
-export { forceRerender, showModalSearch, showModalCrud };
+export { forceRerender, showModalSearch, showModalCrud, closeModalSearch };

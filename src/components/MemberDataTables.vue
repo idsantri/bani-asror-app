@@ -23,33 +23,27 @@
 <script setup>
 import DataTable from "datatables.net-vue3";
 import DataTablesLib from "datatables.net-dt";
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-import memberCrudState from '../stores/member-crud-store'
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import memberCrud from '../stores/member-crud-store'
 import { useRouter } from 'vue-router';
 import api from '../config/api-tokened'
 import { toArray } from '../utils/array';
-import { notifySuccess } from "src/utils/notify";
-import { forceRerender } from '../utils/buttons-click'
+import { notifyError, notifySuccess } from "src/utils/notify";
+import { forceRerender, closeModalSearch } from '../utils/buttons-click'
 const router = useRouter()
 
 //pinia state
-const title = computed(() => memberCrudState().getTitle)
-const familyId = computed(() => memberCrudState().getFamilyId)
-const isHusband = computed(() => memberCrudState().getIsHusband)
-const isWife = computed(() => memberCrudState().getIsWife)
-const isChild = computed(() => memberCrudState().getIsChild)
-
-let refHusband = ref(isHusband)
-let refWife = ref(isWife)
-let refChild = ref(isChild)
-let isSearch = ref(true)
-watch([refHusband, refWife, refChild], ([newHusband, newWife, newChild]) => isSearch.value = !newHusband && !newWife && !newChild)
+const familyId = computed(() => memberCrud().getFamilyId)
+const isHusband = computed(() => memberCrud().getIsHusband)
+const isWife = computed(() => memberCrud().getIsWife)
+const isChild = computed(() => memberCrud().getIsChild)
+const isNew = computed(() => memberCrud().getIsNew)
 
 const url = `${api.defaults.baseURL}/members/search`
 const headers = { Authorization: api.defaults.headers.common.Authorization }
-
 DataTable.use(DataTablesLib);
 const options = ref({
+  isNew: isNew.value,
   processing: true,
   serverSide: true,
   responsive: true,
@@ -64,17 +58,28 @@ const options = ref({
       targets: 0,
       orderable: false,
       className: 'dt-body-center',
-      render: function (data, type, row) {
+      render: function (data, type, row, meta) {
+        let result = null
         const name = row[1].replace(/['"]+/g, '')
-        let button = `<button type='button' class='btn btn-copy' onclick='copyMemberId(${row[0]})'></button>`
-        button += `<button type='button' class='btn btn-add' onclick='addMemberTo(${row[0]},"${name}")'></button>`
-        return button
+        if (isNew.value) {
+          result = `<button type='button' class='btn btn-add' onclick='addMemberTo(${data},"${name}")'></button>`
+        }
+        else {
+          result = `<button type='button' class='btn btn-copy' onclick='copyMemberId(${data})'></button>`
+        }
+        return result
       },
     },
     {
       targets: 1,
-      render: function (data, type, row) {
-        const result = `<span class="nama-link" onClick='goToMember(${row[0]})'>${row[1]}</span>`
+      render: function (data, type, row, meta) {
+        let result = null
+        if (isNew.value) {
+          result = data
+        }
+        else {
+          result = `<span class="nama-link" onClick='goToMember(${row[0]})'>${row[1]}</span>`
+        }
         return result
       },
     },
@@ -85,7 +90,7 @@ const options = ref({
     info: 'Menampilkan _START_ hingga _END_, dari total _TOTAL_ data',
     // info: 'Halaman _PAGE_ dari _PAGES_ halaman',
     infoFiltered: '(disaring dari _MAX_ total data)',
-    paginate: { first: 'Pertama', previous: 'Sebelumnya', next: 'Selanjutnya', last: 'Terakhir' },
+    paginate: { first: '↑', previous: '←', next: '→', last: '↓' },
     lengthMenu: '_MENU_ Perhalaman',
   },
   autoWidth: false,
@@ -93,29 +98,20 @@ const options = ref({
 })
 
 onMounted(() => {
-  // console.log(isChild.value);
-  // if (memberState().getIsNew) document.getElementById('btn-add-new-member').style.display = 'block'
   document.addMemberTo = async (memberId, memberName) => {
-    // console.group(isHusband.value, isWife.value, isChild.value)
     const isConfirmed = confirm(`Tambahkan ${memberName}`)
     if (!isConfirmed) return
     try {
       let response
-      if (isHusband.value || isWife.value) {
-        const data = isHusband.value ? { suami_id: memberId } : { istri_id: memberId }
-        response = await api.put(`families/${familyId.value}`, data)
-      }
-      if (isChild.value) {
-        response = await api.post(`families/${familyId.value}/children`, { member_id: memberId })
-      }
-      document.getElementById('close-modal-search').click()
-      alert(response.data.message)
-
+      if (isHusband.value) response = await api.put(`families/${familyId.value}`, { suami_id: memberId })
+      if (isWife.value) response = await api.put(`families/${familyId.value}`, { istri_id: memberId })
+      if (isChild.value) response = await api.post(`families/${familyId.value}/children`, { member_id: memberId })
+      closeModalSearch()
+      notifySuccess(response.data.message)
       forceRerender()
-
     } catch (error) {
       toArray(error.response.data.message).forEach((errorMessage) => {
-        alert(errorMessage)
+        notifyError(errorMessage)
       })
     }
   };
@@ -127,7 +123,6 @@ onMounted(() => {
 
   document.goToMember = (id) => {
     router.push(`/members/${id}`)
-    // document.getElementById('close-modal-search').click()
   };
 });
 
@@ -137,11 +132,6 @@ onUnmounted(() => {
   delete document.goToMember;
 });
 
-const addNew = () => {
-  const isConfirmed = confirm(`Buat data baru? (${title.value})`)
-  if (!isConfirmed) return
-  document.getElementById('add-new-member').click()
-}
 </script>
 <style lang="scss">
 @import "datatables.net-dt";

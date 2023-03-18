@@ -71,11 +71,11 @@
       </div>
     </q-page-container>
 
-    <!-- modal cari member -->
+    <!-- modal search member -->
     <q-dialog v-model="showSearch" full-width>
       <q-card>
         <q-card-section class="bg-green-8 text-green-1 q-pa-sm">
-          <div class="text-h6 text-weight-light">{{ searchTitle }}</div>
+          <div class="text-h6 text-weight-light">Cari Anggota {{ familyStatus }}</div>
         </q-card-section>
         <q-card-section style="max-height: 75vh" class="scroll">
           <member-data-table />
@@ -84,7 +84,7 @@
         <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
           <q-btn :style="styleButtonNew" label="Baru" color="secondary" @click="addNew" />
           <q-space />
-          <q-btn label="Tutup" color="green-10" v-close-popup />
+          <q-btn label="Tutup" color="green-10" v-close-popup id="btn-close-modal-search" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -121,12 +121,16 @@ const leftDrawerOpen = ref(false);
 const componentKey = ref(0);
 const showSearch = ref(false)
 const showCrud = ref(false)
-const searchTitle = ref('')
+const familyStatus = ref('')
 const styleButtonNew = ref({ display: 'none' })
+
 const addNew = () => {
+  const isConfirmed = confirm(`Buat data baru? ${familyStatus.value}`)
+  if (!isConfirmed) return
   showSearch.value = false
   showModalCrud(false)
 }
+
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value
 const handlePageSubTitle = (value) => pageSubTitle.value = value
@@ -134,16 +138,15 @@ const forceRerender = () => componentKey.value++;
 const clickSearch = () => showModalSearch()
 
 watchEffect(() => {
-  let title = 'Cari Anggota'
   const { getIsNew, getIsHusband, getIsWife, getIsChild, } = memberCrudState()
   if (getIsNew) {
     styleButtonNew.value = { display: 'inline-flex' }
-    if (getIsHusband) searchTitle.value = `${title} (Suami)`
-    if (getIsWife) searchTitle.value = `${title} (Istri)`
-    if (getIsChild) searchTitle.value = `${title} (Anak)`
+    if (getIsHusband) familyStatus.value = '(Suami)'
+    if (getIsWife) familyStatus.value = '(Istri)'
+    if (getIsChild) familyStatus.value = '(Anak)'
   } else {
     styleButtonNew.value = { display: 'none' }
-    searchTitle.value = title
+    familyStatus.value = ''
   }
 })
 
@@ -153,7 +156,6 @@ watchEffect(() => {
   margin: 0;
   padding: 0;
 }
-
 
 .header-1 {
   font-weight: 500;
