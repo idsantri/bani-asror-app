@@ -61,12 +61,8 @@ const options = ref({
       render: function (data, type, row, meta) {
         let result = null
         const name = row[1].replace(/['"]+/g, '')
-        if (isNew.value) {
-          result = `<button type='button' class='btn btn-add' onclick='addMemberTo(${data},"${name}")'></button>`
-        }
-        else {
-          result = `<button type='button' class='btn btn-copy' onclick='copyMemberId(${data})'></button>`
-        }
+        if (isNew.value) result = `<button type='button' class='btn btn-add' onclick='addMemberTo(${data},"${name}")'></button>`
+        else result = `<button type='button' class='btn btn-copy' onclick='copyMemberId(${data})'></button>`
         return result
       },
     },
@@ -74,12 +70,8 @@ const options = ref({
       targets: 1,
       render: function (data, type, row, meta) {
         let result = null
-        if (isNew.value) {
-          result = data
-        }
-        else {
-          result = `<span class="nama-link" onClick='goToMember(${row[0]})'>${row[1]}</span>`
-        }
+        if (isNew.value) result = data
+        else result = `<span class="nama-link" onClick='goToMember(${row[0]})'>${row[1]}</span>`
         return result
       },
     },
