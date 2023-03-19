@@ -2,6 +2,12 @@ import Auth from "../layouts/AuthLayout.vue";
 import Dashboard from "../layouts/MainLayout.vue";
 const routes = [
   {
+    path: "/logout",
+    name: "Logout",
+    component: () => import("../pages/auth/LogoutPage.vue"),
+    meta: { title: "Logout" }
+  },
+  {
     path: "/",
     name: "Auth",
     component: Auth,
@@ -32,12 +38,7 @@ const routes = [
       }
     ]
   },
-  {
-    path: "/logout",
-    name: "Logout",
-    component: () => import("../pages/auth/LogoutPage.vue"),
-    meta: { title: "Logout" }
-  },
+
   {
     path: "/",
     name: "Dashboard",
@@ -68,14 +69,14 @@ const routes = [
         //     meta: { title: "Halaman Keluarga" }
         //   }
         // ]
-      }
+      },
 
-      // {
-      //   path: "profile",
-      //   name: "Profile",
-      //   component: () => import("./components/pages/profile"),
-      //   meta: { title: "Halaman Profil" }
-      // },
+      {
+        path: "users",
+        name: "Users",
+        component: () => import("../pages/users/UserIndex.vue"),
+        meta: { title: "Halaman Users" }
+      }
       // {
       //   path: "about",
       //   name: "About",
