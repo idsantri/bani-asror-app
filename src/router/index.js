@@ -48,7 +48,6 @@ export default route(function (/* { store, ssrContext } */) {
     if (!toAuthRoutes && !isAuthenticate) {
       next("/login");
     } else if (toAuthRoutes && isAuthenticate) {
-      console.log("not");
       history.go(-1);
     } else {
       next();
