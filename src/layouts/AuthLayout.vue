@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { api } from "src/boot/axios";
+import { api } from "../config/api";
 import { toArray } from "src/utils/array";
 import { useRouter } from "vue-router";
 

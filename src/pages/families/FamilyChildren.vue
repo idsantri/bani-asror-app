@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import api from '../../config/api-tokened';
+import { apiTokened } from "../../config/api";
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { toArray } from '../../utils/array';
@@ -74,7 +74,7 @@ const route = useRoute()
 const familyId = route.params.id.toString()
 
 try {
-  const response = await api.get(`families/${familyId}/children`)
+  const response = await apiTokened.get(`families/${familyId}/children`)
   Object.assign(children, response.data.data.children)
   // console.log(response.data.data.children);
 } catch (error) {
@@ -85,7 +85,7 @@ const deleteChild = async (id) => {
   const isConfirmed = confirm(`Hapus yang bersangkutan dari daftar anak?`)
   if (!isConfirmed) return
   try {
-    const response = await api.delete(`children/${id}`)
+    const response = await apiTokened.delete(`children/${id}`)
     // console.log(response.data);
     notifySuccess(response.data.message)
     forceRerender()
@@ -107,7 +107,7 @@ const addChild = () => {
 
 const submitUrut = async (id, urut) => {
   try {
-    const response = await api.put(`children/${id}/short`, { urut: urut })
+    const response = await apiTokened.put(`children/${id}/short`, { urut: urut })
     // console.log(response.data);
     notifySuccess(response.data.message)
     // document.getElementById('btn-force-rerender').click()
@@ -131,7 +131,7 @@ const urutChildren = async () => {
   const data = { id: i, urut: u }
   // console.log(data);
   try {
-    const response = await api.put('children/urut', data)
+    const response = await apiTokened.put('children/urut', data)
     // console.log(response.data);
     alert(response.data.message)
     // document.getElementById('btn-force-rerender').click()

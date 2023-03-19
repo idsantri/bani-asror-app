@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import api from '../../config/api-tokened';
+import { apiTokened } from "../../config/api";
 import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../../utils/array';
@@ -55,7 +55,7 @@ const route = useRoute()
 const memberId = route.params.id.toString()
 
 try {
-  const response = await api.get(`members/${memberId}/families`)
+  const response = await apiTokened.get(`members/${memberId}/families`)
   Object.assign(families, response.data.data.families)
   // console.log(families)
 } catch (error) {
@@ -68,7 +68,7 @@ const createFamily = async () => {
   const isConfirmed = confirm(`Tambahkan keluarga baru (${pasangan}) untuk ${nama}?`)
   if (!isConfirmed) return
   try {
-    const response = await api.post('families', { member_id: memberId })
+    const response = await apiTokened.post('families', { member_id: memberId })
     // console.log('new family', response.data)
     const familyId = response.data.data.family.id
     // console.log(familyId);

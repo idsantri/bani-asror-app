@@ -39,7 +39,7 @@
 
 
 import { reactive, toRefs, ref } from 'vue'
-import api from '../../config/api-tokened'
+import { apiTokened } from '../../config/api';
 import memberCrudState from '../../stores/member-crud-store';
 import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
@@ -56,7 +56,7 @@ const props = defineProps({
 })
 if (props.memberId || props.memberId === 0) {
   try {
-    const response = await api.get(`members/${props.memberId}`)
+    const response = await apiTokened.get(`members/${props.memberId}`)
     // console.log(response.data.data.member);
     Object.assign(member, response.data.data.member)
     Object.assign(parent, response.data.data.member);
@@ -89,7 +89,7 @@ const deletePasangan = async () => {
   const isConfirmed = confirm(`Hapus ${pasangan}?`)
   if (!isConfirmed) return
   try {
-    const response = await api.put(`families/${props.familyId}`, data)
+    const response = await apiTokened.put(`families/${props.familyId}`, data)
     // console.log('hapus pasangan', response.data);
     notifySuccess(response.data.message)
     forceRerender()

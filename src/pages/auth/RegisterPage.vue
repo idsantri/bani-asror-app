@@ -25,10 +25,11 @@
 </template>
 
 <script setup>
-import { api } from "src/boot/axios";
+import { api } from "../../config/api";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { toArray } from "../../utils/array";
+
 const router = useRouter();
 const username = ref("");
 const email = ref("");

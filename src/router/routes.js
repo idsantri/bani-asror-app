@@ -44,17 +44,6 @@ const routes = [
     component: Dashboard,
     children: [
       {
-        path: "search",
-        name: "Search",
-        component: () => import("../pages/search/SearchMember.vue"),
-        meta: { title: "Cari Anggota" }
-        // beforeEnter: (to, from, next) => {
-        // 	console.log('from ', from);
-        // 	console.log('to ', to);
-        // 	next();
-        // },
-      },
-      {
         path: "members/:id",
         name: "Members",
         component: () => import("../pages/members/MemberIndex.vue"),

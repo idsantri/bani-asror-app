@@ -39,7 +39,7 @@
 
 <script setup>
 import { toArray } from '../../utils/array';
-import api from '../../config/api-tokened';
+import { apiTokened } from "../../config/api";
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { notifySuccess, notifyError } from 'src/utils/notify';
@@ -49,7 +49,7 @@ const route = useRoute()
 const familyId = route.params.id
 
 try {
-  const response = await api.get(`families/${familyId}`)
+  const response = await apiTokened.get(`families/${familyId}`)
   Object.assign(family, response.data.data.family)
   // console.log(data);
 } catch (error) {
@@ -63,7 +63,7 @@ const submitAlamat = async (alamat) => {
   // console.log(alamat);
   // return
   try {
-    const response = await api.put(`families/${id.value}`, {
+    const response = await apiTokened.put(`families/${id.value}`, {
       alamat: alamat,
     })
     Object.assign(family, response.data.data.family)
@@ -79,7 +79,7 @@ const deleteFamily = async () => {
   const isConfirmed = confirm('Hapus Keluaga? \nAksi ini tidak dapat dibatalkan.\nData anak yang terhubung dengan id ini juga akan terhapus')
   if (!isConfirmed) return
   try {
-    const response = await api.delete(`families/${familyId}`)
+    const response = await apiTokened.delete(`families/${familyId}`)
     // console.log('hapus family', response.data);
     notifySuccess(response.data.message)
     history.back();

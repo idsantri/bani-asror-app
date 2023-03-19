@@ -26,7 +26,7 @@
   </q-card-section>
 </template>
 <script setup>
-import api from '../../config/api-tokened';
+import { apiTokened } from "../../config/api";
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -34,7 +34,7 @@ const children = reactive([])
 const route = useRoute()
 const memberId = route.params.id.toString()
 try {
-  const response = await api.get(`members/${memberId}/children`)
+  const response = await apiTokened.get(`members/${memberId}/children`)
   Object.assign(children, response.data.data.children)
 } catch (error) {
   console.log("Not Found: member -> children", error.response)

@@ -76,6 +76,7 @@ import MemberProfile from "./MemberProfile.vue";
 import MemberFamilies from "./MemberFamilies.vue";
 import MemberChildren from "./MemberChildren.vue";
 import memberState from '../../stores/member-store'
+
 const tab = ref("profile");
 const pageSubTitle = ref(null)
 watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)

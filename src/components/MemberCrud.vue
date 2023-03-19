@@ -47,7 +47,7 @@
 <script setup>
 import memberCrudState from '../stores/member-crud-store';
 import { toRefs, reactive, ref, computed, watchEffect } from 'vue';
-import api from '../config/api-tokened';
+import { apiTokened } from '../config/api';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../utils/array';
 import { useQuasar } from 'quasar'
@@ -105,7 +105,7 @@ const saveMember = async () => {
     if (isChild.value) url = `members/child/${familyId.value}`
     try {
       //is new
-      const response = await api.post(url, data)
+      const response = await apiTokened.post(url, data)
       closeModal()
       notifySuccess(response.data.message)
       forceRerender()
@@ -116,7 +116,7 @@ const saveMember = async () => {
   } else {
     //not new
     try {
-      const response = await api.put(`members/${memberId}`, data)
+      const response = await apiTokened.put(`members/${memberId}`, data)
       closeModal()
       notifySuccess(response.data.message)
       forceRerender()
@@ -130,7 +130,7 @@ const deleteMember = async (id) => {
   const isConfirmed = confirm("Hapus anggota? \nAksi ini tidak dapat dibatalkan.\nData keluarga yang terhubung dengan ID ini juga akan terpengaruh.")
   if (isConfirmed) {
     try {
-      const response = await api.delete(`members/${id}`)
+      const response = await apiTokened.delete(`members/${id}`)
       closeModal()
       notifySuccess(response.data.message)
       router.go(-2)

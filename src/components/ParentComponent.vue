@@ -27,10 +27,8 @@
 </template>
 <script setup>
 import { reactive, toRefs, } from 'vue'
-const props = defineProps({
-  parent: { type: Object },
-})
 
+const props = defineProps({ parent: { type: Object }, })
 const parent = reactive({
   keluarga_id: null,
   ayah_id: null,

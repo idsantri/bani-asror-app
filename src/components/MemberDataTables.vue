@@ -26,7 +26,7 @@ import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import memberCrud from '../stores/member-crud-store'
 import { useRouter } from 'vue-router';
-import api from '../config/api-tokened'
+import { apiTokened } from '../config/api'
 import { toArray } from '../utils/array';
 import { notifyError, notifySuccess } from "src/utils/notify";
 import { forceRerender, closeModalSearch } from '../utils/buttons-click'
@@ -39,8 +39,8 @@ const isWife = computed(() => memberCrud().getIsWife)
 const isChild = computed(() => memberCrud().getIsChild)
 const isNew = computed(() => memberCrud().getIsNew)
 
-const url = `${api.defaults.baseURL}/members/search`
-const headers = { Authorization: api.defaults.headers.common.Authorization }
+const url = `${apiTokened.defaults.baseURL}/members/search`
+const headers = { Authorization: apiTokened.defaults.headers.common.Authorization }
 DataTable.use(DataTablesLib);
 const options = ref({
   isNew: isNew.value,
@@ -95,9 +95,9 @@ onMounted(() => {
     if (!isConfirmed) return
     try {
       let response
-      if (isHusband.value) response = await api.put(`families/${familyId.value}`, { suami_id: memberId })
-      if (isWife.value) response = await api.put(`families/${familyId.value}`, { istri_id: memberId })
-      if (isChild.value) response = await api.post(`families/${familyId.value}/children`, { member_id: memberId })
+      if (isHusband.value) response = await apiTokened.put(`families/${familyId.value}`, { suami_id: memberId })
+      if (isWife.value) response = await apiTokened.put(`families/${familyId.value}`, { istri_id: memberId })
+      if (isChild.value) response = await apiTokened.post(`families/${familyId.value}/children`, { member_id: memberId })
       closeModalSearch()
       notifySuccess(response.data.message)
       forceRerender()
