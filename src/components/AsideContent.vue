@@ -85,7 +85,7 @@
     </q-item>
 
     <q-separator />
-    <q-item clickable v-ripple to="">
+    <q-item clickable v-ripple to="/users">
       <q-item-section avatar>
         <q-avatar color="green-3" text-color="green-10">
           <q-icon name="manage_accounts" size="sm" />

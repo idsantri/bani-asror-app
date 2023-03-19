@@ -70,7 +70,6 @@ const routes = [
         //   }
         // ]
       },
-
       {
         path: "users",
         name: "Users",
