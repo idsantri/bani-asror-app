@@ -136,8 +136,8 @@ const onRowClick = (row) => {
 const post = async (url) => {
   try {
     const response = await apiTokened.post(url)
-    notifySuccess(response.data.message)
     // console.log("s", response.data);
+    notifySuccess(response.data.message)
   } catch (error) {
     // console.log("e", error);
     toArray(error.response.data.message).forEach((errorMessage) => {
