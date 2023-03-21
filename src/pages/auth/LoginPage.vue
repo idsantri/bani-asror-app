@@ -49,9 +49,10 @@ const login = async () => {
       login: username.value,
       password: password.value,
     });
+    // console.log(response.data.data);
     authState().token = response.data.data.token
     authState().user = response.data.data.user
-    authState().group = response.data.data.group
+    authState().groups = response.data.data.groups
 
     apiTokened.defaults.headers.common["Authorization"] =
       "Bearer " + authState().getToken

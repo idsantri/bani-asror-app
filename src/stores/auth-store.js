@@ -4,23 +4,23 @@ const useAuthStore = defineStore("auth", {
   state: () => ({
     token: null,
     user: null,
-    group: null,
+    groups: null,
   }),
   getters: {
     getUser: (state) => state.user,
     getToken: (state) => state.token,
-    getGroup: (state) => state.group,
+    getGroup: (state) => state.groups,
   },
   actions: {
     setUser(payload) {
       console.log("setuser", payload);
-      if (payload.group) this.group = payload.group;
+      if (payload.groups) this.group = payload.groups;
       if (payload.user) this.user = payload.user;
       if (payload.token) this.token = payload.token;
     },
 
     clearUser() {
-      this.group = null;
+      this.groups = null;
       this.user = null;
       this.token = null;
     },

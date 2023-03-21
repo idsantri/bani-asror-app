@@ -1,16 +1,14 @@
 <template>
-  <q-card class="bg-green-8 text-green-1">
-    <suspense>
-      <template #default>
-        <user-data />
-      </template>
-      <template #fallback>
-        <div class="spinner">
-          <q-spinner-cube color="green-2" size="8em" />
-        </div>
-      </template>
-    </suspense>
-  </q-card>
+  <suspense>
+    <template #default>
+      <user-data />
+    </template>
+    <template #fallback>
+      <div class="spinner">
+        <q-spinner-cube color="green-2" size="8em" />
+      </div>
+    </template>
+  </suspense>
 </template>
 
 <script setup>
