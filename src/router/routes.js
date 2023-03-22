@@ -75,6 +75,12 @@ const routes = [
         name: "Users",
         component: () => import("../pages/users/UserIndex.vue"),
         meta: { title: "Halaman Users" }
+      },
+      {
+        path: "profile",
+        name: "Profile",
+        component: () => import("../pages/users/ProfileIndex.vue"),
+        meta: { title: "Halaman Profil" }
       }
       // {
       //   path: "about",

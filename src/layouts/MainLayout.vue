@@ -66,7 +66,16 @@
               <q-btn flat color="green-1" icon="search" @click="clickSearch" />
             </template>
           </q-banner>
-          <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle" />
+
+          <suspense>
+            <template #default>
+              <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle" />
+            </template>
+            <template #fallback>
+              loading...
+            </template>
+          </suspense>
+
         </div>
       </div>
     </q-page-container>
