@@ -72,7 +72,9 @@
               <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle" />
             </template>
             <template #fallback>
-              loading...
+              <div class="spinner">
+                <q-spinner-cube color="green-8" size="8em" />
+              </div>
             </template>
           </suspense>
 
@@ -160,7 +162,12 @@ watchEffect(() => {
 })
 
 </script>
-<style scoped >
+<style scoped>
+.spinner {
+  text-align: center;
+  margin: 30px auto;
+}
+
 .header {
   margin: 0;
   padding: 0;

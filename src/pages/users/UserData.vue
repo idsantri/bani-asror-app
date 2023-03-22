@@ -172,7 +172,6 @@ const toggleClick = (id, group, value) => {
     }).onCancel(() => {
       console.log('Aksi digagalkan');
     })
-
   }
 }
 

@@ -5,7 +5,7 @@
     </template>
     <template #fallback>
       <div class="spinner">
-        <q-spinner-cube color="green-2" size="8em" />
+        <q-spinner-cube color="green-4" size="8em" />
       </div>
     </template>
   </suspense>

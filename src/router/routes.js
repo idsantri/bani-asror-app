@@ -79,7 +79,7 @@ const routes = [
       {
         path: "profile",
         name: "Profile",
-        component: () => import("../pages/users/ProfileIndex.vue"),
+        component: () => import("../pages/profile/ProfileIndex.vue"),
         meta: { title: "Halaman Profil" }
       }
       // {
