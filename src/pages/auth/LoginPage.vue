@@ -49,6 +49,7 @@ const login = async () => {
       login: username.value,
       password: password.value,
     });
+    const memberId = response.data.data.user.member_id
     // console.log(response.data.data);
     authState().token = response.data.data.token
     authState().user = response.data.data.user
@@ -59,8 +60,9 @@ const login = async () => {
 
     setTimeout(() => {
       document.getElementById('spinner').classList.add('hide')
-      router.push("/members/0");
-    }, 2000);
+      if (memberId) router.push(`/members/${memberId}`);
+      else router.push('/profile')
+    }, 1500);
 
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
