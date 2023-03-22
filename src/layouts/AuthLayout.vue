@@ -1,7 +1,11 @@
 <template>
   <q-card class="my-card bg-secondary text-green-1 q-pa-lg bg-green-8 text-green-1">
     <q-card-section class="no-padding q-mb-md">
-      <h1 class="title">Bani Asror</h1>
+      <div class="container-title">
+        <h1 class="title">Aplikasi</h1>
+        <h1 class="title">{{ constanta.APP_NAME_2 }}</h1>
+      </div>
+      <q-separator dark />
       <h2 class="sub-title">{{ title }}</h2>
     </q-card-section>
 
@@ -22,6 +26,7 @@
 </template>
 
 <script setup>
+import constanta from "src/config/constanta";
 import { ref } from "vue";
 import { api } from "../config/api";
 import { toArray } from "src/utils/array";
@@ -75,6 +80,7 @@ const clickAnchor = (e) => {
   text-align: center;
   height: 30px;
   line-height: 30px;
+  margin-top: 10px;
 }
 
 .my-card {
@@ -84,7 +90,7 @@ const clickAnchor = (e) => {
   max-width: 400px;
 }
 
-.alert {
-  background: red;
+.container-title {
+  margin-bottom: 10px;
 }
 </style>

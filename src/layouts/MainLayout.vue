@@ -12,8 +12,9 @@
             <q-item clickable v-ripple class="no-padding" to="/">
               <q-item-section>
                 <q-item-label class="q-py-sm">
-                  <p class="header header-1"><span class="header-span">Silsilah</span> Bani Asror</p>
-                  <p class="header header-2">(Bujuk Langgundih)</p>
+                  <p class="header header-1"><span class="header-span">{{ constanta.APP_NAME_1 }}</span> {{
+                    constanta.APP_NAME_2 }}</p>
+                  <p class="header header-2">({{ constanta.ANCESTOR_ALIAS }})</p>
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -48,9 +49,9 @@
 
       <q-banner class="bg-transparent q-mt-md">
         <img src="../assets/logo.png" style="height: 100px; object-fit: cover;">
-        <p class="text-green-1 text-h6 text-weight-medium no-margin"> <span class="text-weight-light">Silsilah</span> Bani
-          Asror</p>
-        <p class="text-green-1 text-subtitle1 text-weight-light text-italic">(Bujuk Langgundih)</p>
+        <p class="text-green-1 text-h6 text-weight-medium no-margin"> <span class="text-weight-light">{{
+          constanta.APP_NAME_1 }}</span> {{ constanta.APP_NAME_2 }}</p>
+        <p class="text-green-1 text-subtitle1 text-weight-light text-italic">({{ constanta.ANCESTOR_ALIAS }})</p>
       </q-banner>
       <aside-content />
     </q-drawer>
@@ -125,6 +126,7 @@ import MemberDataTable from '../components/MemberDataTables.vue'
 import { showModalSearch, showModalCrud } from 'src/utils/buttons-click';
 import memberCrudState from '../stores/member-crud-store'
 import MemberCrud from "src/components/MemberCrud.vue";
+import constanta from "src/config/constanta";
 
 const pageTitle = ref("Data")
 const pageSubTitle = ref('')

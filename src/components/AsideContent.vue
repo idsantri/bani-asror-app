@@ -1,90 +1,19 @@
 <template>
   <q-list>
-    <q-item clickable v-ripple to="/members/1">
+    <q-item clickable v-ripple v-for="(side, index) in sideLinks" :key="index" :to="side.link">
       <q-item-section avatar>
         <q-avatar color="green-3" text-color="green-10">
-          <q-icon name="man" size="md" />
+          <q-icon :name="side.icon" size="md" />
         </q-avatar>
       </q-item-section>
       <q-item-section class="text-green-1">
-        <q-item-label>Asyiq</q-item-label>
-        <q-item-label caption>bin Asror</q-item-label>
-      </q-item-section>
-    </q-item>
-
-    <q-item clickable v-ripple to="/members/2">
-      <q-item-section avatar>
-        <q-avatar color="green-3" text-color="green-10">
-          <q-icon name="man" size="md" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section class="text-green-1">
-        <q-item-label>Nur Khotim</q-item-label>
-        <q-item-label caption>bin Asror</q-item-label>
-      </q-item-section>
-    </q-item>
-
-    <q-item clickable v-ripple to="/members/3">
-      <q-item-section avatar>
-        <q-avatar color="green-3" text-color="green-10">
-          <q-icon name="man" size="md" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section class="text-green-1">
-        <q-item-label>Umar</q-item-label>
-        <q-item-label caption>bin Asror</q-item-label>
-      </q-item-section>
-    </q-item>
-
-    <q-item clickable v-ripple to="/members/4">
-      <q-item-section avatar>
-        <q-avatar color="green-3" text-color="green-10">
-          <q-icon name="man" size="md" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section class="text-green-1">
-        <q-item-label>Muhyiddin</q-item-label>
-        <q-item-label caption>bin Asror</q-item-label>
-      </q-item-section>
-    </q-item>
-
-    <q-item clickable v-ripple to="/members/5">
-      <q-item-section avatar>
-        <q-avatar color="green-3" text-color="green-10">
-          <q-icon name="woman" size="md" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section class="text-green-1">
-        <q-item-label>Fulanah-1</q-item-label>
-        <q-item-label caption>bintu Asror</q-item-label>
-      </q-item-section>
-    </q-item>
-
-    <q-item clickable v-ripple to="/members/6">
-      <q-item-section avatar>
-        <q-avatar color="green-3" text-color="green-10">
-          <q-icon name="woman" size="md" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section class="text-green-1">
-        <q-item-label>Fulanah-2</q-item-label>
-        <q-item-label caption>bintu Asror</q-item-label>
-      </q-item-section>
-    </q-item>
-
-    <q-item clickable v-ripple to="/members/7">
-      <q-item-section avatar>
-        <q-avatar color="green-3" text-color="green-10">
-          <q-icon name="woman" size="md" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section class="text-green-1">
-        <q-item-label>Fulanah-3</q-item-label>
-        <q-item-label caption>bintu Asror</q-item-label>
+        <q-item-label>{{ side.name }}</q-item-label>
+        <q-item-label caption>{{ side.caption }}</q-item-label>
       </q-item-section>
     </q-item>
 
     <q-separator />
+
     <q-item clickable v-ripple to="/users">
       <q-item-section avatar>
         <q-avatar color="green-3" text-color="green-10">
@@ -114,5 +43,49 @@
 <script setup>
 const idsantri = () => window.location.replace("https://fb.me/idsantri.page");
 
+const sideLinks = [
+  {
+    name: 'Asyiq',
+    caption: 'bin Asror',
+    icon: 'man',
+    link: '/members/1',
+  },
+  {
+    name: 'Nur Khotim',
+    caption: 'bin Asror',
+    icon: 'man',
+    link: '/members/2',
+  },
+  {
+    name: 'Umar',
+    caption: 'bin Asror',
+    icon: 'man',
+    link: '/members/3',
+  },
+  {
+    name: 'Muhyiddin',
+    caption: 'bin Asror',
+    icon: 'man',
+    link: '/members/4',
+  },
+  {
+    name: 'Fulanah-1',
+    caption: 'bintu Asror',
+    icon: 'woman',
+    link: '/members/5',
+  },
+  {
+    name: 'Fulanah-2',
+    caption: 'bintu Asror',
+    icon: 'woman',
+    link: '/members/6',
+  },
+  {
+    name: 'Fulanah-3',
+    caption: 'bintu Asror',
+    icon: 'woman',
+    link: '/members/7',
+  },
+]
 </script>
 <style lang="scss" scoped></style>

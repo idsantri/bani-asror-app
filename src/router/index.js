@@ -8,6 +8,7 @@ import {
 import routes from "./routes";
 import { nextTick } from "vue";
 import authStore from "../stores/auth-store";
+import constanta from "src/config/constanta";
 
 /*
  * If not building with SSR mode, you can
@@ -54,7 +55,7 @@ export default route(function (/* { store, ssrContext } */) {
     }
   });
 
-  const DEFAULT_TITLE = "Bani Asror";
+  const DEFAULT_TITLE = constanta.APP_NAME_2;
   Router.afterEach((to) => {
     nextTick(() => {
       document.title = to.meta.title
