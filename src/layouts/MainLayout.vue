@@ -20,8 +20,8 @@
             </q-item>
           </q-list>
         </q-toolbar-title>
-        <q-btn round flat dense icon="notifications" disabled color="green-1">
-          <q-badge floating color="info" rounded />
+        <q-btn round flat dense icon="notifications" color="green-1" to="/reports">
+          <q-badge floating color="red" rounded />
         </q-btn>
         <q-btn-dropdown flat round dense dropdown-icon="more_vert" class="q-pl-md" color="green-1">
 
@@ -40,7 +40,6 @@
               </q-item-section>
             </q-item>
           </q-list>
-
         </q-btn-dropdown>
       </q-toolbar>
     </q-header>

@@ -81,6 +81,12 @@ const routes = [
         name: "Profile",
         component: () => import("../pages/profile/ProfileIndex.vue"),
         meta: { title: "Halaman Profil" }
+      },
+      {
+        path: "reports",
+        name: "Reports",
+        component: () => import("../pages/reports/IntroductionIndex.vue"),
+        meta: { title: "Halaman Laporan" }
       }
       // {
       //   path: "about",
