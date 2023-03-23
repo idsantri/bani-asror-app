@@ -74,7 +74,10 @@ const editPasangan = () => {
 }
 
 const deletePasangan = async () => {
-  if (!props.memberId) return
+  if (!props.memberId) {
+    notifyError('Setidaknya ada salah satu pasangan dalam keluarga.')
+    return
+  }
 
   let pasangan
   let data
