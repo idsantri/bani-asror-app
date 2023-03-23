@@ -89,6 +89,7 @@ emit("pageSubTitle", pageSubTitle);
 const report = () => {
   notifyError('Fitur belum siap.')
 }
+
 const print = () => {
   notifyError('Fitur belum siap.')
 }
