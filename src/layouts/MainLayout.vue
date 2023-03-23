@@ -182,6 +182,7 @@ onMounted(async () => {
     deferredPrompt.value = e
   })
 })
+
 const pwaIsInstalled = computed(() => {
   if (window.matchMedia('(display-mode:standalone)').matches) {
     console.log('this is standalone');
@@ -190,6 +191,7 @@ const pwaIsInstalled = computed(() => {
   console.log('this is not standalone');
   return false
 })
+
 const installApp = async () => {
   deferredPrompt.value.prompt()
   const { outcome } = await deferredPrompt.value.userChoice
