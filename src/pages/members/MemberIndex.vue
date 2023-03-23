@@ -6,22 +6,22 @@
       <q-tab name="family" label="Keluarga" />
       <q-tab name="child" label="Anak" />
 
-      <!-- <q-btn-dropdown flat round dense dropdown-icon="more_vert" class="q-pl-md" color="green-1">
+      <q-btn-dropdown flat round dense dropdown-icon="more_vert" class="q-pl-md" color="green-1">
         <q-list>
-          <q-item clickable v-close-popup to="/profile">
+          <q-item clickable v-close-popup @click="print">
             <q-item-section>Cetak</q-item-section>
             <q-item-section avatar>
-              <q-icon color="green" name="3p" />
+              <q-icon color="green" name="print" />
             </q-item-section>
           </q-item>
-          <q-item clickable v-close-popup to="/logout">
+          <q-item clickable v-close-popup @click="report">
             <q-item-section>Lapor</q-item-section>
             <q-item-section avatar>
-              <q-icon color="red" name="logout" />
+              <q-icon color="red" name="report_problem" />
             </q-item-section>
           </q-item>
         </q-list>
-      </q-btn-dropdown> -->
+      </q-btn-dropdown>
 
     </q-tabs>
 
@@ -76,6 +76,7 @@ import MemberProfile from "./MemberProfile.vue";
 import MemberFamilies from "./MemberFamilies.vue";
 import MemberChildren from "./MemberChildren.vue";
 import memberState from '../../stores/member-store'
+import { notifyError } from "src/utils/notify";
 
 const tab = ref("profile");
 const pageSubTitle = ref(null)
@@ -84,6 +85,13 @@ watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberSt
 const emit = defineEmits(["pageTitle", "pageSubTitle"]);
 emit("pageTitle", "Data Anggota");
 emit("pageSubTitle", pageSubTitle);
+
+const report = () => {
+  notifyError('Fitur belum siap.')
+}
+const print = () => {
+  notifyError('Fitur belum siap.')
+}
 
 </script>
 <style scoped>
