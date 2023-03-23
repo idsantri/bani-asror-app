@@ -119,28 +119,7 @@ const submitUrut = async (id, urut) => {
   }
 }
 
-// hapus
-const urutChildren = async () => {
-  let i = [];
-  let u = []
-  children.forEach((child) => {
-    i.push(child.id);
-    u.push(child.urut);
-  })
 
-  const data = { id: i, urut: u }
-  // console.log(data);
-  try {
-    const response = await apiTokened.put('children/urut', data)
-    // console.log(response.data);
-    alert(response.data.message)
-    // document.getElementById('btn-force-rerender').click()
-  } catch (error) {
-    toArray(error.response.data.message).forEach((errorMessage) => {
-      alert(errorMessage)
-    })
-  }
-}
 </script>
 
 <style scoped>

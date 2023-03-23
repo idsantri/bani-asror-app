@@ -55,7 +55,7 @@ try {
 } catch (error) {
   // console.log("Not Found: family -> detail", error.response);
   toArray(error.response.data.message).forEach((errorMessage) => {
-    alert(errorMessage)
+    notifyError(errorMessage)
   })
 }
 const { suami_id, istri_id, id, alamat } = toRefs(family)

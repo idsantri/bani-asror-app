@@ -143,6 +143,7 @@ const post = async (url) => {
     toArray(error.response.data.message).forEach((errorMessage) => {
       notifyError(errorMessage)
     })
+  } finally {
     forceRerender()
   }
 }
@@ -160,7 +161,6 @@ const toggleClick = (id, group, value) => {
     }).onCancel(() => {
       console.log('Aksi digagalkan');
     })
-
   } else {
     url = `user-group/remove/${id}/${group}`
     $q.dialog({
