@@ -40,7 +40,6 @@
 
 import { reactive, toRefs, ref } from 'vue'
 import { apiTokened } from '../../config/api';
-import memberCrudState from '../../stores/member-crud-store';
 import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
 import { notifySuccess, notifyError } from '../../utils/notify';
