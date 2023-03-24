@@ -4,3 +4,6 @@
 - users page -> edit member_id
 - prompt
 - alert
+- dashboard
+- lapor!
+- print
