@@ -2,9 +2,7 @@ import { Notify } from "quasar";
 
 const notifySuccess = (message) => {
   Notify.create({
-    color: "green-6",
-    textColor: "green-1",
-    icon: "cloud_done",
+    type: "positive",
     message: message
   });
 };
@@ -14,4 +12,15 @@ const notifyError = (message) => {
     message: message
   });
 };
-export { notifySuccess, notifyError };
+const notifyWarning = (message) => {
+  Notify.create({
+    type: "warning",
+    message: message
+  });
+};
+
+const notifyWarningExpired = () => {
+  notifyWarning("Sesi telah berakhir.");
+  notifyWarning("Anda perlu keluar lalu masuk lagi!");
+};
+export { notifySuccess, notifyError, notifyWarning, notifyWarningExpired };

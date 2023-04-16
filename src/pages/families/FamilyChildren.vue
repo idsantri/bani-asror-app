@@ -65,7 +65,7 @@ import { apiTokened } from "../../config/api";
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { toArray } from '../../utils/array';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import { notifyError, notifySuccess, notifyWarning, notifyWarningExpired } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import { showModalSearch } from 'src/utils/buttons-click';
 
@@ -78,7 +78,11 @@ try {
   Object.assign(children, response.data.data.children)
   // console.log(response.data.data.children);
 } catch (error) {
-  console.log("Not Found: family -> children", error.response)
+  // console.log("Not Found: family -> children", error.response)
+  const errMsg = toArray(error.response.data.message)
+  const exp = errMsg.some(item => item.toLowerCase().includes("expired"))
+  if (exp) notifyWarningExpired()
+  else errMsg.forEach((message) => notifyError(message))
 }
 
 const deleteChild = async (id) => {

@@ -42,7 +42,7 @@ import { toArray } from '../../utils/array';
 import { apiTokened } from "../../config/api";
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { notifySuccess, notifyError } from 'src/utils/notify';
+import { notifySuccess, notifyError, notifyWarning, notifyWarningExpired } from 'src/utils/notify';
 import FamilyProfileParent from './FamilyProfileSplit.vue';
 const family = reactive({})
 const route = useRoute()
@@ -51,12 +51,12 @@ const familyId = route.params.id
 try {
   const response = await apiTokened.get(`families/${familyId}`)
   Object.assign(family, response.data.data.family)
-  // console.log(data);
 } catch (error) {
   // console.log("Not Found: family -> detail", error.response);
-  toArray(error.response.data.message).forEach((errorMessage) => {
-    notifyError(errorMessage)
-  })
+  const errMsg = toArray(error.response.data.message)
+  const exp = errMsg.some(item => item.toLowerCase().includes("expired"))
+  if (exp) notifyWarningExpired()
+  else errMsg.forEach((message) => notifyError(message))
 }
 const { suami_id, istri_id, id, alamat } = toRefs(family)
 const submitAlamat = async (alamat) => {

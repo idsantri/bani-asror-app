@@ -7,8 +7,8 @@ import axios from "axios";
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const baseUrl = axios.create({ baseURL: "https://api.baniasror.net" });
-// const baseUrl = axios.create({ baseURL: "http://localhost:8080" });
+// const baseUrl = axios.create({ baseURL: "https://api.baniasror.net" });
+const baseUrl = axios.create({ baseURL: "http://localhost:8080" });
 baseUrl.defaults.withCredentials = true;
 
 export default boot(({ app }) => {

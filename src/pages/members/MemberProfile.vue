@@ -52,6 +52,8 @@ import ParentComponent from "src/components/ParentComponent.vue";
 import memberState from '../../stores/member-store'
 import memberCrudState from '../../stores/member-crud-store'
 import { showModalCrud } from "src/utils/buttons-click";
+import { toArray } from "src/utils/array";
+import { notifyError, notifyWarning, notifyWarningExpired } from "src/utils/notify";
 
 const member = reactive({});
 const parent = reactive({});
@@ -79,7 +81,11 @@ try {
   if (member.lp.toUpperCase() == 'L') sexIcon.value = 'man'
   if (member.lp.toUpperCase() == 'P') sexIcon.value = 'woman'
 } catch (error) {
-  console.log("Not Found: member -> detail", error.response);
+  // console.log("Not Found: member -> detail", error.response);
+  const errMsg = toArray(error.response.data.message)
+  const exp = errMsg.some(item => item.toLowerCase().includes("expired"))
+  if (exp) notifyWarningExpired()
+  else errMsg.forEach((message) => notifyError(message))
 }
 
 const { alamat, alias, ayah, ayah_id, ibu, ibu_id, nama, nama_arab, tgl_wafat, usia_wafat, catatan, lp, keluarga_id, } = toRefs(member);

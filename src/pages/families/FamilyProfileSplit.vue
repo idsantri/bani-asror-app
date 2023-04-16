@@ -42,7 +42,7 @@ import { reactive, toRefs, ref } from 'vue'
 import { apiTokened } from '../../config/api';
 import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
-import { notifySuccess, notifyError } from '../../utils/notify';
+import { notifySuccess, notifyError, notifyWarning, notifyWarningExpired } from '../../utils/notify';
 import { showModalSearch, forceRerender } from 'src/utils/buttons-click';
 
 const fab = ref(false)
@@ -60,7 +60,11 @@ if (props.memberId || props.memberId === 0) {
     Object.assign(member, response.data.data.member)
     Object.assign(parent, response.data.data.member);
   } catch (error) {
-    console.log("Not Found: member -> detail", error.response);
+    // console.log("Not Found: member -> detail", error.response);
+    const errMsg = toArray(error.response.data.message)
+    const exp = errMsg.some(item => item.toLowerCase().includes("expired"))
+    if (exp) notifyWarningExpired()
+    else errMsg.forEach((message) => notifyError(message))
   }
 }
 const { id, nama, ayah, ayah_id, ibu, ibu_id, keluarga_id, avatar, lp } = toRefs(member)

@@ -26,9 +26,11 @@
   </q-card-section>
 </template>
 <script setup>
+import { toArray } from "src/utils/array";
 import { apiTokened } from "../../config/api";
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
+import { notifyWarning, notifyWarningExpired } from "src/utils/notify";
 
 const children = reactive([])
 const route = useRoute()
@@ -37,7 +39,11 @@ try {
   const response = await apiTokened.get(`members/${memberId}/children`)
   Object.assign(children, response.data.data.children)
 } catch (error) {
-  console.log("Not Found: member -> children", error.response)
+  // console.log("Not Found: member -> children", error.response)
+  const errMsg = toArray(error.response.data.message)
+  const exp = errMsg.some(item => item.toLowerCase().includes("expired"))
+  if (exp) notifyWarningExpired()
+  else errMsg.forEach((message) => notifyError(message))
 }
 
 </script>

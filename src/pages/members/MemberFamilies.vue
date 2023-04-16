@@ -47,7 +47,7 @@ import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../../utils/array';
 import memberState from '../../stores/member-store'
-import { notifyError } from 'src/utils/notify';
+import { notifyError, notifyWarning, notifyWarningExpired } from 'src/utils/notify';
 
 const families = reactive([])
 const router = useRouter()
@@ -59,7 +59,11 @@ try {
   Object.assign(families, response.data.data.families)
   // console.log(families)
 } catch (error) {
-  console.log("Not Found: member -> families", error.response);
+  // console.log("Not Found: member -> families", error.response);
+  const errMsg = toArray(error.response.data.message)
+  const exp = errMsg.some(item => item.toLowerCase().includes("expired"))
+  if (exp) notifyWarningExpired()
+  else errMsg.forEach((message) => notifyError(message))
 }
 
 const createFamily = async () => {
