@@ -14,22 +14,17 @@
                   ]" @update:modelValue="child.urut = scope.value" />
               </q-popup-edit>
 
-
             </q-badge>
           </q-avatar>
+
           <q-item-section>
-
-
             <q-list clickable v-ripple>
               <q-item class="no-padding" dense :to="/members/ + child.member_id">
                 <q-item-section>
-                  <!-- <q-item-label caption>{{ memberSex == 'L' ? 'Suami' : 'Istri' }}</q-item-label> -->
-                  <!-- <q-item-label class="text-h5 no-margin">{{ nama ? nama : '?' }}</q-item-label> -->
                   <q-item-label> {{ child.nama }}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
-
 
           </q-item-section>
 

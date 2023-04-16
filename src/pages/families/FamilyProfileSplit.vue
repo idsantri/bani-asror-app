@@ -11,7 +11,7 @@
             <q-item clickable v-ripple class="no-padding" dense :to="id ? '/members/' + id : null">
               <q-item-section>
                 <q-item-label caption>{{ memberSex == 'L' ? 'Suami' : 'Istri' }}</q-item-label>
-                <q-item-label class="text-h5 no-margin">{{ nama ? nama : '?' }}</q-item-label>
+                <q-item-label class="text-h6 no-margin text-weight-regular">{{ nama ? nama : '?' }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>

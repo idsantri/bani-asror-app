@@ -9,7 +9,7 @@
               <q-item clickable v-ripple class="no-padding" dense
                 :to="family.pasangan_id ? '/members/' + family.pasangan_id : null">
                 <q-item-section>
-                  <q-item-label class="text-h5 no-margin">
+                  <q-item-label class="text-h6 no-margin text-weight-regular">
                     {{ family.pasangan_id ? family.pasangan : '?' }}
                   </q-item-label>
                   <q-item-label caption>Jumlah anak: {{ family.children_count }}</q-item-label>

@@ -1,7 +1,7 @@
 <template>
   <q-banner class="no-padding no-margin bg-transparent">
     <template #avatar>
-      <q-avatar rounded icon="diversity_3" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
+      <q-avatar rounded icon="family_restroom" color="green-10" text-color="green-3" font-size=".6em"></q-avatar>
     </template>
     <q-list>
       <q-item class="no-padding">
