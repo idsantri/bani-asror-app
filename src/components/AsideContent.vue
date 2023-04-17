@@ -1,5 +1,18 @@
 <template>
   <q-list>
+    <q-item clickable v-ripple to="/home">
+      <q-item-section avatar>
+        <q-avatar color="green-3" text-color="green-10">
+          <q-icon name="home" size="sm" />
+        </q-avatar>
+      </q-item-section>
+      <q-item-section class="text-green-1">
+        <q-item-label>Beranda</q-item-label>
+        <q-item-label caption></q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-separator />
+
     <q-item clickable v-ripple v-for="(side, index) in sideLinks" :key="index" :to="side.link">
       <q-item-section avatar>
         <q-avatar color="green-3" text-color="green-10">

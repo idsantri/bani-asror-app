@@ -1,12 +1,11 @@
+- pindah tombol cari -- done
 - notify report count
 - route tab
-- pull request
 - users page -> edit member_id
 - prompt
 - alert
 - dashboard
 - lapor!
 - print
-- pindah tombol cari
 - search, bedakan admin vs member
 

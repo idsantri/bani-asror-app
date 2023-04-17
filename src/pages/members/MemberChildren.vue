@@ -30,7 +30,7 @@ import { toArray } from "src/utils/array";
 import { apiTokened } from "../../config/api";
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import { notifyWarning, notifyWarningExpired } from "src/utils/notify";
+import { notifyError, notifyWarning, notifyWarningExpired } from "src/utils/notify";
 
 const children = reactive([])
 const route = useRoute()
@@ -43,6 +43,7 @@ try {
   const errMsg = toArray(error.response.data.message)
   const exp = errMsg.some(item => item.toLowerCase().includes("expired"))
   if (exp) notifyWarningExpired()
+  else if (error.response.status == 404) console.log(error.response);
   else errMsg.forEach((message) => notifyError(message))
 }
 

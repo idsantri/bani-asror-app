@@ -66,13 +66,13 @@
     <q-page-container :key="componentKey">
       <div class="q-pa-sm">
         <div class="q-gutter-y-sm">
-          <q-banner class="bg-green-9 text-green-1" inline-actions>
+          <q-banner v-if="pageTitle" class="bg-green-9 text-green-1" inline-actions>
             <h2 class="text-h6 no-margin text-weight-light">{{ pageTitle }}</h2>
             <p class="no-margin text-weight-light" v-if="pageSubTitle">{{ pageSubTitle.value }}</p>
             <!-- tombol cari -->
-            <template v-slot:action>
+            <!-- <template v-slot:action>
               <q-btn flat color="green-1" icon="search" @click="clickSearch" />
-            </template>
+            </template> -->
           </q-banner>
 
           <suspense>
@@ -85,9 +85,13 @@
               </div>
             </template>
           </suspense>
-
         </div>
       </div>
+
+      <!-- TOMBOL CARI -->
+      <q-btn round color="green-8" class="absolute absolute-bottom-right q-mr-lg q-mb-xl" icon="search"
+        @click="clickSearch" />
+
     </q-page-container>
 
     <!-- modal search member -->

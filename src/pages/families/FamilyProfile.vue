@@ -56,6 +56,7 @@ try {
   const errMsg = toArray(error.response.data.message)
   const exp = errMsg.some(item => item.toLowerCase().includes("expired"))
   if (exp) notifyWarningExpired()
+  else if (error.response.status == 404) console.log(error.response);
   else errMsg.forEach((message) => notifyError(message))
 }
 const { suami_id, istri_id, id, alamat } = toRefs(family)
