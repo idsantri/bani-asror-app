@@ -62,11 +62,29 @@
             </q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable v-ripple :to="user.member_id ? '/members/' + user.member_id : null">
+        <q-item>
           <q-item-section>
-            <q-item-label overline>Nama</q-item-label>
-            <q-item-label>
-              {{ user.nama ? user.nama + ' (' + user.lp + ')' : '-' }}
+            <q-item clickable v-ripple :to="user.member_id ? '/members/' + user.member_id : null" class="no-padding">
+              <q-item-section>
+                <q-item-label overline>Nama</q-item-label>
+                <q-item-label>
+                  {{ user.nama ? user.nama + ' (' + user.lp + ')' : '-' }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-item-section>
+          <q-item-section side>
+            <q-item-label class="text-green-10 cursor-pointer">
+              {{ user.member_id ? user.member_id : "?" }}
+              <q-popup-edit v-model="user.member_id" autofocus v-slot="scope">
+                <q-input autofocus dense v-model="user.member_id" :model-value="user.member_id" hint="Member ID">
+                  <template v-slot:after>
+                    <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
+                    <q-btn flat dense color="positive" icon="check_circle"
+                      @click.stop.prevent="updateMemberId(user.id)" />
+                  </template>
+                </q-input>
+              </q-popup-edit>
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -175,5 +193,20 @@ const toggleClick = (id, group, value) => {
   }
 }
 
+const updateMemberId = async (id) => {
+  const isConfirmed = confirm("Update?")
+  if (!isConfirmed) return
+  try {
+    const response = await apiTokened.put(`users/${id}`, {
+      member_id: user.member_id
+    })
+    notifySuccess(response.data.message)
+    forceRerender()
+  } catch (error) {
+    toArray(error.response.data.message).forEach(message => {
+      notifyError(message)
+    })
+  }
+}
 </script>
 

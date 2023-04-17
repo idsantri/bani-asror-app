@@ -1,9 +1,10 @@
-- pindah tombol cari -- done
-- dashboard -- done
-- notify report count
+- pindah tombol cari => done
+- dashboard => done
+- users page -> edit member_id => done
+- donasi
 - route tab
-- users page -> edit member_id
-- prompt
+- notify report count
+- confirm
 - alert
 - lapor!
 - print
