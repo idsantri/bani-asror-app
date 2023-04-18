@@ -73,8 +73,8 @@
               </q-item-section>
             </q-item>
           </q-item-section>
-          <q-item-section side>
-            <q-item-label class="text-green-10 cursor-pointer">
+          <q-item-section side class="no-padding bg-green-11">
+            <q-item-label class="text-green-10 cursor-pointer q-px-lg">
               {{ user.member_id ? user.member_id : "?" }}
               <q-popup-edit v-model="user.member_id" autofocus v-slot="scope">
                 <q-input autofocus dense v-model="user.member_id" :model-value="user.member_id" hint="Member ID">
