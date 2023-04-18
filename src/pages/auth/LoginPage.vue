@@ -19,7 +19,7 @@
       </div>
     </form>
     <div class="spinner" id="spinner">
-      <q-spinner-cube color="green-2" size="16em" />
+      <q-spinner-cube color="green-12" size="14em" />
     </div>
   </div>
 </template>
@@ -50,7 +50,6 @@ const login = async () => {
       password: password.value,
     });
     const memberId = response.data.data.user.member_id
-    // console.log(response.data.data);
     authState().token = response.data.data.token
     authState().user = response.data.data.user
     authState().groups = response.data.data.groups
@@ -58,17 +57,14 @@ const login = async () => {
     apiTokened.defaults.headers.common["Authorization"] =
       "Bearer " + authState().getToken
 
-    setTimeout(() => {
-      document.getElementById('spinner').classList.add('hide')
-      if (memberId) router.push(`/members/${memberId}`);
-      else router.push('/profile')
-    }, 1500);
+    if (memberId) router.push(`/members/${memberId}`);
+    else router.push('/profile')
 
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
+  } finally {
     document.getElementById('spinner').classList.add('hide')
   }
-
 };
 </script>
 <style scoped lang="scss">

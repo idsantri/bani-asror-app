@@ -21,6 +21,7 @@
         </q-card>
       </div>
     </form>
+    <q-spinner-cube v-show="showSpinner" color="green-12" size="14em" class="absolute-center " />
   </div>
 </template>
 
@@ -38,10 +39,13 @@ const password_confirm = ref("");
 const emit = defineEmits(["title", "errors"]);
 emit("title", "Daftar");
 emit("errors", []);
+const showSpinner = ref(false)
+
 
 const register = async () => {
   emit("errors", []);
   try {
+    showSpinner.value = true
     const response = await api.post("register", {
       username: username.value,
       email: email.value,
@@ -52,9 +56,8 @@ const register = async () => {
     router.push({ name: "Login" });
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
-    // toArray(error.response.data.message).forEach(error => {
-    //   alert(error)
-    // });
+  } finally {
+    showSpinner.value = false
   }
 };
 </script>
