@@ -22,7 +22,9 @@
     <q-card-section class="no-padding no-margin">
       <router-view @title="handleTitle" @errors="handleErrors" />
     </q-card-section>
+
   </q-card>
+  <q-spinner-cube v-show="showSpinner" color="green-12" size="14em" class="absolute-center " />
 </template>
 
 <script setup>
@@ -32,6 +34,7 @@ import { api } from "../config/api";
 import { toArray } from "src/utils/array";
 import { useRouter } from "vue-router";
 
+const showSpinner = ref(false)
 const router = useRouter();
 const title = ref("Autentikasi");
 const handleTitle = (value) => (title.value = value);
@@ -50,12 +53,15 @@ const clickAnchor = (e) => {
       e.preventDefault();
       const href = anchor.href.replace("%2540", "@");
       try {
+        showSpinner.value = true
         const response = await api.get(href);
         // console.log("res", response);
         alert(response.data.message);
         await router.push("/login");
       } catch (error) {
         errors.value = toArray(error.response.data.message);
+      } finally {
+        showSpinner.value = false
       }
     });
   }
