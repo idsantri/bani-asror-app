@@ -45,6 +45,12 @@ const routes = [
     component: Dashboard,
     children: [
       {
+        path: "about",
+        name: "About",
+        component: () => import("../pages/about/AboutIndex.vue"),
+        meta: { title: "About" }
+      },
+      {
         path: "home",
         name: "Home",
         component: () => import("../pages/home/HomeIndex.vue"),

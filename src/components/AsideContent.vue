@@ -39,7 +39,7 @@
       </q-item-section>
     </q-item>
 
-    <q-item clickable v-ripple to="" @click="idsantri">
+    <q-item clickable v-ripple to="/about">
       <q-item-section avatar>
         <q-avatar color="green-3" text-color="green-10">
           <q-icon name="contact_mail" size="sm" />
@@ -54,7 +54,7 @@
   </q-list>
 </template>
 <script setup>
-const idsantri = () => window.location.replace("https://fb.me/idsantri.page");
+
 
 const sideLinks = [
   {

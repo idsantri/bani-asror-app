@@ -1,7 +1,18 @@
 <template>
-  <div class="text-green-10">
-    <span v-html="article"></span>
-  </div>
+  <!-- <span v-html="article"></span> -->
+  <q-card class="text-green-10">
+    <q-card-section>
+      <p>
+        Aplikasi ini dibuat oleh perorangan secara sukarela.
+      </p>
+      <p>Untuk memberikan donasi, <a href="https://trakteer.id/bani-asror/tip" target="_blank"
+          class="text-weight-bold text-italic">klik
+          tautan ini.</a>
+      </p>
+    </q-card-section>
+  </q-card>
+
+
   <q-btn v-if="showButtonEdit()" @click="showModal = true" round color="green-8" icon="edit"
     class="absolute-bottom-left q-ml-md q-mb-xl" />
   <q-dialog v-model="showModal" maximized>
@@ -28,9 +39,9 @@ import useQuasar from 'quasar/src/composables/use-quasar.js';
 
 const $q = useQuasar()
 const emit = defineEmits(["pageTitle", "pageSubTitle"]);
-emit("pageTitle", "Ahlan wa Sahlan …");
+emit("pageTitle", "Tentang …");
 emit("pageSubTitle", null);
-
+const idsantri = () => window.location.replace("https://fb.me/idsantri.page");
 const showModal = ref(false)
 const article = ref('')
 const articleEdit = ref('')
@@ -50,7 +61,7 @@ try {
 }
 
 const showButtonEdit = () => {
-  if (useAuthStore().getGroup.is_superadmin || useAuthStore().getGroup.is_admin) {
+  if (useAuthStore().getGroup.is_admin) {
     return true
   }
   return false
