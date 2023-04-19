@@ -56,9 +56,10 @@ import { reactive } from 'vue';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 
-const emit = defineEmits(["pageTitle", "pageSubTitle"]);
+const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Laporaran Pengguna");
 emit("pageSubTitle", null);
+emit("showButtonSearch", true);
 
 const reports = reactive({})
 

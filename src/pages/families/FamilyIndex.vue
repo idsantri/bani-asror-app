@@ -43,9 +43,10 @@ import { ref } from "vue";
 import FamilyProfile from "./FamilyProfile.vue";
 import FamilyChildren from "./FamilyChildren.vue";
 
-const emit = defineEmits(["pageTitle", "pageSubTitle"]);
+const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Data Keluarga");
 emit("pageSubTitle", null);
+emit("showButtonSearch", true);
 
 const tab = ref("profile");
 </script>

@@ -100,12 +100,6 @@ const routes = [
         component: () => import("../pages/reports/IntroductionIndex.vue"),
         meta: { title: "Halaman Laporan" }
       }
-      // {
-      //   path: "about",
-      //   name: "About",
-      //   component: () => import("./components/pages/about"),
-      //   meta: { title: "Tentang Kami" }
-      // }
     ]
   },
 

@@ -39,9 +39,10 @@ import { ref } from 'vue';
 import ProfileUser from './ProfileUser.vue';
 import ProfileMember from './ProfileMember.vue'
 
-const emit = defineEmits(["pageTitle", "pageSubTitle"]);
+const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Profil Pengguna");
 emit("pageSubTitle", null);
+emit("showButtonSearch", true);
 
 const username = ref('?')
 const memberName = ref('?')

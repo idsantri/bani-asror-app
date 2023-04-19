@@ -14,9 +14,10 @@
 <script setup>
 import UserData from "./UserData.vue";
 
-const emit = defineEmits(["pageTitle", "pageSubTitle"]);
+const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Data Pengguna");
 emit("pageSubTitle", null);
+emit("showButtonSearch", true);
 
 </script>
 <style scoped>

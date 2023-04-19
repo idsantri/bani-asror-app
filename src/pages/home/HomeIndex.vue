@@ -24,12 +24,13 @@ import { apiTokened } from 'src/config/api';
 import useAuthStore from 'src/stores/auth-store';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { ref, watchEffect } from 'vue';
-import useQuasar from 'quasar/src/composables/use-quasar.js';
+import { useQuasar } from 'quasar';
 
 const $q = useQuasar()
-const emit = defineEmits(["pageTitle", "pageSubTitle"]);
+const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Ahlan wa Sahlan …");
 emit("pageSubTitle", null);
+emit("showButtonSearch", false);
 
 const showModal = ref(false)
 const article = ref('')

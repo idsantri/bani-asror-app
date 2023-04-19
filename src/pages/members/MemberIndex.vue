@@ -82,9 +82,10 @@ const tab = ref("profile");
 const pageSubTitle = ref(null)
 watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
 
-const emit = defineEmits(["pageTitle", "pageSubTitle"]);
+const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Data Anggota");
 emit("pageSubTitle", pageSubTitle);
+emit("showButtonSearch", true);
 
 const report = () => {
   notifyError('Fitur belum siap.')

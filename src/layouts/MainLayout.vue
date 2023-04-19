@@ -77,7 +77,8 @@
 
           <suspense>
             <template #default>
-              <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle" />
+              <router-view :key="$route.fullPath" @page-title="handlePageTitle" @page-sub-title="handlePageSubTitle"
+                @show-button-search="handleShowButtonSearch" />
             </template>
             <template #fallback>
               <div class="spinner">
@@ -89,8 +90,8 @@
       </div>
 
       <!-- TOMBOL CARI -->
-      <q-btn round color="green-8" class="absolute absolute-bottom-right q-mr-lg q-mb-xl" icon="search"
-        @click="clickSearch" />
+      <q-btn v-show="showButtonSearch" round color="green-8" class="absolute absolute-bottom-right q-mr-lg q-mb-xl"
+        icon="search" @click="clickSearch" />
 
     </q-page-container>
 
@@ -125,7 +126,11 @@
     </div>
 
     <q-footer bordered class="bg-green-9 text-green-1">
-      <p class="text-center no-margin q-pa-xs">by idsantri</p>
+
+
+      <p class="text-center no-margin q-pa-xs">&copy;
+        <a href="https://fb.me/idsantri.page" target="_blank" class="text-green-1">ID Santri</a>
+      </p>
     </q-footer>
   </q-layout>
 </template>
@@ -147,6 +152,7 @@ const showSearch = ref(false)
 const showCrud = ref(false)
 const familyStatus = ref('')
 const styleButtonNew = ref({ display: 'none' })
+const showButtonSearch = ref(true)
 
 const addNew = () => {
   const isConfirmed = confirm(`Buat data baru? ${familyStatus.value}`)
@@ -158,6 +164,7 @@ const addNew = () => {
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 const handlePageTitle = (value) => pageTitle.value = value
 const handlePageSubTitle = (value) => pageSubTitle.value = value
+const handleShowButtonSearch = (value) => showButtonSearch.value = value
 const forceRerender = () => componentKey.value++;
 const clickSearch = () => showModalSearch()
 
