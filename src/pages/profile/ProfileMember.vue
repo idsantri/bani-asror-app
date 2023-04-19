@@ -4,16 +4,16 @@
       <q-list separator>
         <q-item v-ripple clickable :to="member.id ? '/members/' + member.id : null">
           <q-item-section>
-            <q-item-label class="text-green-10" caption>Nama</q-item-label>
+            <q-item-label class="text-green-10" caption>Nama:</q-item-label>
             <q-item-label>{{ member.nama }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label class="text-green-10" caption>Orang Tua</q-item-label>
+            <q-item-label class="text-green-10" caption>Orang Tua:</q-item-label>
             <q-item-label>
               {{ member.ayah ? member.ayah : '?' }}
-              --
+              &mdash;
               {{ member.ibu ? member.ibu : '?' }}
             </q-item-label>
           </q-item-section>

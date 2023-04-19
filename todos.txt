@@ -1,7 +1,8 @@
 - pindah tombol cari => done
 - dashboard => done
 - users page -> edit member_id => done
-- donasi
+- donasi => done
+- Profil -> add phone => done
 - route tab
 - notify report count
 - confirm
