@@ -174,6 +174,8 @@ const toggleClick = (id, group, value) => {
       title: 'Konfirmasi',
       message: 'Tetapkan yang bersangkutan sebagai ' + group.toUpperCase() + '?',
       cancel: true,
+      persistent: false,
+      html: true,
     }).onOk(() => {
       post(url)
     }).onCancel(() => {
@@ -185,6 +187,8 @@ const toggleClick = (id, group, value) => {
       title: 'Konfirmasi',
       message: 'Hapus yang bersangkutan dari group ' + group.toUpperCase() + '?',
       cancel: true,
+      persistent: false,
+      html: true,
     }).onOk(() => {
       post(url)
     }).onCancel(() => {
@@ -194,19 +198,25 @@ const toggleClick = (id, group, value) => {
 }
 
 const updateMemberId = async (id) => {
-  const isConfirmed = confirm("Update?")
-  if (!isConfirmed) return
-  try {
-    const response = await apiTokened.put(`users/${id}`, {
-      member_id: user.member_id
-    })
-    notifySuccess(response.data.message)
-    forceRerender()
-  } catch (error) {
-    toArray(error.response.data.message).forEach(message => {
-      notifyError(message)
-    })
-  }
+  $q.dialog({
+    title: "Konfirmasi",
+    message: `Update?`,
+    cancel: true,
+    persistent: false,
+    html: true,
+  }).onOk(async () => {
+    try {
+      const response = await apiTokened.put(`users/${id}`, {
+        member_id: user.member_id
+      })
+      notifySuccess(response.data.message)
+      forceRerender()
+    } catch (error) {
+      toArray(error.response.data.message).forEach(message => {
+        notifyError(message)
+      })
+    }
+  })
 }
 </script>
 

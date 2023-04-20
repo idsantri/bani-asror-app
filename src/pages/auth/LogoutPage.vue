@@ -26,13 +26,4 @@ import authState from '../../stores/auth-store';
       // console.log('I am triggered on both OK and Cancel')
     })
 })()
-
-// if (confirm("Keluar dari situs ini?") == true) {
-//   localStorage.setItem("token", "");
-//   localStorage.setItem("user", "");
-//   useRouter().push('/login')
-//   // next("/login");
-// } else {
-//   history.go(-1);
-// }
 </script>

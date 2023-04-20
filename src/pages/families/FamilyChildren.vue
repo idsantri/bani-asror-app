@@ -63,6 +63,7 @@ import { toArray } from '../../utils/array';
 import { notifyError, notifySuccess, notifyWarning, notifyWarningExpired } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import { showModalSearch } from 'src/utils/buttons-click';
+import { useQuasar } from "quasar";
 
 const children = reactive([])
 const route = useRoute()
@@ -81,21 +82,27 @@ try {
   else errMsg.forEach((message) => notifyError(message))
 }
 
+const $q = useQuasar();
 const deleteChild = async (id) => {
-  const isConfirmed = confirm(`Hapus yang bersangkutan dari daftar anak?`)
-  if (!isConfirmed) return
-  try {
-    const response = await apiTokened.delete(`children/${id}`)
-    // console.log(response.data);
-    notifySuccess(response.data.message)
-    forceRerender()
-
-  } catch (error) {
-    // console.log("error hapus anak:", error.response);
-    toArray(error.response.data.message).forEach((errorMessage) => {
-      notifyError(errorMessage)
-    })
-  }
+  $q.dialog({
+    title: "Konfirmasi",
+    message: `Hapus yang bersangkutan dari daftar anak?`,
+    cancel: true,
+    persistent: false,
+    html: true,
+  }).onOk(async () => {
+    try {
+      const response = await apiTokened.delete(`children/${id}`)
+      // console.log(response.data);
+      notifySuccess(response.data.message)
+      forceRerender()
+    } catch (error) {
+      // console.log("error hapus anak:", error.response);
+      toArray(error.response.data.message).forEach((errorMessage) => {
+        notifyError(errorMessage)
+      })
+    }
+  })
 }
 
 const addChild = () => {

@@ -53,9 +53,6 @@ const reset = async () => {
     router.push("/reset");
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
-    // toArray(error.response.data.message).forEach(error => {
-    //   alert(error)
-    // });
   }
 };
 </script>

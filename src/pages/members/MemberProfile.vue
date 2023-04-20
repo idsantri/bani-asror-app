@@ -38,10 +38,6 @@
       <q-tooltip class="bg-green-1 text-dark">Edit data</q-tooltip>
     </q-btn>
   </q-card-section>
-
-  <!-- <q-dialog v-model="showModalCrud" persistent>
-    <member-modal-edit :member="member" modal-title="Edit Anggota" :is-new="false" @new-member="handleNewMember" />
-  </q-dialog> -->
 </template>
 
 <script setup>

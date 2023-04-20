@@ -48,6 +48,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../../utils/array';
 import memberState from '../../stores/member-store'
 import { notifyError, notifyWarning, notifyWarningExpired } from 'src/utils/notify';
+import { useQuasar } from "quasar";
 
 const families = reactive([])
 const router = useRouter()
@@ -67,23 +68,31 @@ try {
   else errMsg.forEach((message) => notifyError(message))
 }
 
+const $q = useQuasar();
 const createFamily = async () => {
   const nama = memberState().getMember.nama
   const pasangan = memberState().getMember.lp.toUpperCase() == 'L' ? 'istri' : 'suami'
-  const isConfirmed = confirm(`Tambahkan keluarga baru (${pasangan}) untuk ${nama}?`)
-  if (!isConfirmed) return
-  try {
-    const response = await apiTokened.post('families', { member_id: memberId })
-    // console.log('new family', response.data)
-    const familyId = response.data.data.family.id
-    // console.log(familyId);
-    router.push(`/families/${familyId}`)
-  } catch (error) {
-    // console.log("error create family:", error.response);
-    toArray(error.response.data.message).forEach((errorMessage) => {
-      notifyError(errorMessage)
-    })
-  }
+
+  $q.dialog({
+    title: "Konfirmasi",
+    message: `Tambahkan keluarga baru (${pasangan}) untuk ${nama}?`,
+    cancel: true,
+    persistent: false,
+    html: true,
+  }).onOk(async () => {
+    try {
+      const response = await apiTokened.post('families', { member_id: memberId })
+      // console.log('new family', response.data)
+      const familyId = response.data.data.family.id
+      // console.log(familyId);
+      router.push(`/families/${familyId}`)
+    } catch (error) {
+      // console.log("error create family:", error.response);
+      toArray(error.response.data.message).forEach((errorMessage) => {
+        notifyError(errorMessage)
+      })
+    }
+  })
 }
 </script>
 

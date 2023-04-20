@@ -44,6 +44,7 @@ import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
 import { notifySuccess, notifyError, notifyWarning, notifyWarningExpired } from '../../utils/notify';
 import { showModalSearch, forceRerender } from 'src/utils/buttons-click';
+import { useQuasar } from 'quasar';
 
 const fab = ref(false)
 const member = reactive({})
@@ -77,6 +78,7 @@ const editPasangan = () => {
   showModalSearch(args)
 }
 
+const $q = useQuasar();
 const deletePasangan = async () => {
   if (!props.memberId) {
     notifyError('Setidaknya ada salah satu pasangan dalam keluarga.')
@@ -93,18 +95,25 @@ const deletePasangan = async () => {
     pasangan = 'istri';
     data = { istri_id: null }
   }
-  const isConfirmed = confirm(`Hapus ${pasangan}?`)
-  if (!isConfirmed) return
-  try {
-    const response = await apiTokened.put(`families/${props.familyId}`, data)
-    // console.log('hapus pasangan', response.data);
-    notifySuccess(response.data.message)
-    forceRerender()
-  } catch (error) {
-    toArray(error.response.data.message).forEach((errorMessage) => {
-      notifyError(errorMessage)
-    })
-  }
+
+  $q.dialog({
+    title: "Konfirmasi",
+    message: `Hapus ${pasangan}?`,
+    cancel: true,
+    persistent: false,
+    html: true,
+  }).onOk(async () => {
+    try {
+      const response = await apiTokened.put(`families/${props.familyId}`, data)
+      // console.log('hapus pasangan', response.data);
+      notifySuccess(response.data.message)
+      forceRerender()
+    } catch (error) {
+      toArray(error.response.data.message).forEach((errorMessage) => {
+        notifyError(errorMessage)
+      })
+    }
+  })
 }
 </script>
 

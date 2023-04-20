@@ -31,6 +31,7 @@ import { toArray } from '../utils/array';
 import { notifyError, notifySuccess } from "src/utils/notify";
 import { forceRerender, closeModalSearch } from '../utils/buttons-click'
 import useAuthStore from "src/stores/auth-store";
+import { useQuasar } from "quasar";
 const router = useRouter()
 
 //pinia state
@@ -94,23 +95,30 @@ const options = ref({
   // dom: 'bftip',
 })
 
+const $q = useQuasar();
 onMounted(() => {
   document.addMemberTo = async (memberId, memberName) => {
-    const isConfirmed = confirm(`Tambahkan ${memberName}`)
-    if (!isConfirmed) return
-    try {
-      let response
-      if (isHusband.value) response = await apiTokened.put(`families/${familyId.value}`, { suami_id: memberId })
-      if (isWife.value) response = await apiTokened.put(`families/${familyId.value}`, { istri_id: memberId })
-      if (isChild.value) response = await apiTokened.post(`families/${familyId.value}/children`, { member_id: memberId })
-      closeModalSearch()
-      notifySuccess(response.data.message)
-      forceRerender()
-    } catch (error) {
-      toArray(error.response.data.message).forEach((errorMessage) => {
-        notifyError(errorMessage)
-      })
-    }
+    $q.dialog({
+      title: "Konfirmasi",
+      message: `Tambahkan ${memberName}`,
+      cancel: true,
+      persistent: false,
+      html: true,
+    }).onOk(async () => {
+      try {
+        let response
+        if (isHusband.value) response = await apiTokened.put(`families/${familyId.value}`, { suami_id: memberId })
+        if (isWife.value) response = await apiTokened.put(`families/${familyId.value}`, { istri_id: memberId })
+        if (isChild.value) response = await apiTokened.post(`families/${familyId.value}/children`, { member_id: memberId })
+        closeModalSearch()
+        notifySuccess(response.data.message)
+        forceRerender()
+      } catch (error) {
+        toArray(error.response.data.message).forEach((errorMessage) => {
+          notifyError(errorMessage)
+        })
+      }
+    })
   };
 
   document.copyMemberId = (id) => {

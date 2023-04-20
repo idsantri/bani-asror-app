@@ -145,6 +145,7 @@ import MemberDataTable from '../components/MemberDataTables.vue'
 import MemberCrud from "src/components/MemberCrud.vue";
 import { apiTokened } from "src/config/api";
 import useAuthStore from "src/stores/auth-store";
+import { useQuasar } from "quasar";
 
 const pageTitle = ref("Data")
 const pageSubTitle = ref('')
@@ -157,11 +158,18 @@ const styleButtonNew = ref({ display: 'none' })
 const showButtonSearch = ref(true)
 const showNotification = ref(false)
 
+const $q = useQuasar();
 const addNew = () => {
-  const isConfirmed = confirm(`Buat data baru? ${familyStatus.value}`)
-  if (!isConfirmed) return
-  showSearch.value = false
-  showModalCrud(false)
+  $q.dialog({
+    title: "Konfirmasi",
+    message: `Buat data baru? ${familyStatus.value}`,
+    cancel: true,
+    persistent: false,
+    html: true,
+  }).onOk(() => {
+    showSearch.value = false
+    showModalCrud(false)
+  })
 }
 
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
