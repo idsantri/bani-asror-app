@@ -9,9 +9,9 @@
 - notify report count => done
 - confirm => done
 - alert
+- spinner on auth page
 - lapor!
 - print
 - guest expired
-- spinner on auth page
 - /users -> updute memberId - onCancel masih nyangkut.
 - auth - click anchor pada resend activation masih bermasalah
