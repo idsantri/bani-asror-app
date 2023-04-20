@@ -20,8 +20,8 @@
             </q-item>
           </q-list>
         </q-toolbar-title>
-        <q-btn round flat dense icon="notifications" color="green-1" to="/reports">
-          <q-badge floating color="red" rounded />
+        <q-btn v-show="isAdmin" round flat dense icon="notifications" color="green-1" to="/reports">
+          <q-badge v-show="showNotification" floating color="red" rounded />
         </q-btn>
         <q-btn-dropdown flat round dense dropdown-icon="more_vert" class="q-pl-md" color="green-1">
 
@@ -143,6 +143,8 @@ import constanta from "src/config/constanta";
 import AsideContent from "src/components/AsideContent.vue";
 import MemberDataTable from '../components/MemberDataTables.vue'
 import MemberCrud from "src/components/MemberCrud.vue";
+import { apiTokened } from "src/config/api";
+import useAuthStore from "src/stores/auth-store";
 
 const pageTitle = ref("Data")
 const pageSubTitle = ref('')
@@ -153,6 +155,7 @@ const showCrud = ref(false)
 const familyStatus = ref('')
 const styleButtonNew = ref({ display: 'none' })
 const showButtonSearch = ref(true)
+const showNotification = ref(false)
 
 const addNew = () => {
   const isConfirmed = confirm(`Buat data baru? ${familyStatus.value}`)
@@ -183,9 +186,35 @@ watchEffect(() => {
 
 /**
  * ----------------------------------
- * PWA
+ * REQUEST CHECK REPORT
  * ----------------------------------
  */
+const checkReport = async () => {
+  try {
+    const response = await apiTokened.get('reports/count/0')
+    const reports = response.data.data.reports_count;
+    if (reports > 0) showNotification.value = true
+    else showNotification.value = false
+    // console.log(reports);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const isAdmin = useAuthStore().getGroup.is_superadmin || useAuthStore().getGroup.is_admin
+if (isAdmin) {
+  //init
+  checkReport()
+  // continues
+  setInterval(async () => {
+    checkReport()
+  }, 1000 * 60 * 2);
+}
+
+/**
+* ----------------------------------
+* PWA
+* ----------------------------------
+*/
 let deferredPrompt = ref(null)
 onMounted(async () => {
   window.addEventListener('beforeinstallprompt', (e) => {
