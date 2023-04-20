@@ -67,6 +67,7 @@ const login = async () => {
   }
 };
 </script>
+
 <style scoped lang="scss">
 .spinner {
   position: absolute;

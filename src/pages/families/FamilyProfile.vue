@@ -3,12 +3,12 @@
 
     <!-- SUAMI -->
     <div>
-      <family-profile-parent :member-id="parseInt(suami_id)" :family-id="parseInt(id)" member-sex="L" />
+      <FamilyProfileSplit :member-id="parseInt(suami_id)" :family-id="parseInt(id)" member-sex="L" />
     </div>
 
     <!-- ISTRI -->
     <div class="q-mt-md">
-      <family-profile-parent :member-id="parseInt(istri_id)" :family-id="parseInt(id)" member-sex="P" />
+      <FamilyProfileSplit :member-id="parseInt(istri_id)" :family-id="parseInt(id)" member-sex="P" />
     </div>
 
     <!-- alamat -->
@@ -43,7 +43,7 @@ import { apiTokened } from "../../config/api";
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { notifySuccess, notifyError, notifyWarning, notifyWarningExpired } from 'src/utils/notify';
-import FamilyProfileParent from './FamilyProfileSplit.vue';
+import FamilyProfileSplit from './FamilyProfileSplit.vue';
 const family = reactive({})
 const route = useRoute()
 const familyId = route.params.id

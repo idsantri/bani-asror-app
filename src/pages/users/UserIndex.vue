@@ -1,7 +1,7 @@
 <template>
   <suspense>
     <template #default>
-      <user-data />
+      <UserData />
     </template>
     <template #fallback>
       <div class="spinner">

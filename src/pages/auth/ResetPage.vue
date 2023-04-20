@@ -28,14 +28,17 @@ import { api } from "../../config/api";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { toArray } from "../../utils/array";
+
 const router = useRouter();
 const token = ref("");
 const email = ref("");
 const password = ref("");
 const password_confirm = ref("");
+
 const emit = defineEmits(["title", "errors"]);
 emit("title", "Reset Password");
 emit("errors", []);
+
 const reset = async () => {
   emit("errors", []);
   try {

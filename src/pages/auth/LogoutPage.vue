@@ -6,6 +6,7 @@
 <script setup>
 import { useQuasar } from 'quasar'
 import authState from '../../stores/auth-store';
+
 (() => {
   useQuasar()
     .dialog({

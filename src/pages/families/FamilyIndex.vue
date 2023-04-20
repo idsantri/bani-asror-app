@@ -2,8 +2,8 @@
   <q-card class="bg-green-8 text-green-1">
     <q-tabs v-model="tab" class="text-green-5" active-color="green-1" indicator-color="green-3" align="justify"
       narrow-indicator>
-      <q-tab name="profile" label="Profil" />
-      <q-tab name="child" label="Anak" />
+      <q-route-tab :to="toProfile" name="profile" label="Profil" />
+      <q-route-tab :to="toChildren" name="child" label="Anak" />
     </q-tabs>
 
     <q-separator dark />
@@ -12,7 +12,7 @@
       <q-tab-panel name="profile" class="no-padding no-margin">
         <suspense>
           <template #default>
-            <family-profile />
+            <FamilyProfile />
           </template>
           <template #fallback>
             <div class="spinner">
@@ -25,7 +25,7 @@
       <q-tab-panel name="child" class="no-padding no-margin">
         <suspense>
           <template #default>
-            <family-children />
+            <FamilyChildren />
           </template>
           <template #fallback>
             <div class="spinner">
@@ -42,6 +42,7 @@
 import { ref } from "vue";
 import FamilyProfile from "./FamilyProfile.vue";
 import FamilyChildren from "./FamilyChildren.vue";
+import { useRoute } from "vue-router";
 
 const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Data Keluarga");
@@ -49,6 +50,9 @@ emit("pageSubTitle", null);
 emit("showButtonSearch", true);
 
 const tab = ref("profile");
+const toProfile = "/families/" + useRoute().params.id.toString() + "/profile"
+const toChildren = "/families/" + useRoute().params.id.toString() + "/children"
+
 </script>
 <style scoped>
 .spinner {

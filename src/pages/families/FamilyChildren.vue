@@ -111,11 +111,12 @@ const submitUrut = async (id, urut) => {
     // console.log(response.data);
     notifySuccess(response.data.message)
     // document.getElementById('btn-force-rerender').click()
-    forceRerender()
   } catch (error) {
     toArray(error.response.data.message).forEach((errorMessage) => {
       notifyError(errorMessage)
     })
+  } finally {
+    forceRerender()
   }
 }
 

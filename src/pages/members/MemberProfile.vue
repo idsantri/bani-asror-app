@@ -17,7 +17,7 @@
 
     <!-- PARENT -->
     <div class="q-pa-sm bg-green-3 text-dark q-mt-md">
-      <parent-component :parent="parent" />
+      <ParentComponent :parent="parent" />
     </div>
 
     <!-- OTHERS -->

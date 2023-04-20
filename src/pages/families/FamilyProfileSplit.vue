@@ -31,7 +31,7 @@
 
   <!-- ORTU  -->
   <q-banner class="q-pa-sm bg-green-3 text-dark">
-    <parent-component :parent="parent" />
+    <ParentComponent :parent="parent" />
   </q-banner>
 </template>
 

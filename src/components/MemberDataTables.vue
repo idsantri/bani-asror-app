@@ -30,6 +30,7 @@ import { apiTokened } from '../config/api'
 import { toArray } from '../utils/array';
 import { notifyError, notifySuccess } from "src/utils/notify";
 import { forceRerender, closeModalSearch } from '../utils/buttons-click'
+import useAuthStore from "src/stores/auth-store";
 const router = useRouter()
 
 //pinia state
@@ -38,11 +39,14 @@ const isHusband = computed(() => memberCrud().getIsHusband)
 const isWife = computed(() => memberCrud().getIsWife)
 const isChild = computed(() => memberCrud().getIsChild)
 const isNew = computed(() => memberCrud().getIsNew)
+const isAdmin = useAuthStore().getGroup.is_superadmin || useAuthStore().getGroup.is_admin
+// console.log('isadmin', isAdmin);
 
 const url = `${apiTokened.defaults.baseURL}/members/search`
 const headers = { Authorization: apiTokened.defaults.headers.common.Authorization }
 DataTable.use(DataTablesLib);
 const options = ref({
+  isAdmin: isAdmin,
   isNew: isNew.value,
   processing: true,
   serverSide: true,
@@ -61,7 +65,8 @@ const options = ref({
       render: function (data, type, row, meta) {
         let result = null
         const name = row[1].replace(/['"]+/g, '')
-        if (isNew.value) result = `<button type='button' class='btn btn-add' onclick='addMemberTo(${data},"${name}")'></button>`
+        if (!isAdmin) result = '#'
+        else if (isNew.value) result = `<button type='button' class='btn btn-add' onclick='addMemberTo(${data},"${name}")'></button>`
         else result = `<button type='button' class='btn btn-copy' onclick='copyMemberId(${data})'></button>`
         return result
       },

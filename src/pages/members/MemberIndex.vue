@@ -2,9 +2,9 @@
   <q-card class="bg-green-8 text-green-1">
     <q-tabs v-model="tab" class="text-green-5" active-color="green-1" indicator-color="green-3" align="justify"
       narrow-indicator>
-      <q-tab name="profile" label="Profil" />
-      <q-tab name="family" label="Keluarga" />
-      <q-tab name="child" label="Anak" />
+      <q-route-tab :to="toProfile" name="profile" label="Profil" />
+      <q-route-tab :to="toFamilies" name="family" label="Keluarga" />
+      <q-route-tab :to="toChildren" name="child" label="Anak" />
 
       <q-btn-dropdown flat round dense dropdown-icon="more_vert" class="q-pl-md" color="green-1">
         <q-list>
@@ -77,8 +77,8 @@ import MemberFamilies from "./MemberFamilies.vue";
 import MemberChildren from "./MemberChildren.vue";
 import memberState from '../../stores/member-store'
 import { notifyError } from "src/utils/notify";
+import { useRoute } from "vue-router";
 
-const tab = ref("profile");
 const pageSubTitle = ref(null)
 watchEffect(() => pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`)
 
@@ -86,6 +86,11 @@ const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Data Anggota");
 emit("pageSubTitle", pageSubTitle);
 emit("showButtonSearch", true);
+
+const tab = ref("profile");
+const toProfile = "/members/" + useRoute().params.id.toString() + "/profile"
+const toFamilies = "/members/" + useRoute().params.id.toString() + "/families"
+const toChildren = "/members/" + useRoute().params.id.toString() + "/children"
 
 const report = () => {
   notifyError('Fitur belum siap.')

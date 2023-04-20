@@ -36,6 +36,7 @@ const username = ref("");
 const email = ref("");
 const password = ref("");
 const password_confirm = ref("");
+
 const emit = defineEmits(["title", "errors"]);
 emit("title", "Daftar");
 emit("errors", []);

@@ -8,7 +8,7 @@
     <q-card-section class="bg-green-7">
       <suspense>
         <template #default>
-          <profile-user @username="handleUsername" />
+          <ProfileUser @username="handleUsername" />
         </template>
         <template #fallback>
           <div class="spinner">
@@ -21,7 +21,7 @@
     <q-card-section class="bg-green-6">
       <suspense>
         <template #default>
-          <profile-member @member-name="handleMemberName" />
+          <ProfileMember @member-name="handleMemberName" />
         </template>
         <template #fallback>
           <div class="spinner">

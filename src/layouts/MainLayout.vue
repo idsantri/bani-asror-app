@@ -60,7 +60,7 @@
           constanta.APP_NAME_1 }}</span> {{ constanta.APP_NAME_2 }}</p>
         <p class="text-green-1 text-subtitle1 text-weight-light text-italic">({{ constanta.ANCESTOR_ALIAS }})</p>
       </q-banner>
-      <aside-content />
+      <AsideContent />
     </q-drawer>
 
     <q-page-container :key="componentKey">
@@ -102,7 +102,7 @@
           <div class="text-h6 text-weight-light">Cari Anggota {{ familyStatus }}</div>
         </q-card-section>
         <q-card-section style="max-height: 75vh" class="scroll">
-          <member-data-table />
+          <MemberDataTable />
         </q-card-section>
 
         <q-card-actions class="bg-green-8 text-green-1 q-pa-sm">
@@ -115,7 +115,7 @@
 
     <!-- modal crud member -->
     <q-dialog v-model="showCrud" persistent>
-      <member-crud />
+      <MemberCrud />
     </q-dialog>
 
     <!-- hidden elements -->
@@ -137,12 +137,12 @@
 
 <script setup>
 import { ref, watchEffect, computed, onMounted } from "vue";
-import AsideContent from "src/components/AsideContent.vue";
-import MemberDataTable from '../components/MemberDataTables.vue'
 import { showModalSearch, showModalCrud } from 'src/utils/buttons-click';
 import memberCrudState from '../stores/member-crud-store'
-import MemberCrud from "src/components/MemberCrud.vue";
 import constanta from "src/config/constanta";
+import AsideContent from "src/components/AsideContent.vue";
+import MemberDataTable from '../components/MemberDataTables.vue'
+import MemberCrud from "src/components/MemberCrud.vue";
 
 const pageTitle = ref("Data")
 const pageSubTitle = ref('')
