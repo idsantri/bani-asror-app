@@ -56,19 +56,19 @@ const routes = [
         path: "members/:id/profile",
         name: "Member Profile",
         component: () => import("../pages/members/MemberIndex.vue"),
-        meta: { title: "Halaman Anggota — Profil" }
+        meta: { title: "Halaman Anggota (Profil)" }
       },
       {
         path: "members/:id/families",
         name: "Member Families",
         component: () => import("../pages/members/MemberIndex.vue"),
-        meta: { title: "Halaman Anggota — Keluarga" }
+        meta: { title: "Halaman Anggota (Keluarga)" }
       },
       {
         path: "members/:id/children",
         name: "Member Children",
         component: () => import("../pages/members/MemberIndex.vue"),
-        meta: { title: "Halaman Anggota — Anak" }
+        meta: { title: "Halaman Anggota (Anak)" }
       },
 
       //FAMILIES
@@ -83,20 +83,20 @@ const routes = [
         path: "families/:id/profile",
         name: "Family Profile",
         component: () => import("../pages/families/FamilyIndex.vue"),
-        meta: { title: "Halaman Keluarga — Profil" }
+        meta: { title: "Halaman Keluarga (Profil)" }
       },
       {
         path: "families/:id/children",
         name: "Family Children",
         component: () => import("../pages/families/FamilyIndex.vue"),
-        meta: { title: "Halaman Keluarga — Anak" }
+        meta: { title: "Halaman Keluarga (Anak)" }
       },
 
       {
         path: "home",
         name: "Home",
         component: () => import("../pages/home/HomeIndex.vue"),
-        meta: { title: "Home" }
+        meta: { title: "Beranda" }
       },
       {
         path: "users",

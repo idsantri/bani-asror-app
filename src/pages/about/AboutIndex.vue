@@ -14,7 +14,7 @@
             </div>
           </li>
         </ul>
-        <li>Hal-hal yang terkait dengan fitur dan pengembangan aplikasi hubungi developer: IDSantri</li>
+        <li>Hal-hal yang terkait dengan fitur dan pengembangan aplikasi hubungi developer (ID Santri)</li>
       </ul>
       <br />
       <p class="text-center">***</p>
@@ -28,11 +28,13 @@
       </p>
       <p>Salam, </p>
       <br />
-      <p class="no-margin">
-        <span class="text-bold">ID Santri</span>
-        <br>
-        <a href="https://fb.me/idsantri.page" target="_blank" class="text-italic">https://fb.me/idsantri.page</a>
-      </p>
+
+      <p class="no-margin">ID Santri</p>
+      <ul class="no-margin text-italic q-pl-md">
+        <li><a href="https://fb.me/idsantri.page" target="_blank">https://fb.me/idsantri.page</a></li>
+        <li>idsantri.mail@gmail.com</li>
+        <li><a href="https://wa.me/6285765675657" target="_blank">0857-6567-5657 (WA Only)</a></li>
+      </ul>
     </q-card-section>
   </q-card>
 </template>
