@@ -3,13 +3,15 @@
     <form @submit.prevent="register">
       <div class="q-gutter-y-md column">
         <q-input bg-color="green-1" outlined v-model="username" minlength="5" required label="Username"
-          placeholder="Masukkan username!" />
+          placeholder="Masukkan username!" autocapitalize="none" autocomplete="off" autocorrect="off" />
         <q-input bg-color="green-1" outlined v-model="email" type="email" required label="Email"
-          placeholder="Masukkan email!" hint="Kami tidak akan membagikan email Anda" />
+          placeholder="Masukkan email!" autocapitalize="none" autocomplete="off" autocorrect="off"
+          hint="Kami tidak akan membagikan email Anda" />
         <q-input bg-color="green-1" outlined v-model="password" type="password" required label="Password"
-          placeholder="Masukkan password!" />
+          placeholder="Masukkan password!" autocapitalize="none" autocomplete="off" autocorrect="off" />
         <q-input bg-color="green-1" round outlined v-model="password_confirm" type="password" required
-          label="Konfirmasi Password" placeholder="Ulangi password!" />
+          label="Konfirmasi Password" placeholder="Ulangi password!" autocapitalize="none" autocomplete="off"
+          autocorrect="off" />
         <q-btn type="submit" class="full-width q-pa-sm text-green-10" color="green-3" label="Daftar" />
 
 
