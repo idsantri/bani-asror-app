@@ -113,7 +113,7 @@ watch(phone, async (newValue, oldValue) => {
   }
 });
 
-const changePassword = () => {
-  notifyAlert("Untuk mengganti password, silakan logout (keluar) terlebih dahulu. Lalu, pada halaman login, klik lupa password.<br/>Ikuti petunjuk yang diberikan.", 0)
+const changePassword = async () => {
+  await notifyAlert("Untuk mengganti password, silakan logout (keluar) terlebih dahulu. Lalu, pada halaman login, klik lupa password.<br/>Ikuti petunjuk yang diberikan.", 0);
 }
 </script>

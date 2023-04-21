@@ -10,7 +10,7 @@
 - confirm => done
 - spinner on auth page => done
 - auth - click anchor pada resend activation masih bermasalah => done
-- alert
+- alert => done
 - introduction + dashboard -> request 2x
 - setting (ganti password) pada halaman profil
 - lapor!

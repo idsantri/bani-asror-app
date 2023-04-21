@@ -28,7 +28,7 @@ import { useRouter } from "vue-router";
 import { onUpdated, ref } from "vue";
 import { toArray } from "../../utils/array";
 import authState from '../../stores/auth-store'
-import { notifySuccess } from "src/utils/notify";
+import { notifyAlert, notifySuccess } from "src/utils/notify";
 
 const router = useRouter();
 const username = ref("");
@@ -78,7 +78,8 @@ onUpdated(() => {
     try {
       showSpinner.value = true
       const response = await api.get(href);
-      alert(response.data.message);
+      const notification = notifyAlert(response.data.message, 0);
+      await notification; // tunggu notifikasi ditutup
     } catch (error) {
       emit("errors", toArray(error.response.data.message));
     } finally {

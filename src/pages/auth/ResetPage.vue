@@ -29,6 +29,7 @@ import { api } from "../../config/api";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { toArray } from "../../utils/array";
+import { notifyAlert } from "src/utils/notify";
 
 const showSpinner = ref(false)
 const router = useRouter();
@@ -51,7 +52,8 @@ const reset = async () => {
       password: password.value,
       password_confirm: password_confirm.value,
     });
-    alert(response.data.message);
+    const notification = notifyAlert(response.data.message, 0);
+    await notification; // tunggu notifikasi ditutup
     router.push({ name: "Login" });
   } catch (error) {
     emit("errors", toArray(error.response.data.message));

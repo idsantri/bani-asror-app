@@ -36,6 +36,7 @@ import { api } from "../../config/api";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { toArray } from "../../utils/array";
+import { notifyAlert } from "src/utils/notify";
 
 const showSpinner = ref(false)
 const router = useRouter();
@@ -52,7 +53,8 @@ const reset = async () => {
     const response = await api.post("forgot", {
       email: email.value,
     });
-    alert(response.data.message);
+    const notification = notifyAlert(response.data.message, 0);
+    await notification; // tunggu notifikasi ditutup
     router.push("/reset");
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
@@ -60,4 +62,5 @@ const reset = async () => {
     showSpinner.value = false
   }
 };
+
 </script>
