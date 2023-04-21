@@ -10,7 +10,11 @@
               <span v-show="admin.alamat" class="text-italic text-caption">&mdash; {{ admin.alamat }}</span>
             </div>
             <div class="text-caption">
-              {{ admin.email }} <span v-show="admin.phone"><br /> {{ admin.phone }}</span>
+              {{ admin.email }}
+              <span v-show="admin.phone"><br />
+                <a href='#' @click.prevent="redirectToWA(admin.phone)" target="_blank">{{ admin.phone }} <span
+                    class="text-italic">(klik)</span> </a>
+              </span>
             </div>
           </li>
         </ul>
@@ -55,6 +59,10 @@ try {
   // console.log(users);
 } catch (error) {
   console.log("Not Found: user-group -> users", error.response)
+}
+
+const redirectToWA = (no) => {
+  window.open("https://wa.me/" + no, '_blank');
 }
 
 </script>
