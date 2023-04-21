@@ -25,7 +25,7 @@
 <script setup>
 import { api, apiTokened } from "../../config/api";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { onUpdated, ref } from "vue";
 import { toArray } from "../../utils/array";
 import authState from '../../stores/auth-store'
 import { notifySuccess } from "src/utils/notify";
@@ -65,6 +65,28 @@ const login = async () => {
     showSpinner.value = false
   }
 };
+
+onUpdated(() => {
+  const resend = document.querySelector("ul > li > span > a")
+  if (!resend) return
+  resend.addEventListener("click", async (e) => {
+    console.log("anchor clicked");
+    emit("errors", []);
+    e.preventDefault();
+    const href = resend.href.replace("%2540", "@");
+    // console.log(href);
+    try {
+      showSpinner.value = true
+      const response = await api.get(href);
+      alert(response.data.message);
+    } catch (error) {
+      emit("errors", toArray(error.response.data.message));
+    } finally {
+      showSpinner.value = false
+    }
+  });
+})
+
 </script>
 
 <style scoped lang="scss"></style>

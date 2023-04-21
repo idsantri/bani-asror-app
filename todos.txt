@@ -9,6 +9,7 @@
 - notify report count => done
 - confirm => done
 - spinner on auth page => done
+- auth - click anchor pada resend activation masih bermasalah => done
 - alert
 - introduction + dashboard -> request 2x
 - setting (ganti password) pada halaman profil
@@ -16,4 +17,3 @@
 - print
 - guest expired
 - /users -> updute memberId - onCancel masih nyangkut.
-- auth - click anchor pada resend activation masih bermasalah

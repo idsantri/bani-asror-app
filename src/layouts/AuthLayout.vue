@@ -12,8 +12,8 @@
     <q-card flat v-if="errors.length > 0" class="q-ma-xs" id="error">
       <q-card-section class="q-pa-xs bg-red-2 text-red">
         <ul class="q-my-xs">
-          <li v-for="error in errors" :key="error">
-            <span v-html="error" class="anchorErrorResponse" @click="clickAnchor"></span>
+          <li v-for="(error, index) in errors" :key="index">
+            <span v-html="error"></span>
           </li>
         </ul>
       </q-card-section>
@@ -24,46 +24,19 @@
     </q-card-section>
 
   </q-card>
-  <q-spinner-cube v-show="showSpinner" color="green-12" size="14em" class="absolute-center " />
 </template>
 
 <script setup>
 import constanta from "src/config/constanta";
 import { ref } from "vue";
-import { api } from "../config/api";
-import { toArray } from "src/utils/array";
 import { useRouter } from "vue-router";
 
-const showSpinner = ref(false)
 const router = useRouter();
 const title = ref("Autentikasi");
 const handleTitle = (value) => (title.value = value);
 
 const errors = ref([]);
 const handleErrors = (value) => (errors.value = value);
-
-const clickAnchor = (e) => {
-  const anchor = e.target.getElementsByTagName("a")[0];
-  // console.log(anchor);
-  if (anchor) {
-    anchor.addEventListener("click", async (e) => {
-      console.log("anchor clicked");
-      errors.value = [];
-      e.preventDefault();
-      const href = anchor.href.replace("%2540", "@");
-      try {
-        showSpinner.value = true
-        const response = await api.get(href);
-        alert(response.data.message);
-        await router.push("/login");
-      } catch (error) {
-        errors.value = toArray(error.response.data.message);
-      } finally {
-        showSpinner.value = false
-      }
-    });
-  }
-};
 </script>
 
 <style scoped>
