@@ -18,33 +18,31 @@
         </q-card>
       </div>
     </form>
-    <div class="spinner" id="spinner">
-      <q-spinner-cube color="green-12" size="14em" />
-    </div>
   </div>
+  <q-spinner-cube v-show="showSpinner" color="green-12" size="14em" class="absolute-center " />
 </template>
 
 <script setup>
 import { api, apiTokened } from "../../config/api";
 import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { toArray } from "../../utils/array";
 import authState from '../../stores/auth-store'
+import { notifySuccess } from "src/utils/notify";
 
 const router = useRouter();
 const username = ref("");
 const password = ref("");
+const showSpinner = ref(false)
 
 const emit = defineEmits(["title", "errors"]);
 emit("title", "Login");
 emit("errors", []);
 
-onMounted(() => document.getElementById('spinner').classList.add('hide'))
-
 const login = async () => {
-  document.getElementById('spinner').classList.remove('hide')
   emit("errors", []);
   try {
+    showSpinner.value = true
     const response = await api.post("login", {
       login: username.value,
       password: password.value,
@@ -57,30 +55,16 @@ const login = async () => {
     apiTokened.defaults.headers.common["Authorization"] =
       "Bearer " + authState().getToken
 
+    notifySuccess(response.data.message)
     if (memberId) router.push(`/members/${memberId}`);
     else router.push('/profile')
 
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
   } finally {
-    document.getElementById('spinner').classList.add('hide')
+    showSpinner.value = false
   }
 };
 </script>
 
-<style scoped lang="scss">
-.spinner {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hide {
-  display: none;
-}
-</style>
+<style scoped lang="scss"></style>

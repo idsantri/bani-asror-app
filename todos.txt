@@ -8,9 +8,10 @@
 - search, bedakan admin vs member => done
 - notify report count => done
 - confirm => done
+- spinner on auth page => done
 - alert
-- spinner on auth page
 - introduction + dashboard -> request 2x
+- setting (ganti password) pada halaman profil
 - lapor!
 - print
 - guest expired

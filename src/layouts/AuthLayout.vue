@@ -33,7 +33,6 @@ import { ref } from "vue";
 import { api } from "../config/api";
 import { toArray } from "src/utils/array";
 import { useRouter } from "vue-router";
-// import { useQuasar } from "quasar";
 
 const showSpinner = ref(false)
 const router = useRouter();
@@ -43,7 +42,6 @@ const handleTitle = (value) => (title.value = value);
 const errors = ref([]);
 const handleErrors = (value) => (errors.value = value);
 
-// const $q = useQuasar()
 const clickAnchor = (e) => {
   const anchor = e.target.getElementsByTagName("a")[0];
   // console.log(anchor);
@@ -56,11 +54,6 @@ const clickAnchor = (e) => {
       try {
         showSpinner.value = true
         const response = await api.get(href);
-        // $q.dialog({
-        //   title: '',
-        //   message: `${response.data.message}`
-        // })
-        // console.log("res", response);
         alert(response.data.message);
         await router.push("/login");
       } catch (error) {

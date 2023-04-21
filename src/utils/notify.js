@@ -19,8 +19,37 @@ const notifyWarning = (message) => {
   });
 };
 
+const notifyAlert = (message, delay = 15) => {
+  Notify.create({
+    message: message,
+    color: "green-1",
+    textColor: "green-10",
+    timeout: 1000 * delay,
+    html: true,
+    icon: "announcement",
+    multiLine: true,
+    // closeBtn: true,
+    position: "center",
+    actions: [
+      {
+        label: "OK",
+        color: "green-10",
+        handler: () => {
+          return true;
+        }
+      }
+    ]
+  });
+};
+
 const notifyWarningExpired = () => {
   notifyWarning("Sesi telah berakhir.");
   notifyWarning("Anda perlu keluar lalu masuk lagi!");
 };
-export { notifySuccess, notifyError, notifyWarning, notifyWarningExpired };
+export {
+  notifySuccess,
+  notifyError,
+  notifyWarning,
+  notifyAlert,
+  notifyWarningExpired
+};

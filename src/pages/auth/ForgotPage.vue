@@ -28,6 +28,7 @@
       </div>
     </form>
   </div>
+  <q-spinner-cube v-show="showSpinner" color="green-12" size="14em" class="absolute-center " />
 </template>
 
 <script setup>
@@ -36,6 +37,7 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { toArray } from "../../utils/array";
 
+const showSpinner = ref(false)
 const router = useRouter();
 const email = ref("");
 
@@ -46,6 +48,7 @@ emit("errors", []);
 const reset = async () => {
   emit("errors", []);
   try {
+    showSpinner.value = true
     const response = await api.post("forgot", {
       email: email.value,
     });
@@ -53,6 +56,8 @@ const reset = async () => {
     router.push("/reset");
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
+  } finally {
+    showSpinner.value = false
   }
 };
 </script>

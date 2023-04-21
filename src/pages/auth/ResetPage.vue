@@ -7,9 +7,9 @@
         <q-input bg-color="green-1" outlined v-model="email" type="email" required label="Email"
           placeholder="Masukkan email!" />
         <q-input bg-color="green-1" outlined v-model="password" type="password" required label="Password"
-          placeholder="Masukkan password!" />
+          placeholder="Masukkan password!" autocomplete="off" />
         <q-input bg-color="green-1" outlined v-model="password_confirm" type="password" required
-          label="Konfirmasi Password" placeholder="Ulangi password!" />
+          label="Konfirmasi Password" placeholder="Ulangi password!" autocomplete="off" />
         <q-btn type="submit" class="full-width q-pa-sm text-green-10" color="green-3" label="Ganti Password" />
 
         <q-card class="my-card" flat>
@@ -21,6 +21,7 @@
       </div>
     </form>
   </div>
+  <q-spinner-cube v-show="showSpinner" color="green-12" size="14em" class="absolute-center " />
 </template>
 
 <script setup>
@@ -29,6 +30,7 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { toArray } from "../../utils/array";
 
+const showSpinner = ref(false)
 const router = useRouter();
 const token = ref("");
 const email = ref("");
@@ -42,6 +44,7 @@ emit("errors", []);
 const reset = async () => {
   emit("errors", []);
   try {
+    showSpinner.value = true
     const response = await api.post("reset-password", {
       token: token.value,
       email: email.value,
@@ -52,9 +55,8 @@ const reset = async () => {
     router.push({ name: "Login" });
   } catch (error) {
     emit("errors", toArray(error.response.data.message));
-    // toArray(error.response.data.message).forEach(error => {
-    //   alert(error)
-    // });
+  } finally {
+    showSpinner.value = false
   }
 };
 </script>

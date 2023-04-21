@@ -7,6 +7,21 @@
             <q-item-label class="text-green-10" caption>Email:</q-item-label>
             <q-item-label>{{ user.email }}</q-item-label>
           </q-item-section>
+          <q-item-section side>
+            <!-- <q-btn icon="more_vert" color="green-10" flat class="q-pr-none" /> -->
+            <q-btn icon="more_vert" color="green-10" flat class="q-pr-none">
+              <q-menu cover auto-close>
+                <q-list>
+                  <q-item clickable @click="changePassword">
+                    <q-item-section>Ganti password</q-item-section>
+                    <q-item-section avatar>
+                      <q-icon color="green" name="key" />
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
@@ -41,7 +56,7 @@
 import { reactive, ref, toRefs, watch, } from 'vue';
 import authState from '../../stores/auth-store'
 import { apiTokened } from 'src/config/api';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import { notifyAlert, notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 
 const emit = defineEmits(["username"]);
@@ -98,5 +113,7 @@ watch(phone, async (newValue, oldValue) => {
   }
 });
 
-
+const changePassword = () => {
+  notifyAlert("Untuk mengganti password, silakan logout (keluar) terlebih dahulu. Lalu, pada halaman login, klik lupa password.<br/>Ikuti petunjuk yang diberikan.", 0)
+}
 </script>
