@@ -13,6 +13,12 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const { configure } = require("quasar/wrappers");
 
 module.exports = configure(function (ctx) {
+  const env = ctx.dev ? "development" : "production";
+  const baseURL =
+    env === "development"
+      ? "http://localhost:8080"
+      : "https://api.baniasror.net";
+
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
     supportTS: false,
@@ -44,6 +50,9 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
+      env: {
+        BASE_URL: baseURL
+      },
       vueRouterMode: "history", // available values: 'hash', 'history'
 
       // transpile: false,
