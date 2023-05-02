@@ -11,9 +11,10 @@
 - spinner on auth page => done
 - auth - click anchor pada resend activation masih bermasalah => done
 - alert => done
+- setting (ganti password) pada halaman profil => done
+- lapor! => done
+
 - introduction + dashboard -> request 2x
-- setting (ganti password) pada halaman profil
-- lapor!
 - print
 - guest expired
 - /users -> updute memberId - onCancel masih nyangkut.

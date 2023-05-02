@@ -82,19 +82,19 @@ const sideLinks = [
     link: '/members/4',
   },
   {
-    name: 'Fulanah-1',
+    name: 'Istri Ansor',
     caption: 'bintu Asror',
     icon: 'woman',
     link: '/members/5',
   },
   {
-    name: 'Fulanah-2',
+    name: 'Istri Hamim',
     caption: 'bintu Asror',
     icon: 'woman',
     link: '/members/6',
   },
   {
-    name: 'Fulanah-3',
+    name: 'Istri Abbas',
     caption: 'bintu Asror',
     icon: 'woman',
     link: '/members/7',

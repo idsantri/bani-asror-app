@@ -16,8 +16,8 @@
         </q-banner>
 
         <input type="hidden" v-model="id" />
-        <q-input outlined v-model="nama" label="Nama" placeholder="Nama Lengkap"
-          hint="Tulis nama tanpa gelar kehormatan" />
+        <q-input outlined v-model="nama" label="Nama" placeholder="Nama Lengkap" hint="Tulis nama tanpa gelar kehormatan"
+          autocapitalize="words" />
         <q-input outlined class="q-mt-md" v-model="nama_arab" label="الاسم" placeholder="الاسم بالعربية" dir="rtl"
           lang="ar" />
         <q-input outlined class="q-mt-md" v-model="alias" label="Alias"
