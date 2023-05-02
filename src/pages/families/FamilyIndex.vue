@@ -4,6 +4,8 @@
       narrow-indicator>
       <q-route-tab :to="toProfile" name="profile" label="Profil" />
       <q-route-tab :to="toChildren" name="child" label="Anak" />
+
+      <DropDownTab />
     </q-tabs>
 
     <q-separator dark />
@@ -43,6 +45,7 @@ import { ref } from "vue";
 import FamilyProfile from "./FamilyProfile.vue";
 import FamilyChildren from "./FamilyChildren.vue";
 import { useRoute } from "vue-router";
+import DropDownTab from "src/components/DropDownTab.vue";
 
 const emit = defineEmits(["pageTitle", "pageSubTitle", "showButtonSearch"]);
 emit("pageTitle", "Data Keluarga");

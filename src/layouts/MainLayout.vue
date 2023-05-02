@@ -41,6 +41,13 @@
               </q-item-section>
             </q-item>
 
+            <q-item clickable v-close-popup @click="copyUrl">
+              <q-item-section>Salin URL</q-item-section>
+              <q-item-section avatar>
+                <q-icon color="green" name="content_copy" />
+              </q-item-section>
+            </q-item>
+
             <q-item clickable v-close-popup to="/logout">
               <q-item-section>Keluar</q-item-section>
               <q-item-section avatar>
@@ -146,6 +153,7 @@ import MemberCrud from "src/components/MemberCrud.vue";
 import { apiTokened } from "src/config/api";
 import useAuthStore from "src/stores/auth-store";
 import { useQuasar } from "quasar";
+import { notifySuccess } from "src/utils/notify";
 
 const pageTitle = ref("Data")
 const pageSubTitle = ref('')
@@ -157,6 +165,12 @@ const familyStatus = ref('')
 const styleButtonNew = ref({ display: 'none' })
 const showButtonSearch = ref(true)
 const showNotification = ref(false)
+
+const copyUrl = async () => {
+  const url = document.location.href
+  await navigator.clipboard.writeText(url)
+  notifySuccess('URL sudah disalin/dicopy ke clipboard')
+}
 
 const $q = useQuasar();
 const addNew = () => {
