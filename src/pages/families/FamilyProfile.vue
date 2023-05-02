@@ -19,13 +19,24 @@
       <!-- <p class="no-margin q-pb-xs"><span class="text-weight-light">Alamat: </span>{{ alamat }}</p> -->
       <div class="cursor-pointer">
         Alamat: {{ alamat ? alamat : '-' }}
-        <q-popup-edit v-model="alamat" v-slot="scope" @save="submitAlamat(alamat)">
-          <q-input autofocus dense v-model="scope.value" :model-value="scope.value" hint="Alamat tinggal pasangan"
+        <q-popup-edit v-model="alamat" v-slot="scope" @save="submitPopup('alamat', alamat)">
+          <q-input autofocus dense v-model="scope.value" :model-value="scope.value" hint="Alamat tinggal keluarga"
             @update:modelValue="alamat = scope.value">
             <template v-slot:after>
               <q-btn flat dense color="negative" icon="cancel" @click.stop.prevent="scope.cancel" />
               <q-btn flat dense color="positive" icon="check_circle" @click.stop.prevent="scope.set" />
             </template>
+          </q-input>
+        </q-popup-edit>
+      </div>
+
+      <div class="cursor-pointer">
+        <em>
+          {{ (catatan ? catatan : 'Catatan: -') }}
+        </em>
+        <q-popup-edit v-model="catatan" v-slot="scope" @save="submitPopup('catatan', catatan)" buttons>
+          <q-input autofocus dense v-model="scope.value" :model-value="scope.value" hint="Catatan untuk keluarga ini"
+            @update:modelValue="catatan = scope.value" type="textarea" @keyup.enter.stop>
           </q-input>
         </q-popup-edit>
       </div>
@@ -60,16 +71,23 @@ try {
   else if (error.response.status == 404) console.log(error.response);
   else errMsg.forEach((message) => notifyError(message))
 }
-const { suami_id, istri_id, id, alamat } = toRefs(family)
-const submitAlamat = async (alamat) => {
-  // console.log(alamat);
-  // return
+const { suami_id, istri_id, id, alamat, catatan } = toRefs(family)
+const submitPopup = async (arg, field) => {
   try {
-    const response = await apiTokened.put(`families/${id.value}`, {
-      alamat: alamat,
-    })
-    Object.assign(family, response.data.data.family)
-    notifySuccess(response.data.message)
+    if (arg == 'alamat') {
+      const response = await apiTokened.put(`families/${id.value}`, {
+        alamat: field,
+      })
+      Object.assign(family, response.data.data.family)
+      notifySuccess(response.data.message)
+    }
+    if (arg == 'catatan') {
+      const response = await apiTokened.put(`families/${id.value}`, {
+        catatan: field,
+      })
+      Object.assign(family, response.data.data.family)
+      notifySuccess(response.data.message)
+    }
   } catch (error) {
     toArray(error.response.data.message).forEach((errorMessage) => {
       notifyError(errorMessage)
