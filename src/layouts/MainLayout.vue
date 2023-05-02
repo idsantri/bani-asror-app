@@ -69,10 +69,10 @@
           <q-banner v-if="pageTitle" class="bg-green-9 text-green-1" inline-actions>
             <h2 class="text-h6 no-margin text-weight-light">{{ pageTitle }}</h2>
             <p class="no-margin text-weight-light" v-if="pageSubTitle">{{ pageSubTitle.value }}</p>
-            <!-- tombol cari -->
-            <!-- <template v-slot:action>
-              <q-btn flat color="green-1" icon="search" @click="clickSearch" />
-            </template> -->
+            <!-- TOMBOL CARI -->
+            <template v-slot:action>
+              <q-btn v-show="showButtonSearch" flat color="green-1" icon="search" @click="clickSearch" />
+            </template>
           </q-banner>
 
           <suspense>
@@ -90,9 +90,8 @@
       </div>
 
       <!-- TOMBOL CARI -->
-      <q-btn v-show="showButtonSearch" round color="green-8" class="absolute absolute-bottom-right q-mr-lg q-mb-xl"
-        icon="search" @click="clickSearch" />
-
+      <!-- <q-btn v-show="showButtonSearch" round color="green-8" class="absolute absolute-bottom-right q-mr-lg q-mb-xl"
+        icon="search" @click="clickSearch" /> -->
     </q-page-container>
 
     <!-- modal search member -->
@@ -126,8 +125,9 @@
     </div>
 
     <q-footer bordered class="bg-green-9 text-green-1">
-
-
+      <!-- TOMBOL CARI -->
+      <q-btn v-show="showButtonSearch" round color="green-7" class="absolute absolute-bottom-left q-ml-md q-mb-xl"
+        icon="search" @click="clickSearch" />
       <p class="text-center no-margin q-pa-xs">&copy;
         <a href="https://fb.me/idsantri.page" target="_blank" class="text-green-1">ID Santri</a>
       </p>
