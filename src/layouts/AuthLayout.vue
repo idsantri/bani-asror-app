@@ -1,5 +1,7 @@
 <template>
-  <q-card class="my-card bg-secondary text-green-1 q-pa-lg bg-green-8 text-green-1">
+  <q-card
+    class="my-card bg-secondary text-green-1 q-pa-lg bg-green-8 text-green-1"
+  >
     <q-card-section class="no-padding q-mb-md">
       <div class="container-title">
         <h1 class="title">Aplikasi</h1>
@@ -22,7 +24,6 @@
     <q-card-section class="no-padding no-margin">
       <router-view @title="handleTitle" @errors="handleErrors" />
     </q-card-section>
-
   </q-card>
 </template>
 
@@ -63,8 +64,8 @@ const handleErrors = (value) => (errors.value = value);
 .my-card {
   margin: 2em auto;
   margin-top: 10vh;
-  width: 100%;
-  max-width: 400px;
+  width: 400px;
+  max-width: 95vw;
 }
 
 .container-title {
