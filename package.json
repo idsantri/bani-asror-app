@@ -1,51 +1,58 @@
 {
-  "name": "bani-asror-qw",
-  "version": "1.1.2",
-  "description": "Silsilah Bani Asror",
-  "productName": "Bani Asror",
-  "author": "Usman <oets.man@gmail.com>",
-  "private": true,
-  "scripts": {
-    "lint": "eslint --ext .js,.vue ./",
-    "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "echo \"No test specified\" && exit 0"
-  },
-  "dependencies": {
-    "@quasar/extras": "^1.15.11",
-    "axios": "^1.2.1",
-    "core-js": "^3.6.5",
-    "datatables.net-dt": "^1.13.3",
-    "datatables.net-vue3": "^2.0.0",
-    "pinia": "^2.0.11",
-    "pinia-plugin-persistedstate": "^3.1.0",
-    "quasar": "^2.6.0",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0"
-  },
-  "devDependencies": {
-    "@babel/eslint-parser": "^7.13.14",
-    "@quasar/app-webpack": "^3.0.0",
-    "eslint": "^8.10.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-vue": "^9.0.0",
-    "eslint-webpack-plugin": "^3.1.1",
-    "prettier": "^2.5.1",
-    "workbox-webpack-plugin": "^6.0.0"
-  },
-  "browserslist": [
-    "last 10 Chrome versions",
-    "last 10 Firefox versions",
-    "last 4 Edge versions",
-    "last 7 Safari versions",
-    "last 8 Android versions",
-    "last 8 ChromeAndroid versions",
-    "last 8 FirefoxAndroid versions",
-    "last 10 iOS versions",
-    "last 5 Opera versions"
-  ],
-  "engines": {
-    "node": ">= 12.22.1",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
-  }
+	"name": "bani-asror-app",
+	"version": "0.0.1",
+	"description": "Silsilah Bani Asror",
+	"productName": "Bani Asror",
+	"author": "idsantri <idsantri.mail@gmail.com>",
+	"private": true,
+	"scripts": {
+		"lint": "eslint --ext .js,.ts,.vue ./",
+		"format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+		"test": "echo \"No test specified\" && exit 0",
+		"dev": "quasar dev",
+		"build": "quasar build"
+	},
+	"dependencies": {
+		"@quasar/extras": "^1.16.4",
+		"axios": "^1.2.1",
+		"core-js": "^3.6.5",
+		"datatables.net-dt": "^2.0.8",
+		"datatables.net-vue3": "^3.0.1",
+		"pinia": "^2.0.11",
+		"pinia-plugin-persistedstate": "^3.2.1",
+		"quasar": "^2.16.0",
+		"register-service-worker": "^1.7.2",
+		"vue": "^3.4.18",
+		"vue-router": "^4.0.0"
+	},
+	"devDependencies": {
+		"@quasar/app-webpack": "^4.0.0-beta.13",
+		"@types/node": "^20.5.9",
+		"@typescript-eslint/eslint-plugin": "^6.6.0",
+		"@typescript-eslint/parser": "^6.6.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-vue": "^9.0.0",
+		"eslint-webpack-plugin": "^4.0.1",
+		"prettier": "^3.0.3",
+		"ts-loader": "^9.4.2",
+		"typescript": "^5.2.2",
+		"workbox-webpack-plugin": "^7.0.0"
+	},
+	"browserslist": [
+		"last 10 Chrome versions",
+		"last 10 Firefox versions",
+		"last 4 Edge versions",
+		"last 7 Safari versions",
+		"last 8 Android versions",
+		"last 8 ChromeAndroid versions",
+		"last 8 FirefoxAndroid versions",
+		"last 10 iOS versions",
+		"last 5 Opera versions"
+	],
+	"engines": {
+		"node": "^24 || ^22 || ^20 || ^18",
+		"npm": ">= 6.13.4",
+		"yarn": ">= 1.21.1"
+	}
 }

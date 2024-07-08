@@ -1,4 +1,4 @@
-# Bani Asror (bani-asror-qw)
+# Bani Asror (bani-asror-app)
 
 Silsilah Bani Asror
 

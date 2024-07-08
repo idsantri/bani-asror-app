@@ -1,64 +1,64 @@
 // app global css in SCSS form
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 body {
-  font-family: "Ubuntu", sans-serif;
-  background-color: rgba(0, 128, 0, 0.1);
+	font-family: 'Ubuntu', sans-serif;
+	background-color: rgba(0, 128, 0, 0.1);
 }
 
 a {
-  text-decoration: none;
-  color: darkgreen;
+	text-decoration: none;
+	color: darkgreen;
 }
 
 #member-data-table {
-  .nama-link {
-    color: rgb(17, 77, 17);
-    cursor: pointer;
-  }
+	.nama-link {
+		color: rgb(17, 77, 17);
+		cursor: pointer;
+	}
 
-  @media screen and (max-width: 480px) {
-    table > tbody > tr:nth-child(odd) > td {
-      padding: 4px;
-    }
+	@media screen and (max-width: 480px) {
+		table > tbody > tr:nth-child(odd) > td {
+			padding: 4px;
+		}
 
-    table > tbody > tr:nth-child(even) > td {
-      padding: 4px;
-    }
-  }
+		table > tbody > tr:nth-child(even) > td {
+			padding: 4px;
+		}
+	}
 
-  .btn {
-    border-radius: 50%;
-    border-style: none;
-    border-color: transparent;
-    padding: 2px;
-    margin: 5px;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    text-align: center;
-    line-height: 30px;
-  }
+	.btn {
+		border-radius: 50%;
+		border-style: none;
+		border-color: transparent;
+		padding: 2px;
+		margin: 5px;
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		cursor: pointer;
+		text-align: center;
+		line-height: 30px;
+	}
 
-  .btn-copy {
-    background-color: #2e7d32 !important;
+	.btn-copy {
+		background-color: #2e7d32 !important;
 
-    &::before {
-      content: "\e14d";
-      font-family: "Material Icons";
-      color: #e8f5e9;
-      font-size: larger;
-    }
-  }
+		&::before {
+			content: '\e14d';
+			font-family: 'Material Icons';
+			color: #e8f5e9;
+			font-size: larger;
+		}
+	}
 
-  .btn-add {
-    background-color: #2e7d32;
+	.btn-add {
+		background-color: #2e7d32;
 
-    &::before {
-      content: "\e7fe";
-      font-family: "Material Icons";
-      color: #e8f5e9;
-    }
-  }
+		&::before {
+			content: '\e7fe';
+			font-family: 'Material Icons';
+			color: #e8f5e9;
+		}
+	}
 }

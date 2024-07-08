@@ -1,11 +1,16 @@
-import axios from "axios";
-import { baseUrl } from "src/boot/axios";
+import axios from 'axios';
+import config from '.';
 
-const api = axios.create({ baseURL: baseUrl.defaults.baseURL });
+const url =
+	process.env.NODE_ENV == 'development'
+		? 'http://localhost:8080'
+		: config.BASE_API;
 
-const apiTokened = axios.create({ baseURL: baseUrl.defaults.baseURL });
-const auth = JSON.parse(localStorage.getItem("auth"));
-const token = auth ? auth.token : "FAIL TO GET TOKEN";
-apiTokened.defaults.headers.common["Authorization"] = "Bearer " + token;
+const api = axios.create({ baseURL: url });
+
+const apiTokened = axios.create({ baseURL: url });
+const auth = JSON.parse(localStorage.getItem('auth'));
+const token = auth ? auth.token : 'FAIL TO GET TOKEN';
+apiTokened.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
 export { api, apiTokened };
