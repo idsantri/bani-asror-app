@@ -4,8 +4,14 @@
 	>
 		<q-card-section class="no-padding q-mb-md">
 			<div class="container-title">
-				<h1 class="title">Aplikasi</h1>
-				<h1 class="title">{{ constanta.APP_NAME_2 }}</h1>
+				<p class="text-center text-subtitle1 no-margin">Aplikasi</p>
+				<h1 class="title">{{ config.APP_NAME_2 }}</h1>
+				<h2
+					class="text-center text-overline no-margin"
+					style="font-size: medium; font-weight: 300"
+				>
+					({{ config.ANCESTOR_ALIAS }})
+				</h2>
 			</div>
 			<q-separator dark />
 			<h2 class="sub-title">{{ title }}</h2>
@@ -28,7 +34,7 @@
 </template>
 
 <script setup>
-import constanta from 'src/config/constanta';
+import config from 'src/config';
 import { ref } from 'vue';
 
 const title = ref('Autentikasi');

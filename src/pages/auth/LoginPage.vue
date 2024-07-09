@@ -62,11 +62,13 @@
 </template>
 
 <script setup>
-import { api, apiTokened } from '../../config/api';
+import api from 'src/api';
+import { apiTokened } from '../../config/api';
+
 import { useRouter } from 'vue-router';
 import { onUpdated, ref } from 'vue';
-import { toArray } from '../../utils/array';
-import authState from '../../stores/auth-store';
+import { toArray } from 'src/utils/array';
+import authState from 'src/stores/auth-store';
 import { notifyAlert, notifySuccess } from 'src/utils/notify';
 
 const router = useRouter();
@@ -86,19 +88,23 @@ const login = async () => {
 			login: username.value,
 			password: password.value,
 		});
-		const memberId = response.data.data.user.member_id;
-		authState().token = response.data.data.token;
-		authState().user = response.data.data.user;
-		authState().groups = response.data.data.groups;
+		const { data } = response.data;
+		// console.log(response.data.message);
+
+		authState().token = data.token;
+		authState().user = data.user;
+		authState().groups = data.groups;
 
 		apiTokened.defaults.headers.common['Authorization'] =
 			'Bearer ' + authState().getToken;
 
 		notifySuccess(response.data.message);
+
+		const memberId = data.user?.member_id;
 		if (memberId) router.push(`/members/${memberId}`);
 		else router.push('/profile');
 	} catch (error) {
-		emit('errors', toArray(error.response.data.message));
+		emit('errors', toArray(error.response?.data?.message));
 	} finally {
 		showSpinner.value = false;
 	}

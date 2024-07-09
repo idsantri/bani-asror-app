@@ -73,7 +73,7 @@
 </template>
 
 <script setup>
-import { api } from '../../config/api';
+import api from 'src/api';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { toArray } from '../../utils/array';
@@ -104,7 +104,7 @@ const reset = async () => {
 		await notification; // tunggu notifikasi ditutup
 		router.push({ name: 'Login' });
 	} catch (error) {
-		emit('errors', toArray(error.response.data.message));
+		emit('errors', toArray(error.response?.data?.message));
 	} finally {
 		showSpinner.value = false;
 	}
