@@ -93,7 +93,7 @@
 		</q-banner>
 
 		<q-btn
-			class="glossy btn-float"
+			class="glossy btn-float text-green-11"
 			round
 			color="negative"
 			icon="delete"

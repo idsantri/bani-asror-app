@@ -66,7 +66,8 @@
 		</q-banner>
 
 		<q-btn
-			class="glossy btn-float"
+			class="btn-float text-green-11"
+			glossy
 			round
 			color="green-10"
 			icon="edit"

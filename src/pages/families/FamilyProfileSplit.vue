@@ -8,9 +8,10 @@
 						color="green-10"
 						style="width: 46px; height: 46px"
 						:to="id ? '/members/' + id : null"
-						:disable="!id"
-						:glossy="props.memberId ? true : false"
-						:outline="!id"
+						:disable="!id ? true : false"
+						:glossy="id ? true : false"
+						:outline="!id ? true : false"
+						:class="id ? 'text-green-11' : null"
 					/>
 				</q-item-section>
 				<q-item-section>
@@ -31,6 +32,7 @@
 						direction="left"
 						padding="sm"
 						color="green-9"
+						glossy
 					>
 						<q-fab-action
 							padding="5px"

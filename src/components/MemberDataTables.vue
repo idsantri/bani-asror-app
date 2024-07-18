@@ -75,9 +75,9 @@ const options = ref({
 				const name = row[1].replace(/['"]+/g, '');
 				if (!isAdmin) result = '#';
 				else if (isNew.value)
-					result = `<button type='button' class='btn btn-add' onclick='addMemberTo(${data},"${name}")'></button>`;
+					result = `<button type='button' class='btn btn-add glossy' onclick='addMemberTo(${data},"${name}")'></button>`;
 				else
-					result = `<button type='button' class='btn btn-copy' onclick='copyMemberId(${data})'></button>`;
+					result = `<button type='button' class='btn btn-copy glossy' onclick='copyMemberId(${data})'></button>`;
 				return result;
 			},
 		},

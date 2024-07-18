@@ -192,15 +192,22 @@
 					<q-btn
 						:style="styleButtonNew"
 						label="Baru"
-						color="secondary"
+						color="green-11"
+						outline
+						glossy
+						class="bg-green-10"
 						@click="addNew"
+						no-caps
 					/>
 					<q-space />
 					<q-btn
+						glossy
 						label="Tutup"
-						color="green-10"
+						color="green-1"
+						class="text-green-10"
 						v-close-popup
 						id="btn-close-modal-search"
+						no-caps
 					/>
 				</q-card-actions>
 			</q-card>

@@ -7,6 +7,7 @@
 						icon="family_restroom"
 						color="green-10"
 						style="width: 46px; height: 46px"
+						:class="keluarga_id ? 'text-green-11' : null"
 						:to="/families/ + keluarga_id"
 						:disable="!keluarga_id > 0"
 						:glossy="keluarga_id > 0"
@@ -29,16 +30,19 @@
 								<td class="text-right">
 									<q-btn
 										icon="info"
-										outline
-										glossy
 										color="green-10"
 										dense
+										:class="
+											ayah_id ? 'text-green-11' : null
+										"
 										:to="
 											ayah_id
 												? '/members/' + ayah_id
 												: null
 										"
-										:disable="!ayah_id"
+										:outline="ayah_id ? false : true"
+										:glossy="!ayah_id ? false : true"
+										:disable="!ayah_id ? true : false"
 									/>
 								</td>
 							</tr>
@@ -55,14 +59,15 @@
 								<td class="text-right">
 									<q-btn
 										icon="info"
-										outline
-										glossy
 										color="green-10"
 										dense
+										:class="ibu_id ? 'text-green-11' : null"
 										:to="
 											ibu_id ? '/members/' + ibu_id : null
 										"
-										:disable="!ibu_id"
+										:outline="ibu_id ? false : true"
+										:glossy="!ibu_id ? false : true"
+										:disable="!ibu_id ? true : false"
 									/>
 								</td>
 							</tr>

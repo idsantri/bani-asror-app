@@ -14,22 +14,35 @@
 									<q-btn
 										glossy
 										:to="/families/ + family.family_id"
-										color="green-8"
+										color="green-10"
 										icon="diversity_1"
 										style="width: 46px; height: 46px"
-										class="q-mr-sm"
+										class="q-mr-sm text-green-11"
 									/>
 									<q-btn
-										glossy
 										:to="
 											family.pasangan_id
 												? '/members/' +
 													family.pasangan_id
 												: null
 										"
-										color="green-8"
+										color="green-10"
 										icon="info"
 										style="width: 46px; height: 46px"
+										:class="
+											family.pasangan_id
+												? 'text-green-11'
+												: null
+										"
+										:disable="
+											family.pasangan_id ? false : true
+										"
+										:outline="
+											family.pasangan_id ? false : true
+										"
+										:glossy="
+											family.pasangan_id ? true : false
+										"
 									/>
 								</div>
 							</q-item-section>
@@ -85,7 +98,8 @@
 			</q-list>
 		</q-banner>
 		<q-btn
-			class="glossy btn-float"
+			class="btn-float text-green-11"
+			glossy
 			round
 			color="green-10"
 			icon="add"

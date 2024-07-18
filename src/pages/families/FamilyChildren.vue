@@ -80,7 +80,7 @@
 		</q-banner>
 
 		<q-btn
-			class="btn-float"
+			class="btn-float text-green-11"
 			round
 			color="green-10"
 			glossy
