@@ -2,24 +2,16 @@ import api from '.';
 import getToken from './get-token';
 import { buildTextError } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import { notifyConfirm, notifyError, notifySuccess } from 'src/utils/notify';
 
-async function apiPost({
-	endPoint,
-	data,
-	rerender,
-	needResponse = true,
-	needNotify = true,
-	loading,
-}) {
+async function postData({ endPoint, data, rerender, loading, notify, params }) {
 	try {
 		api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
-		const response = await api.post(endPoint, data);
-		if (needNotify) notifySuccess(response.data.message);
-		if (needResponse) return response.data;
+		const response = await api.post(endPoint, data, { params });
+		if (notify) notifySuccess(response.data.message);
 		if (rerender) forceRerender();
-		return true;
+		return response.data;
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
@@ -31,6 +23,34 @@ async function apiPost({
 	} finally {
 		if (loading && typeof loading.value === 'boolean')
 			loading.value = false;
+	}
+}
+
+async function apiPost({
+	endPoint,
+	data,
+	confirm = false,
+	message = 'Simpan data?',
+	rerender,
+	loading,
+	notify = true,
+	params,
+}) {
+	const execute = () =>
+		postData({
+			endPoint,
+			data,
+			rerender,
+			loading,
+			notify,
+			params,
+		});
+
+	if (confirm) {
+		const dialog = await notifyConfirm(message, true);
+		return dialog ? await execute() : false;
+	} else {
+		return execute();
 	}
 }
 

@@ -23,73 +23,36 @@
 			<template #avatar>
 				<q-avatar rounded>
 					<q-btn
-						icon="info"
+						icon="fmd_bad"
 						color="green-10"
 						style="width: 46px; height: 46px"
-						outline=""
-						@click="null"
+						@click="modalInfo = true"
+						:class="id ? 'text-green-11' : null"
+						:glossy="id ? true : false"
+						:disable="id ? false : true"
+						:outline="!id > 0"
 					/>
 				</q-avatar>
 			</template>
-			<!-- <p class="no-margin q-pb-xs"><span class="text-weight-light">Alamat: </span>{{ alamat }}</p> -->
-			<div class="cursor-pointer">
-				Alamat: {{ alamat ? alamat : '-' }}
-				<q-popup-edit
-					v-model="alamat"
-					v-slot="scope"
-					@save="submitPopup('alamat', alamat)"
-				>
-					<q-input
-						autofocus
-						dense
-						v-model="scope.value"
-						:model-value="scope.value"
-						hint="Alamat tinggal keluarga"
-						@update:modelValue="alamat = scope.value"
-					>
-						<template v-slot:after>
-							<q-btn
-								flat
-								dense
-								color="negative"
-								icon="cancel"
-								@click.stop.prevent="scope.cancel"
-							/>
-							<q-btn
-								flat
-								dense
-								color="positive"
-								icon="check_circle"
-								@click.stop.prevent="scope.set"
-							/>
-						</template>
-					</q-input>
-				</q-popup-edit>
-			</div>
 
-			<div class="cursor-pointer">
-				<em>
-					{{ catatan ? catatan : 'Catatan: -' }}
-				</em>
-				<q-popup-edit
-					v-model="catatan"
-					v-slot="scope"
-					@save="submitPopup('catatan', catatan)"
-					buttons
-				>
-					<q-input
-						autofocus
-						dense
-						v-model="scope.value"
-						:model-value="scope.value"
-						hint="Catatan untuk keluarga ini"
-						@update:modelValue="catatan = scope.value"
-						type="textarea"
-						@keyup.enter.stop
-					>
-					</q-input>
-				</q-popup-edit>
-			</div>
+			<table>
+				<tbody>
+					<tr>
+						<td class="text-left text-italic" style="width: 56px">
+							Alamat
+						</td>
+						<td>{{ alamat ? alamat : '-' }}</td>
+					</tr>
+					<tr>
+						<td class="text-left text-italic" style="width: 56px">
+							Catatan
+						</td>
+						<td>
+							{{ catatan ? catatan : '-' }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</q-banner>
 
 		<q-btn
@@ -104,23 +67,31 @@
 			</q-tooltip>
 		</q-btn>
 	</q-card-section>
+
+	<q-dialog v-model="modalInfo" persistent>
+		<FamilyInfoHomeModal :data="family" @on-submit="forceRerender" />
+	</q-dialog>
 </template>
 
 <script setup>
 import { toArray } from '../../utils/array';
 import { apiTokened } from '../../config/api';
-import { toRefs, reactive } from 'vue';
+import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useQuasar } from 'quasar';
 import {
 	notifySuccess,
 	notifyError,
 	notifyWarningExpired,
 } from 'src/utils/notify';
 import FamilyProfileSplit from './FamilyProfileSplit.vue';
-import { useQuasar } from 'quasar';
+import FamilyInfoHomeModal from './FamilyInfoHomeModal.vue';
+import { forceRerender } from 'src/utils/buttons-click';
+
 const family = reactive({});
 const route = useRoute();
 const familyId = route.params.id;
+const modalInfo = ref(false);
 
 try {
 	const response = await apiTokened.get(`families/${familyId}`);
@@ -134,28 +105,6 @@ try {
 	else errMsg.forEach((message) => notifyError(message));
 }
 const { suami_id, istri_id, id, alamat, catatan } = toRefs(family);
-const submitPopup = async (arg, field) => {
-	try {
-		if (arg == 'alamat') {
-			const response = await apiTokened.put(`families/${id.value}`, {
-				alamat: field,
-			});
-			Object.assign(family, response.data.data.family);
-			notifySuccess(response.data.message);
-		}
-		if (arg == 'catatan') {
-			const response = await apiTokened.put(`families/${id.value}`, {
-				catatan: field,
-			});
-			Object.assign(family, response.data.data.family);
-			notifySuccess(response.data.message);
-		}
-	} catch (error) {
-		toArray(error.response.data.message).forEach((errorMessage) => {
-			notifyError(errorMessage);
-		});
-	}
-};
 
 const $q = useQuasar();
 const deleteFamily = async () => {

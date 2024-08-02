@@ -16,7 +16,7 @@
 			</template>
 			<div>
 				<h3 class="text-h6 no-margin">
-					{{ nama.toUpperCase() }} ({{ lp.toUpperCase() }})
+					{{ nama?.toUpperCase() }} ({{ lp?.toUpperCase() }})
 				</h3>
 				<p
 					class="no-margin text-body2 text-weight-light text-italic"
@@ -111,8 +111,8 @@ try {
 	Object.assign(parent, response.data.data.member);
 	memberState().member = member;
 
-	if (member.lp.toUpperCase() == 'L') sexIcon.value = 'man';
-	if (member.lp.toUpperCase() == 'P') sexIcon.value = 'woman';
+	if (member?.lp?.toUpperCase() == 'L') sexIcon.value = 'man';
+	if (member?.lp?.toUpperCase() == 'P') sexIcon.value = 'woman';
 } catch (error) {
 	// console.log("Not Found: member -> detail", error.response);
 	const errMsg = toArray(error.response.data.message);

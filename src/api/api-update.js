@@ -37,26 +37,14 @@ async function apiUpdate({
 	endPoint,
 	data,
 	confirm = true,
-	message = '<span style="color:\'red\'">Update data ini?</span>',
+	message = 'Update data ini?',
 	rerender,
 	loading,
 	notify = true,
 	params,
 }) {
-	if (confirm) {
-		const dialog = await notifyConfirm(message, true);
-		return dialog
-			? await updateData({
-					endPoint,
-					data,
-					rerender,
-					loading,
-					notify,
-					params,
-				})
-			: false;
-	} else {
-		return updateData({
+	const execute = () =>
+		updateData({
 			endPoint,
 			data,
 			rerender,
@@ -64,6 +52,12 @@ async function apiUpdate({
 			notify,
 			params,
 		});
+
+	if (confirm) {
+		const dialog = await notifyConfirm(message, true);
+		return dialog ? await execute() : false;
+	} else {
+		return execute();
 	}
 }
 

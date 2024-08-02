@@ -20,7 +20,7 @@
 							<tr>
 								<td
 									class="text-left text-italic"
-									style="width: 44px"
+									style="width: 56px"
 								>
 									Ayah
 								</td>
@@ -49,7 +49,7 @@
 							<tr>
 								<td
 									class="text-left text-italic"
-									style="width: 44px"
+									style="width: 56px"
 								>
 									Ibu
 								</td>
