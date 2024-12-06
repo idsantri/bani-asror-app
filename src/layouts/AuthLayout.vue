@@ -1,42 +1,57 @@
 <template>
-	<q-card
-		class="my-card bg-secondary text-green-1 q-pa-lg bg-green-8 text-green-1"
-	>
-		<q-card-section class="no-padding q-mb-md">
-			<div class="container-title">
-				<p class="text-center text-subtitle1 no-margin">Aplikasi</p>
-				<h1 class="title">{{ config.APP_NAME_2 }}</h1>
-				<h2
-					class="text-center text-overline no-margin"
-					style="font-size: medium; font-weight: 300"
+	<div class="absolute-center full-width q-px-md">
+		<div style="max-width: 400px; margin: auto">
+			<!-- PWA -->
+			<pwa-card />
+
+			<!-- MAIN CARD -->
+			<q-card
+				class="bg-secondary text-green-1 q-pa-lg bg-green-8 text-green-1"
+			>
+				<q-card-section class="no-padding q-mb-md">
+					<div class="container-title">
+						<p class="text-center text-subtitle1 no-margin">
+							Aplikasi
+						</p>
+						<h1 class="title">{{ config.APP_NAME_2 }}</h1>
+						<h2
+							class="text-center text-overline no-margin"
+							style="font-size: medium; font-weight: 300"
+						>
+							({{ config.ANCESTOR_ALIAS }})
+						</h2>
+					</div>
+					<q-separator dark />
+					<h2 class="sub-title">{{ title }}</h2>
+				</q-card-section>
+
+				<q-card
+					flat
+					v-if="errors.length > 0"
+					class="q-ma-xs"
+					id="error"
 				>
-					({{ config.ANCESTOR_ALIAS }})
-				</h2>
-			</div>
-			<q-separator dark />
-			<h2 class="sub-title">{{ title }}</h2>
-		</q-card-section>
+					<q-card-section class="q-pa-xs bg-red-2 text-red">
+						<ul class="q-my-xs">
+							<li v-for="(error, index) in errors" :key="index">
+								<span v-html="error"></span>
+							</li>
+						</ul>
+					</q-card-section>
+				</q-card>
 
-		<q-card flat v-if="errors.length > 0" class="q-ma-xs" id="error">
-			<q-card-section class="q-pa-xs bg-red-2 text-red">
-				<ul class="q-my-xs">
-					<li v-for="(error, index) in errors" :key="index">
-						<span v-html="error"></span>
-					</li>
-				</ul>
-			</q-card-section>
-		</q-card>
-
-		<q-card-section class="no-padding no-margin">
-			<router-view @title="handleTitle" @errors="handleErrors" />
-		</q-card-section>
-	</q-card>
+				<q-card-section class="no-padding no-margin">
+					<router-view @title="handleTitle" @errors="handleErrors" />
+				</q-card-section>
+			</q-card>
+		</div>
+	</div>
 </template>
 
 <script setup>
 import config from 'src/config';
 import { ref } from 'vue';
-
+import PwaCard from 'src/components/PwaCard.vue';
 const title = ref('Autentikasi');
 const handleTitle = (value) => (title.value = value);
 
@@ -66,8 +81,6 @@ const handleErrors = (value) => (errors.value = value);
 }
 
 .my-card {
-	margin: 2em auto;
-	margin-top: 10vh;
 	width: 400px;
 	max-width: 95vw;
 }
