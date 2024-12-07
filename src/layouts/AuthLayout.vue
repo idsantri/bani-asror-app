@@ -6,7 +6,7 @@
 
 			<!-- MAIN CARD -->
 			<q-card
-				class="bg-secondary text-green-1 q-pa-lg bg-green-8 text-green-1"
+				class="bg-secondary text-green-1 q-pa-lg bg-green-7 text-green-1"
 			>
 				<q-card-section class="no-padding q-mb-md">
 					<div class="container-title">
@@ -22,7 +22,7 @@
 						</h2>
 					</div>
 					<q-separator dark />
-					<h2 class="sub-title">{{ title }}</h2>
+					<h2 class="sub-title text-green-11">{{ title }}</h2>
 				</q-card-section>
 
 				<q-card

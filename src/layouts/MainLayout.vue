@@ -11,7 +11,7 @@
 					color="green-4"
 				/>
 				<q-avatar class="bg-green-1">
-					<img src="../assets/logo-circle.png" />
+					<img src="../assets/logo-c.png" />
 				</q-avatar>
 
 				<q-toolbar-title class="no-padding q-ml-sm">
