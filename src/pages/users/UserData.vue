@@ -64,29 +64,75 @@
 		<!-- <q-card class="bg-green-1 text-green-10"> -->
 		<q-card-section class="q-pa-sm">
 			<q-list separator>
-				<q-item clickable v-ripple>
+				<q-item class="q-px-none">
 					<q-item-section>
 						<q-item-label overline
-							>ID | Username | Email</q-item-label
+							>ID | Username | Email | Phone</q-item-label
 						>
 						<q-item-label>
-							{{ user.id || '' }} | {{ user.username || '-' }} |
-							{{ user.email || '-' }}
+							{{ user.id || '?' }} | {{ user.username || '?' }} |
+							{{ user.email || '?' }} | {{ user.phone || '?' }}
+						</q-item-label>
+					</q-item-section>
+					<q-item-section side class="no-padding">
+						<q-item-label class="text-green-10">
+							<q-btn
+								class="bg-green-11 text-green-10 q-px-sm q-ml-sm"
+								outline
+								glossy
+							>
+								<q-icon name="phone" size="1em" />
+								<q-icon name="edit" size="1em" />
+
+								<q-popup-edit
+									v-model="user.phone"
+									autofocus
+									v-slot="scope"
+								>
+									<q-input
+										autofocus
+										dense
+										v-model="user.phone"
+										:model-value="user.phone"
+										hint="User Phone: 628x ..."
+									>
+										<template v-slot:after>
+											<q-btn
+												flat
+												dense
+												color="negative"
+												icon="cancel"
+												@click.stop.prevent="
+													scope.cancel
+												"
+											/>
+											<q-btn
+												flat
+												dense
+												color="positive"
+												icon="check_circle"
+												@click.stop.prevent="
+													updateUserPhone(user.id)
+												"
+											/>
+										</template>
+									</q-input>
+								</q-popup-edit>
+							</q-btn>
+							<q-btn
+								class="bg-green-11 text-green-10 q-px-sm q-ml-sm"
+								outline
+								glossy
+								icon="phone"
+								:disable="!user.phone"
+								@click="callPhone(user.phone)"
+							></q-btn>
 						</q-item-label>
 					</q-item-section>
 				</q-item>
-				<q-item>
+				<q-item class="q-px-none">
 					<q-item-section>
-						<q-item
-							clickable
-							v-ripple
-							:to="
-								user.member_id
-									? '/members/' + user.member_id
-									: null
-							"
-							class="no-padding"
-						>
+						<q-item class="no-padding">
 							<q-item-section>
 								<q-item-label overline>Nama</q-item-label>
 								<q-item-label>
@@ -99,47 +145,71 @@
 							</q-item-section>
 						</q-item>
 					</q-item-section>
-					<q-item-section side class="no-padding bg-green-11">
-						<q-item-label
-							class="text-green-10 cursor-pointer q-px-lg"
-						>
-							{{ user.member_id ? user.member_id : '?' }}
-							<q-popup-edit
-								v-model="user.member_id"
-								autofocus
-								v-slot="scope"
+					<q-item-section side class="no-padding">
+						<q-item-label class="">
+							<q-btn
+								class="bg-green-11 text-green-10 q-px-sm q-ml-sm"
+								outline
+								glossy
+								:label="user.member_id ? user.member_id : '?'"
 							>
-								<q-input
-									autofocus
-									dense
+								<q-icon
+									name="edit"
+									size="1em"
+									class="q-ml-xs"
+								/>
+								<q-popup-edit
 									v-model="user.member_id"
-									:model-value="user.member_id"
-									hint="Member ID"
+									autofocus
+									v-slot="scope"
 								>
-									<template v-slot:after>
-										<q-btn
-											flat
-											dense
-											color="negative"
-											icon="cancel"
-											@click.stop.prevent="scope.cancel"
-										/>
-										<q-btn
-											flat
-											dense
-											color="positive"
-											icon="check_circle"
-											@click.stop.prevent="
-												updateMemberId(user.id)
-											"
-										/>
-									</template>
-								</q-input>
-							</q-popup-edit>
+									<q-input
+										autofocus
+										dense
+										v-model="user.member_id"
+										:model-value="user.member_id"
+										hint="Member ID"
+									>
+										<template v-slot:after>
+											<q-btn
+												flat
+												dense
+												color="negative"
+												icon="cancel"
+												@click.stop.prevent="
+													scope.cancel
+												"
+											/>
+											<q-btn
+												flat
+												dense
+												color="positive"
+												icon="check_circle"
+												@click.stop.prevent="
+													updateMemberId(user.id)
+												"
+											/>
+										</template>
+									</q-input>
+								</q-popup-edit>
+							</q-btn>
+							<q-btn
+								class="bg-green-11 text-green-10 q-px-sm q-ml-sm"
+								outline
+								glossy
+								:to="
+									user.member_id
+										? '/members/' + user.member_id
+										: null
+								"
+								icon="person"
+								:disable="!user.member_id"
+							>
+							</q-btn>
 						</q-item-label>
 					</q-item-section>
 				</q-item>
-				<q-item>
+				<q-item class="q-px-none">
 					<q-item-section>
 						<q-item-label overline>Akses</q-item-label>
 						<q-item-label>
@@ -323,7 +393,7 @@ async function updateGroup(id, group, value) {
 const updateMemberId = async (id) => {
 	$q.dialog({
 		title: 'Konfirmasi',
-		message: 'Update?',
+		message: 'Update Member ID',
 		cancel: true,
 		persistent: false,
 		html: true,
@@ -340,6 +410,32 @@ const updateMemberId = async (id) => {
 			});
 		}
 	});
+};
+
+const updateUserPhone = async (id) => {
+	$q.dialog({
+		title: 'Konfirmasi',
+		message: 'Update Nomor Telepon (WA)?',
+		cancel: true,
+		persistent: false,
+		html: true,
+	}).onOk(async () => {
+		try {
+			const response = await apiTokened.put(`users/${id}`, {
+				phone: user.phone,
+			});
+			notifySuccess(response.data.message);
+			forceRerender();
+		} catch (error) {
+			toArray(error.response.data.message).forEach((message) => {
+				notifyError(message);
+			});
+		}
+	});
+};
+
+const callPhone = (phone) => {
+	window.open(`https://wa.me/${phone.replace(/^0/, '62')}`, '_blank');
 };
 
 const deleteUser = async (id) => {

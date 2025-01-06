@@ -8,5 +8,6 @@
 	"html-css-class-completion.remoteStyleSheets": [
 		"https://cdn.jsdelivr.net/npm/quasar@2.11.7/dist/quasar.prod.css"
 	],
-	"typescript.tsdk": "node_modules/typescript/lib"
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"cSpell.words": ["superadmin"]
 }
