@@ -1,3 +1,8 @@
+/**
+ * @deprecated
+ * @param {*} value
+ * @returns
+ */
 export const toArray = (value) => {
 	let result = [];
 	if (Array.isArray(value)) result = value;

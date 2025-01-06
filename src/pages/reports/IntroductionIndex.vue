@@ -85,6 +85,7 @@ import { apiTokened } from '../../config/api';
 import { reactive } from 'vue';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
+import { toArray } from 'src/utils/array-object';
 
 const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
 emit('pageTitle', 'Laporaran Pengguna');
@@ -102,14 +103,15 @@ try {
 }
 
 const submitIntroduction = async (id, userId, memberId) => {
+	const data = {
+		id: id,
+		is_responded: true,
+		member_id: memberId,
+		user_id: userId,
+	};
 	try {
-		const response = await apiTokened.put('reports/introduction', {
-			id: id,
-			is_responded: true,
-			user_id: userId,
-			member_id: memberId,
-		});
-		console.log(response.data);
+		// return console.log(data);
+		const response = await apiTokened.put('reports/introduction', data);
 		notifySuccess(response.data.message);
 		forceRerender();
 	} catch (error) {
