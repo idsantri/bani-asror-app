@@ -74,21 +74,23 @@
 
 <script setup>
 import api from 'src/api';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { toArray } from '../../utils/array';
 import { notifyAlert } from 'src/utils/notify';
 
-const showSpinner = ref(false);
-const router = useRouter();
-const token = ref('');
-const email = ref('');
-const password = ref('');
-const password_confirm = ref('');
-
 const emit = defineEmits(['title', 'errors']);
 emit('title', 'Reset Password');
 emit('errors', []);
+
+const router = useRouter();
+const route = useRoute();
+
+const showSpinner = ref(false);
+const token = ref(route?.query?.token || '');
+const email = ref('');
+const password = ref('');
+const password_confirm = ref('');
 
 const reset = async () => {
 	emit('errors', []);

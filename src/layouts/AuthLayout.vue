@@ -2,7 +2,7 @@
 	<div class="absolute-center full-width q-px-md">
 		<div style="max-width: 400px; margin: auto">
 			<!-- PWA -->
-			<pwa-card />
+			<!-- <pwa-card /> -->
 
 			<!-- MAIN CARD -->
 			<q-card
@@ -51,7 +51,7 @@
 <script setup>
 import config from 'src/config';
 import { ref } from 'vue';
-import PwaCard from 'src/components/PwaCard.vue';
+// import PwaCard from 'src/components/PwaCard.vue';
 const title = ref('Autentikasi');
 const handleTitle = (value) => (title.value = value);
 
