@@ -1,7 +1,10 @@
 {
 	"name": "Bani Asror",
 	"short_name": "Bani Asror",
-	"description": "Silsilah Bani Asror",
+	"description": "Aplikasi Silsilah Bani Asror. Aplikasi ini dibuat untuk memudahkan pencarian silsilah keluarga Bani Asror dan wadah untuk saling mengenal.",
+	"categories": [
+		"social"
+	],
 	"display": "standalone",
 	"orientation": "portrait",
 	"background_color": "#ffffff",
@@ -36,6 +39,43 @@
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "any maskable"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "screenshots/n-mp.png",
+			"sizes": "412x915",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Data Anggota. Menampilkan profile dan orang tua."
+		},
+		{
+			"src": "screenshots/n-mf.png",
+			"sizes": "412x915",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Data Anggota. Menampilkan pasangan (suami/istri) serta jumlah anak."
+		},
+		{
+			"src": "screenshots/n-mc.png",
+			"sizes": "412x915",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Data Anggota. Menampilkan anak anggota (dari semua pasangan)."
+		},
+		{
+			"src": "screenshots/n-fp.png",
+			"sizes": "412x915",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Data Keluarga. Menampilkan pasangan suami/istri dan orang tua dari masing-masing."
+		},
+		{
+			"src": "screenshots/n-fc.png",
+			"sizes": "412x915",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Data Keluarga. Menampilkan data anak dari pasangan"
 		}
 	]
 }
