@@ -9,8 +9,8 @@
 							glossy
 							color="green-10"
 							style="width: 34px; height: 34px"
-							outline=""
 							:to="/members/ + child.member_id"
+							class="text-green-11"
 						/>
 					</q-item-section>
 					<q-item-section side class="">

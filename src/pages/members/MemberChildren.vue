@@ -16,8 +16,8 @@
 							icon="info"
 							glossy
 							color="green-10"
+							class="text-green-11"
 							style="width: 34px; height: 34px"
-							outline=""
 							:to="/members/ + child.anak_id"
 						/>
 					</q-item-section>
