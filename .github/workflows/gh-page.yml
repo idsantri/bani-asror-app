@@ -1,25 +1,41 @@
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            - master
 
 name: 🚀 Deploy website on push
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: npm install
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 22
 
-      - name: Build PWA
-        run: npx quasar build -m pwa
+            - name: Install Corepack
+              run: npm i -g corepack
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist/pwa
-          clean: true
-          branch: gh-page
+            - name: Enable Corepack & pnpm
+              run: |
+                  corepack enable
+                  corepack prepare pnpm@latest --activate
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Clean Config
+              run: pnpm exec quasar clean --qconf
+
+            - name: Build PWA
+              run: pnpm exec quasar build -m pwa
+
+            - name: Deploy to GitHub Pages
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                  folder: dist/pwa
+                  clean: true
+                  branch: gh-page
