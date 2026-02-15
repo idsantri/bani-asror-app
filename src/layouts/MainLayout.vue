@@ -139,7 +139,7 @@
 							class="no-margin text-weight-light"
 							v-if="pageSubTitle"
 						>
-							{{ pageSubTitle.value }}
+							{{ pageSubTitle }}
 						</p>
 						<!-- TOMBOL CARI -->
 						<template v-slot:action>

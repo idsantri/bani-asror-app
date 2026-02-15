@@ -94,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue';
+import { ref, watch } from 'vue';
 import MemberProfile from './MemberProfile.vue';
 import MemberFamilies from './MemberFamilies.vue';
 import MemberChildren from './MemberChildren.vue';
@@ -102,17 +102,19 @@ import MemberSiblings from './MemberSiblings.vue';
 import memberState from '../../stores/member-store';
 import { useRoute } from 'vue-router';
 import DropDownTab from 'src/components/DropDownTab.vue';
+import { storeToRefs } from 'pinia';
 
-const pageSubTitle = ref(null);
-watchEffect(
-	() =>
-		(pageSubTitle.value = `${memberState().member.nama} (${memberState().member.lp})`),
-);
+const state = memberState();
+const { member } = storeToRefs(state);
 
 const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
 emit('pageTitle', 'Data Anggota');
-emit('pageSubTitle', pageSubTitle.value);
 emit('showButtonSearch', true);
+
+watch(member, () => {
+	const pageSubTitle = `${member.value.nama || '?'}`;
+	emit('pageSubTitle', pageSubTitle);
+});
 
 const tab = ref('profile');
 const toProfile = '/members/' + useRoute().params.id.toString() + '/profile';

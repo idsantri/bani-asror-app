@@ -57,16 +57,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import FamilyProfile from './FamilyProfile.vue';
 import FamilyChildren from './FamilyChildren.vue';
 import { useRoute } from 'vue-router';
 import DropDownTab from 'src/components/DropDownTab.vue';
+import familyState from '../../stores/family-store';
+import { storeToRefs } from 'pinia';
+
+const state = familyState();
+const { family } = storeToRefs(state);
 
 const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
 emit('pageTitle', 'Data Keluarga');
-emit('pageSubTitle', null);
 emit('showButtonSearch', true);
+
+watch(family, () => {
+	const pageSubTitle = `${family.value.suami || '?'} & ${family.value.istri || '?'}`;
+	emit('pageSubTitle', pageSubTitle);
+});
 
 const tab = ref('profile');
 const toProfile = '/families/' + useRoute().params.id.toString() + '/profile';

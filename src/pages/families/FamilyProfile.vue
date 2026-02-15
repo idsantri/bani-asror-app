@@ -87,6 +87,7 @@ import {
 import FamilyProfileSplit from './FamilyProfileSplit.vue';
 import FamilyInfoHomeModal from './FamilyInfoHomeModal.vue';
 import { forceRerender } from 'src/utils/buttons-click';
+import familyState from 'src/stores/family-store';
 
 const family = reactive({});
 const route = useRoute();
@@ -96,6 +97,7 @@ const modalInfo = ref(false);
 try {
 	const response = await apiTokened.get(`families/${familyId}`);
 	Object.assign(family, response.data.data.family);
+	familyState().family = family;
 } catch (error) {
 	// console.log("Not Found: family -> detail", error.response);
 	const errMsg = toArray(error.response.data.message);
