@@ -70,6 +70,12 @@ const routes = [
 				component: () => import('../pages/members/MemberIndex.vue'),
 				meta: { title: 'Halaman Anggota (Anak)' },
 			},
+			{
+				path: 'members/:id/siblings',
+				name: 'Member Siblings',
+				component: () => import('../pages/members/MemberIndex.vue'),
+				meta: { title: 'Halaman Anggota (Saudara)' },
+			},
 
 			//FAMILIES
 			{

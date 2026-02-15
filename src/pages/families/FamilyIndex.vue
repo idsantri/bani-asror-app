@@ -8,8 +8,18 @@
 			align="justify"
 			narrow-indicator
 		>
-			<q-route-tab :to="toProfile" name="profile" label="Profil" />
-			<q-route-tab :to="toChildren" name="child" label="Anak" />
+			<q-route-tab
+				:to="toProfile"
+				name="profile"
+				label="Profil"
+				replace=""
+			/>
+			<q-route-tab
+				:to="toChildren"
+				name="child"
+				label="Anak"
+				replace=""
+			/>
 
 			<DropDownTab />
 		</q-tabs>
