@@ -14,7 +14,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 22
+                  node-version: 26
 
             - name: Install Corepack
               run: npm i -g corepack
@@ -22,7 +22,7 @@ jobs:
             - name: Enable Corepack & pnpm
               run: |
                   corepack enable
-                  corepack prepare pnpm@latest --activate
+                  corepack prepare pnpm@10 --activate
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
