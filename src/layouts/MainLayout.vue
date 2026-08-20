@@ -247,8 +247,10 @@
 					href="https://fb.me/idsantri.page"
 					target="_blank"
 					class="text-green-1"
-					>ID Santri</a
 				>
+					ID Santri
+				</a>
+				&nbsp;&mdash; &nbsp; v{{ v.version }}
 			</p>
 		</q-footer>
 	</q-layout>
@@ -266,6 +268,7 @@ import { apiTokened } from 'src/config/api';
 import useAuthStore from 'src/stores/auth-store';
 import { useQuasar } from 'quasar';
 import { notifySuccess } from 'src/utils/notify';
+import * as v from '../../package.json';
 
 const pageTitle = ref('Data');
 const pageSubTitle = ref('');

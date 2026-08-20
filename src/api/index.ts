@@ -9,7 +9,7 @@ const url =
 		: config.BASE_API;
 
 const baseUrl = axios.create({ baseURL: url });
-baseUrl.defaults.withCredentials = true;
+// baseUrl.defaults.withCredentials = true;
 
 const api = baseUrl;
 // Tambahkan interceptor untuk menangani kesalahan
