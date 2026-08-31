@@ -1,5 +1,11 @@
 <template>
 	<div class="q-pa-xs">
+		<q-btn
+			v-if="showBtnVerify"
+			@click="resendEmail"
+			class="q-btn full-width q-pa-sm q-my-md bg-primary no-caps"
+			>Kirim ulang email verifikasi</q-btn
+		>
 		<form @submit.prevent="login">
 			<div class="q-gutter-y-md column">
 				<q-input
@@ -10,17 +16,33 @@
 					label="Login"
 					placeholder="Masukkan username atau email Anda!"
 					autocomplete=""
+					autocapitalize="none"
+					autocorrect="off"
+					:rules="[(val) => !!val || 'Username wajib diisi']"
+					name="username"
+					type="text"
 				/>
 				<q-input
 					bg-color="green-1"
 					outlined
 					v-model="password"
-					type="password"
+					:type="isPwd ? 'password' : 'text'"
 					required
 					label="Password"
+					name="password"
 					placeholder="Masukkan password!"
-					autocomplete=""
-				/>
+					autocomplete="off"
+					autocapitalize="off"
+					:rules="[(val) => !!val || 'Password wajib diisi']"
+				>
+					<template v-slot:append>
+						<q-icon
+							:name="isPwd ? 'visibility_off' : 'visibility'"
+							class="cursor-pointer"
+							@click="isPwd = !isPwd"
+						/>
+					</template>
+				</q-input>
 				<q-btn
 					type="submit"
 					class="full-width q-pa-sm text-green-10"
@@ -52,30 +74,30 @@
 				</q-card>
 			</div>
 		</form>
+		<q-spinner-cube
+			v-show="showSpinner"
+			color="green-12"
+			size="14em"
+			class="absolute-center"
+		/>
 	</div>
-	<q-spinner-cube
-		v-show="showSpinner"
-		color="green-12"
-		size="14em"
-		class="absolute-center"
-	/>
 </template>
 
 <script setup>
-import api from 'src/api';
-import { apiTokened } from '../../config/api';
-
 import { useRouter } from 'vue-router';
-import { onUpdated, ref } from 'vue';
-import { toArray } from 'src/utils/array';
-import authState from 'src/stores/auth-store';
-import { notifyAlert, notifySuccess } from 'src/utils/notify';
+import { ref } from 'vue';
+import { toArray } from '../../utils/array';
+import { useAuthStore } from '../../stores/auth-store';
+import { notifySuccess } from 'src/utils/notify';
+import Auth from 'src/models/Auth';
+import UserCurrent from 'src/models/UserCurrent';
 
 const router = useRouter();
 const username = ref('');
 const password = ref('');
 const showSpinner = ref(false);
-
+const isPwd = ref(true);
+const showBtnVerify = ref(false);
 const emit = defineEmits(['title', 'errors']);
 emit('title', 'Login');
 emit('errors', []);
@@ -84,53 +106,48 @@ const login = async () => {
 	emit('errors', []);
 	try {
 		showSpinner.value = true;
-		const response = await api.post('login', {
+		const response = await Auth.login({
 			login: username.value,
 			password: password.value,
 		});
-		const { data } = response.data;
-		// console.log(response.data.message);
+		useAuthStore().setUser(response.data);
 
-		authState().token = data.token;
-		authState().user = data.user;
-		authState().groups = data.groups;
+		notifySuccess(response.message);
 
-		apiTokened.defaults.headers.common['Authorization'] =
-			'Bearer ' + authState().getToken;
-
-		notifySuccess(response.data.message);
-
-		const memberId = data.user?.member_id;
+		const memberId = response.data.user?.member_id;
 		if (memberId) router.push(`/members/${memberId}`);
 		else router.push('/profile');
 	} catch (error) {
-		emit('errors', toArray(error.response?.data?.message));
+		const res = error.response.data;
+		if (res?.data?.code == 'EMAIL_NOT_VERIFIED') {
+			// alert("Email belum diverifikasi. Silakan verifikasi email Anda.");
+			showBtnVerify.value = true;
+		}
+
+		emit('errors', toArray(res.message));
 	} finally {
 		showSpinner.value = false;
 	}
 };
 
-onUpdated(() => {
-	const resend = document.querySelector('ul > li > span > a');
-	if (!resend) return;
-	resend.addEventListener('click', async (e) => {
-		console.log('anchor clicked');
+const resendEmail = async () => {
+	try {
 		emit('errors', []);
-		e.preventDefault();
-		const href = resend.href.replace('%2540', '@');
-		// console.log(href);
-		try {
-			showSpinner.value = true;
-			const response = await api.get(href);
-			const notification = notifyAlert(response.data.message, 0);
-			await notification; // tunggu notifikasi ditutup
-		} catch (error) {
-			emit('errors', toArray(error.response.data.message));
-		} finally {
-			showSpinner.value = false;
-		}
-	});
-});
+		showSpinner.value = true;
+		const response = await Auth.resendEmail({
+			login: username.value,
+		});
+
+		notifySuccess(response.message);
+
+		showBtnVerify.value = false;
+	} catch (error) {
+		const res = error.response.data;
+		emit('errors', toArray(res.message));
+	} finally {
+		showSpinner.value = false;
+	}
+};
 </script>
 
 <style scoped lang="scss"></style>

@@ -7,7 +7,7 @@ import {
 } from 'vue-router';
 import routes from './routes';
 import { nextTick } from 'vue';
-import authStore from '../stores/auth-store';
+import { useAuthStore } from '../stores/auth-store';
 import constanta from 'src/config/constanta';
 
 /*
@@ -19,6 +19,7 @@ import constanta from 'src/config/constanta';
  * with the Router instance.
  */
 
+let routerInstance = null;
 export default route(function (/* { store, ssrContext } */) {
 	const createHistory = process.env.SERVER
 		? createMemoryHistory
@@ -33,15 +34,17 @@ export default route(function (/* { store, ssrContext } */) {
 		// Leave this as is and make changes in quasar.conf.js instead!
 		// quasar.conf.js -> build -> vueRouterMode
 		// quasar.conf.js -> build -> publicPath
-		history: createHistory(process.env.VUE_ROUTER_BASE),
+		history: createHistory(
+			process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE,
+		),
 	});
 
 	Router.beforeEach((to, from, next) => {
 		if (to.fullPath == '/') {
-			return next('/members/0');
+			return next('/home');
 		}
 
-		const store = authStore();
+		const store = useAuthStore();
 		const authRoutes = ['Register', 'Login', 'Forgot', 'Reset'];
 		const toAuthRoutes = authRoutes.includes(to.name);
 		const isAuthenticate = store.getToken && store.getToken.length > 0;
@@ -64,5 +67,7 @@ export default route(function (/* { store, ssrContext } */) {
 		});
 	});
 
+	routerInstance = Router;
 	return Router;
 });
+export { routerInstance };

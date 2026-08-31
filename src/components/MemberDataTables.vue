@@ -34,7 +34,7 @@ import { apiTokened } from '../config/api';
 import { toArray } from '../utils/array';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender, closeModalSearch } from '../utils/buttons-click';
-import useAuthStore from 'src/stores/auth-store';
+import { useAuthStore } from 'src/stores/auth-store';
 import { useQuasar } from 'quasar';
 const router = useRouter();
 

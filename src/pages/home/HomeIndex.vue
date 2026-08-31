@@ -37,7 +37,7 @@
 </template>
 <script setup>
 import { apiTokened } from 'src/config/api';
-import useAuthStore from 'src/stores/auth-store';
+import { useAuthStore } from 'src/stores/auth-store';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watchEffect } from 'vue';
 import { useQuasar } from 'quasar';

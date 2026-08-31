@@ -71,7 +71,7 @@ import { apiTokened } from 'src/config/api';
 import { toArray } from 'src/utils/array';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { reactive, ref } from 'vue';
-import authState from '../../stores/auth-store';
+import { useAuthStore as authState } from '../../stores/auth-store';
 
 const memberId = authState().getUser.member_id;
 const userId = authState().getUser.id;

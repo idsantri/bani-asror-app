@@ -55,21 +55,21 @@
 				</q-card>
 			</div>
 		</form>
+		<q-spinner-cube
+			v-show="showSpinner"
+			color="green-12"
+			size="14em"
+			class="absolute-center"
+		/>
 	</div>
-	<q-spinner-cube
-		v-show="showSpinner"
-		color="green-12"
-		size="14em"
-		class="absolute-center"
-	/>
 </template>
 
 <script setup>
-import api from 'src/api';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { toArray } from '../../utils/array';
 import { notifyAlert } from 'src/utils/notify';
+import Auth from 'src/models/Auth';
 
 const showSpinner = ref(false);
 const router = useRouter();
@@ -83,14 +83,12 @@ const reset = async () => {
 	emit('errors', []);
 	try {
 		showSpinner.value = true;
-		const response = await api.post('forgot', {
-			email: email.value,
-		});
-		const notification = notifyAlert(response.data.message, 0);
+		const response = await Auth.forgotPassword({ email: email.value });
+		const notification = notifyAlert(response.message, 0);
 		await notification; // tunggu notifikasi ditutup
-		router.push('/reset');
+		router.push({ name: 'Reset' });
 	} catch (error) {
-		emit('errors', toArray(error.response?.data?.message));
+		emit('errors', toArray(error.response.data.message));
 	} finally {
 		showSpinner.value = false;
 	}

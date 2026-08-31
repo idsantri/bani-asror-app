@@ -24,22 +24,42 @@
 					bg-color="green-1"
 					outlined
 					v-model="password"
-					type="password"
+					:type="isPwd ? 'password' : 'text'"
+					:rules="[(val) => !!val || 'Password wajib diisi']"
 					required
 					label="Password"
 					placeholder="Masukkan password!"
 					autocomplete="off"
-				/>
+				>
+					<template v-slot:append>
+						<q-icon
+							:name="isPwd ? 'visibility_off' : 'visibility'"
+							class="cursor-pointer"
+							@click="isPwd = !isPwd"
+						/>
+					</template>
+				</q-input>
 				<q-input
 					bg-color="green-1"
 					outlined
 					v-model="password_confirm"
-					type="password"
+					:type="isPwd ? 'password' : 'text'"
+					:rules="[
+						(val) => !!val || 'Konfirmasi password wajib diisi',
+					]"
 					required
 					label="Konfirmasi Password"
 					placeholder="Ulangi password!"
 					autocomplete="off"
-				/>
+				>
+					<template v-slot:append>
+						<q-icon
+							:name="isPwd ? 'visibility_off' : 'visibility'"
+							class="cursor-pointer"
+							@click="isPwd = !isPwd"
+						/>
+					</template>
+				</q-input>
 				<q-btn
 					type="submit"
 					class="full-width q-pa-sm text-green-10"
@@ -63,50 +83,54 @@
 				</q-card>
 			</div>
 		</form>
+		<q-spinner-cube
+			v-show="showSpinner"
+			color="green-12"
+			size="14em"
+			class="absolute-center"
+		/>
 	</div>
-	<q-spinner-cube
-		v-show="showSpinner"
-		color="green-12"
-		size="14em"
-		class="absolute-center"
-	/>
 </template>
 
 <script setup>
-import api from 'src/api';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { ref } from 'vue';
 import { toArray } from '../../utils/array';
 import { notifyAlert } from 'src/utils/notify';
+import Auth from 'src/models/Auth';
+
+const { query } = useRoute();
+const router = useRouter();
+
+const showSpinner = ref(false);
+const token = ref(query.token);
+const email = ref(query.email);
+const password = ref('');
+const password_confirm = ref('');
+const isPwd = ref(true);
 
 const emit = defineEmits(['title', 'errors']);
 emit('title', 'Reset Password');
 emit('errors', []);
 
-const router = useRouter();
-const route = useRoute();
-
-const showSpinner = ref(false);
-const token = ref(route?.query?.token || '');
-const email = ref('');
-const password = ref('');
-const password_confirm = ref('');
-
 const reset = async () => {
 	emit('errors', []);
+	if (password.value !== password_confirm.value) {
+		emit('errors', ['Password dan konfirmasi password tidak sama.']);
+		return;
+	}
 	try {
 		showSpinner.value = true;
-		const response = await api.post('reset-password', {
+		const response = await Auth.resetPassword({
 			token: token.value,
 			email: email.value,
 			password: password.value,
-			password_confirm: password_confirm.value,
 		});
-		const notification = notifyAlert(response.data.message, 0);
+		const notification = notifyAlert(response.message, 0);
 		await notification; // tunggu notifikasi ditutup
 		router.push({ name: 'Login' });
 	} catch (error) {
-		emit('errors', toArray(error.response?.data?.message));
+		emit('errors', toArray(error.response.data.message));
 	} finally {
 		showSpinner.value = false;
 	}

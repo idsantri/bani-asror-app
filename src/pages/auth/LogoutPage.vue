@@ -3,7 +3,7 @@
 </template>
 <script setup>
 import { useQuasar } from 'quasar';
-import authState from '../../stores/auth-store';
+import { useAuthStore } from '../../stores/auth-store';
 
 (() => {
 	useQuasar()
@@ -14,7 +14,7 @@ import authState from '../../stores/auth-store';
 			persistent: true,
 		})
 		.onOk(() => {
-			authState().$reset();
+			useAuthStore().$reset();
 			window.location.href = '/login';
 		})
 		.onOk(() => {
