@@ -7,6 +7,7 @@
 				:columns="columns"
 				:filter="filter"
 				class="bg-green-1 text-green-10"
+				@row-click="(e, row) => (userId = row.id)"
 			>
 				<template v-slot:top-right>
 					<q-input
@@ -21,242 +22,17 @@
 						</template>
 					</q-input>
 				</template>
-				<template v-slot:body="props">
-					<q-tr :props="props" @click="onRowClick(props.row)">
-						<!-- <q-td auto-width>
-             <q-btn size="sm" color="green-8" round dense @click="props.expand = !props.expand"
-               :icon="props.expand ? 'remove' : 'add'" />
-           </q-td> -->
-						<q-td key="username" :props="props">
-							{{ props.row.username }}
-						</q-td>
-						<q-td key="member_nama" :props="props">
-							{{ props.row.member_nama }}
-						</q-td>
-						<q-td key="roles" :props="props">
-							[{{ props.row.roles }}]
-						</q-td>
-						<q-td key="email" :props="props">
-							{{ props.row.email }}
-						</q-td>
-					</q-tr>
-				</template>
 			</q-table>
 		</q-card-section>
 	</q-card>
-
-	<q-card v-if="user.id" class="bg-green-1 text-green-10">
-		<!-- <q-card class="bg-green-1 text-green-10"> -->
-		<q-card-section class="q-pa-sm">
-			<q-list separator>
-				<q-item class="q-px-none">
-					<q-item-section>
-						<q-item-label overline
-							>ID | Username | Email | Phone</q-item-label
-						>
-						<q-item-label>
-							{{ user.id || '?' }} | {{ user.username || '?' }} |
-							{{ user.email || '?' }} | {{ user.phone || '?' }}
-						</q-item-label>
-					</q-item-section>
-					<q-item-section side class="no-padding">
-						<q-item-label class="text-green-10">
-							<q-btn
-								class="bg-green-11 text-green-10 q-px-sm q-ml-sm"
-								outline
-								glossy
-							>
-								<q-icon name="phone" size="1em" />
-								<q-icon name="edit" size="1em" />
-
-								<q-popup-edit
-									v-model="user.phone"
-									autofocus
-									v-slot="scope"
-								>
-									<q-input
-										autofocus
-										dense
-										v-model="user.phone"
-										:model-value="user.phone"
-										hint="User Phone: 628x ..."
-									>
-										<template v-slot:after>
-											<q-btn
-												flat
-												dense
-												color="negative"
-												icon="cancel"
-												@click.stop.prevent="
-													scope.cancel
-												"
-											/>
-											<q-btn
-												flat
-												dense
-												color="positive"
-												icon="check_circle"
-												@click.stop.prevent="
-													updateUserPhone(user.id)
-												"
-											/>
-										</template>
-									</q-input>
-								</q-popup-edit>
-							</q-btn>
-							<q-btn
-								class="bg-green-11 text-green-10 q-px-sm q-ml-sm"
-								outline
-								glossy
-								icon="phone"
-								:disable="!user.phone"
-								@click="callPhone(user.phone)"
-							></q-btn>
-						</q-item-label>
-					</q-item-section>
-				</q-item>
-				<q-item class="q-px-none">
-					<q-item-section>
-						<q-item class="no-padding">
-							<q-item-section>
-								<q-item-label overline>Nama</q-item-label>
-								<q-item-label>
-									{{
-										user.nama
-											? user.nama + ' (' + user.lp + ')'
-											: '-'
-									}}
-								</q-item-label>
-							</q-item-section>
-						</q-item>
-					</q-item-section>
-					<q-item-section side class="no-padding">
-						<q-item-label class="">
-							<q-btn
-								class="bg-green-11 text-green-10 q-px-sm q-ml-sm"
-								outline
-								glossy
-								:label="user.member_id ? user.member_id : '?'"
-							>
-								<q-icon
-									name="edit"
-									size="1em"
-									class="q-ml-xs"
-								/>
-								<q-popup-edit
-									v-model="user.member_id"
-									autofocus
-									v-slot="scope"
-								>
-									<q-input
-										autofocus
-										dense
-										v-model="user.member_id"
-										:model-value="user.member_id"
-										hint="Member ID"
-									>
-										<template v-slot:after>
-											<q-btn
-												flat
-												dense
-												color="negative"
-												icon="cancel"
-												@click.stop.prevent="
-													scope.cancel
-												"
-											/>
-											<q-btn
-												flat
-												dense
-												color="positive"
-												icon="check_circle"
-												@click.stop.prevent="
-													updateMemberId(user.id)
-												"
-											/>
-										</template>
-									</q-input>
-								</q-popup-edit>
-							</q-btn>
-							<q-btn
-								class="bg-green-11 text-green-10 q-px-sm q-ml-sm"
-								outline
-								glossy
-								:to="
-									user.member_id
-										? '/members/' + user.member_id
-										: null
-								"
-								icon="person"
-								:disable="!user.member_id"
-							>
-							</q-btn>
-						</q-item-label>
-					</q-item-section>
-				</q-item>
-				<q-item class="q-px-none">
-					<q-item-section>
-						<q-item-label overline>Akses</q-item-label>
-						<q-item-label>
-							<div class="q-gutter-x-md">
-								<q-toggle
-									v-model="isGuest"
-									color="green"
-									label="Tamu"
-									@click="
-										toggleClick(user.id, 'guest', isGuest)
-									"
-									disable
-								/>
-								<q-toggle
-									v-model="isMember"
-									color="green"
-									label="Anggota"
-									@click="
-										toggleClick(user.id, 'member', isMember)
-									"
-								/>
-								<q-toggle
-									v-model="isAdmin"
-									color="green"
-									label="Admin"
-									@click="
-										toggleClick(user.id, 'admin', isAdmin)
-									"
-								/>
-								<q-toggle
-									v-model="isSuperadmin"
-									color="green"
-									label="Super Admin"
-									@click="null"
-									disable
-								/>
-							</div>
-						</q-item-label>
-					</q-item-section>
-				</q-item>
-			</q-list>
-		</q-card-section>
-		<q-separator />
-		<q-card-actions align="right">
-			<q-btn
-				label="Hapus"
-				no-caps=""
-				color="negative"
-				@click="deleteUser(user.id)"
-			/>
-		</q-card-actions>
-	</q-card>
+	<user-detail :userId="userId" />
 </template>
 
 <script setup>
 import { inject, reactive, ref } from 'vue';
-import { useQuasar } from 'quasar';
-import { notifyError, notifySuccess } from 'src/utils/notify';
-import { toArray } from 'src/utils/array';
-import { forceRerender } from 'src/utils/buttons-click';
+import { notifyError } from 'src/utils/notify';
+import UserDetail from './UserDetail.vue';
 
-const api = inject('api');
 const columns = [
 	{
 		name: 'username',
@@ -288,19 +64,15 @@ const columns = [
 	},
 ];
 
-const user = reactive({});
+const api = inject('api');
 const users = reactive([]);
 const filter = ref('');
-const isSuperadmin = ref(false);
-const isAdmin = ref(false);
-const isMember = ref(false);
-const isGuest = ref(false);
-const $q = useQuasar();
+const userId = ref(null);
 
 const fetchUsers = async () => {
 	try {
 		const response = await api.get('users');
-		console.log(response.data.data.users);
+		// console.log(response.data.data.users);
 		Object.assign(users, response.data.data.users);
 		// console.log(users);
 	} catch (error) {
@@ -309,142 +81,4 @@ const fetchUsers = async () => {
 	}
 };
 fetchUsers();
-
-const onRowClick = (row) => {
-	Object.assign(user, row);
-	// console.log(user);
-	if (user.is_superadmin == 1) {
-		isSuperadmin.value = true;
-	} else {
-		isSuperadmin.value = false;
-	}
-	if (user.is_admin == 1) {
-		isAdmin.value = true;
-	} else {
-		isAdmin.value = false;
-	}
-	if (user.is_member == 1) {
-		isMember.value = true;
-	} else {
-		isMember.value = false;
-	}
-	if (user.is_guest == 1) {
-		isGuest.value = true;
-	} else {
-		isGuest.value = false;
-	}
-};
-
-const toggleClick = async (id, group, value) => {
-	// console.log(group);
-	// return;
-	const message = value
-		? 'Tetapkan yang bersangkutan sebagai ' + group.toUpperCase() + '?'
-		: 'Hapus yang bersangkutan dari group ' + group.toUpperCase() + '?';
-
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: message,
-		cancel: true,
-		persistent: false,
-		html: true,
-	})
-		.onOk(async () => {
-			await updateGroup(id, group, value);
-		})
-		.onCancel(() => {
-			console.log('Aksi digagalkan');
-		});
-};
-
-async function updateGroup(id, group, value) {
-	const method = value ? 'add' : 'remove';
-	const data = {
-		user_id: id,
-		method: method,
-		group_name: group,
-	};
-	// console.log(data);
-	// return;
-	try {
-		const response = await api.post('user-group', data);
-		// console.log(response.data);
-		notifySuccess(response.data.message);
-	} catch (error) {
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
-		});
-	} finally {
-		forceRerender();
-	}
-}
-
-const updateMemberId = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: 'Update Member ID',
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.put(`users/${id}`, {
-				member_id: user.member_id,
-			});
-			notifySuccess(response.data.message);
-			forceRerender();
-		} catch (error) {
-			toArray(error.response.data.message).forEach((message) => {
-				notifyError(message);
-			});
-		}
-	});
-};
-
-const updateUserPhone = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: 'Update Nomor Telepon (WA)?',
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.put(`users/${id}`, {
-				phone: user.phone,
-			});
-			notifySuccess(response.data.message);
-			forceRerender();
-		} catch (error) {
-			toArray(error.response.data.message).forEach((message) => {
-				notifyError(message);
-			});
-		}
-	});
-};
-
-const callPhone = (phone) => {
-	window.open(`https://wa.me/${phone.replace(/^0/, '62')}`, '_blank');
-};
-
-const deleteUser = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: 'Hapus user ini?',
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.delete(`users/${id}`);
-			notifySuccess(response.data.message);
-		} catch (error) {
-			toArray(error.response.data.message).forEach((message) => {
-				notifyError(message);
-			});
-		} finally {
-			forceRerender();
-		}
-	});
-};
 </script>
