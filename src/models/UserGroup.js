@@ -1,11 +1,11 @@
-import { notifyConfirm, notifyError } from "src/utils/notify";
-import BaseModel from "./BaseModel";
+import { notifyConfirm, notifyError } from 'src/utils/notify';
+import BaseModel from './BaseModel';
 
 class UserGroup extends BaseModel {
 	constructor() {
-		super("user-groups");
+		super('user-groups');
 	}
-	async addToGroup({ userId, group, message = "" }) {
+	async addToGroup({ userId, group, message = '' }) {
 		const isConfirmed = await notifyConfirm(message);
 		if (!isConfirmed) return false;
 
@@ -14,7 +14,7 @@ class UserGroup extends BaseModel {
 				`${this._path}/users/${userId}`,
 				{
 					group,
-				}
+				},
 			);
 			return response.data;
 		} catch (error) {
@@ -22,13 +22,13 @@ class UserGroup extends BaseModel {
 			return false;
 		}
 	}
-	async removeFromGroup({ userId, group, message = "" }) {
+	async removeFromGroup({ userId, group, message = '' }) {
 		const isConfirmed = await notifyConfirm(message);
 		if (!isConfirmed) return false;
 
 		try {
 			const response = await this._api.delete(
-				`${this._path}/users/${userId}/${group}`
+				`${this._path}/users/${userId}/${group}`,
 			);
 			return response.data;
 		} catch (error) {

@@ -67,15 +67,7 @@ onMounted(async () => {
 	}
 });
 
-const showButtonEdit = () => {
-	if (
-		useAuthStore().getGroup.is_superadmin ||
-		useAuthStore().getGroup.is_admin
-	) {
-		return true;
-	}
-	return false;
-};
+const showButtonEdit = () => useAuthStore().isAdminOrSuperAdmin;
 
 const save = async () => {
 	try {

@@ -1,3 +1,4 @@
+// file: src/stores/index.js
 import { store } from 'quasar/wrappers';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';

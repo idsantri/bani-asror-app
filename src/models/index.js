@@ -1,3 +1,5 @@
+// file : src/models/index.js
+
 import axios from 'axios';
 import { useAuthStore } from 'src/stores/auth-store';
 import { notifyError } from 'src/utils/notify';
@@ -14,9 +16,10 @@ const api = axios.create({
 	// withCredentials: true, // no need to send cookies, stateless
 });
 
-const authStore = useAuthStore();
+// panggil store dalam fungsi interceptor, bukan di luar
 
 api.interceptors.request.use((config) => {
+	const authStore = useAuthStore();
 	if (authStore.token) {
 		config.headers.Authorization = `Bearer ${authStore.token}`;
 	}
@@ -44,6 +47,7 @@ api.interceptors.response.use(
 					error?.response?.data?.message ||
 						'Masa berlaku token telah habis.',
 				);
+				const authStore = useAuthStore();
 				authStore.logout();
 				setTimeout(() => {
 					routerInstance.push({ name: 'Login' });

@@ -264,7 +264,7 @@ import constanta from 'src/config/constanta';
 import AsideContent from 'src/components/AsideContent.vue';
 import MemberDataTable from '../components/MemberDataTables.vue';
 import MemberCrud from 'src/components/MemberCrud.vue';
-import { apiTokened } from 'src/config/api';
+import apiTokened from 'src/models';
 import { useAuthStore } from 'src/stores/auth-store';
 import { useQuasar } from 'quasar';
 import { notifySuccess } from 'src/utils/notify';
@@ -337,8 +337,7 @@ const checkReport = async () => {
 		console.log(error);
 	}
 };
-const isAdmin =
-	useAuthStore().getGroup.is_superadmin || useAuthStore().getGroup.is_admin;
+const isAdmin = useAuthStore().isAdminOrSuperAdmin;
 if (isAdmin) {
 	//init
 	checkReport();

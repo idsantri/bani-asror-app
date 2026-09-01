@@ -25,7 +25,7 @@ export default configure((/* ctx */) => {
 		// app boot file (/src/boot)
 		// --> boot files are part of "main.js"
 		// https://v2.quasar.dev/quasar-cli-webpack/boot-files
-		boot: ['axios'],
+		boot: ['pinia', 'axios'],
 
 		// https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
 		css: ['app.scss'],
@@ -87,9 +87,7 @@ export default configure((/* ctx */) => {
 		// https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
 		framework: {
 			config: {
-				notify: {
-					/* look at QuasarConfOptions from the API card */
-				},
+				notify: {/* look at QuasarConfOptions from the API card */},
 			},
 
 			// iconSet: 'material-icons', // Quasar icon set

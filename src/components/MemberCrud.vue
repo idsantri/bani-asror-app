@@ -119,7 +119,7 @@
 <script setup>
 import memberCrudState from '../stores/member-crud-store';
 import { toRefs, reactive, ref, computed, watchEffect } from 'vue';
-import { apiTokened } from '../config/api';
+import api from 'src/models';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../utils/array';
 import { useQuasar } from 'quasar';
@@ -200,7 +200,7 @@ const saveMember = async () => {
 		if (isChild.value) url = `members/child/${familyId.value}`;
 		try {
 			//is new
-			const response = await apiTokened.post(url, data);
+			const response = await api.post(url, data);
 			closeModal();
 			notifySuccess(response.data.message);
 			forceRerender();
@@ -211,7 +211,7 @@ const saveMember = async () => {
 	} else {
 		//not new
 		try {
-			const response = await apiTokened.put(`members/${memberId}`, data);
+			const response = await api.put(`members/${memberId}`, data);
 			closeModal();
 			notifySuccess(response.data.message);
 			forceRerender();
@@ -233,7 +233,7 @@ const deleteMember = async (id) => {
 		html: true,
 	}).onOk(async () => {
 		try {
-			const response = await apiTokened.delete(`members/${id}`);
+			const response = await api.delete(`members/${id}`);
 			closeModal();
 			notifySuccess(response.data.message);
 			router.go(-2);

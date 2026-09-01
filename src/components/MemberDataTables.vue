@@ -30,7 +30,7 @@ import DataTablesLib from 'datatables.net-dt';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import memberCrud from '../stores/member-crud-store';
 import { useRouter } from 'vue-router';
-import { apiTokened } from '../config/api';
+import api from 'src/models';
 import { toArray } from '../utils/array';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender, closeModalSearch } from '../utils/buttons-click';
@@ -44,14 +44,13 @@ const isHusband = computed(() => memberCrud().getIsHusband);
 const isWife = computed(() => memberCrud().getIsWife);
 const isChild = computed(() => memberCrud().getIsChild);
 const isNew = computed(() => memberCrud().getIsNew);
-const isAdmin =
-	useAuthStore().getGroup.is_superadmin || useAuthStore().getGroup.is_admin;
-// console.log('isadmin', isAdmin);
+const isAdmin = useAuthStore().isAdminOrSuperAdmin;
 
-const url = `${apiTokened.defaults.baseURL}/members/search`;
+const url = `${api.defaults.baseURL}/members/search`;
 const headers = {
-	Authorization: apiTokened.defaults.headers.common.Authorization,
+	Authorization: `Bearer ${useAuthStore().token}`,
 };
+
 DataTable.use(DataTablesLib);
 const options = ref({
 	isAdmin: isAdmin,
@@ -119,17 +118,15 @@ onMounted(() => {
 			try {
 				let response;
 				if (isHusband.value)
-					response = await apiTokened.put(
-						`families/${familyId.value}`,
-						{ suami_id: memberId },
-					);
+					response = await api.put(`families/${familyId.value}`, {
+						suami_id: memberId,
+					});
 				if (isWife.value)
-					response = await apiTokened.put(
-						`families/${familyId.value}`,
-						{ istri_id: memberId },
-					);
+					response = await api.put(`families/${familyId.value}`, {
+						istri_id: memberId,
+					});
 				if (isChild.value)
-					response = await apiTokened.post(
+					response = await api.post(
 						`families/${familyId.value}/children`,
 						{ member_id: memberId },
 					);

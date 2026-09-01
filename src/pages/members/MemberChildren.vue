@@ -35,6 +35,9 @@
 				</q-item>
 			</q-list>
 		</q-banner>
+		<q-banner class="q-mt-md bg-info text-blue-10 text-center text-italic">
+			Untuk menambahkan anak, silakan masuk dari halaman keluarga
+		</q-banner>
 	</q-card-section>
 </template>
 <script setup>
