@@ -1,7 +1,7 @@
 <template>
 	<q-card class="bg-green-1 text-green-10">
 		<div v-if="loading" class="text-center absolute-center">
-			<q-spinner color="green-4" size="8em" thickness="2" />
+			<q-spinner color="green-4" size="8em" :thickness="3" />
 		</div>
 		<!-- <q-card class="bg-green-1 text-green-10"> -->
 		<q-card-section class="q-pa-sm">
@@ -153,10 +153,38 @@
 				</q-item>
 				<q-item class="q-px-none">
 					<q-item-section>
-						<q-item-label overline>Akses</q-item-label>
-						<q-item-label>
-							<div class="q-gutter-x-md"></div>
-						</q-item-label>
+						<q-list bordered="" separator="" class="bg-green-1">
+							<q-item
+								tag="label"
+								v-ripple
+								v-for="(group, index) in groups"
+								:key="index"
+							>
+								<q-item-section>
+									<q-item-label>{{
+										group.title
+									}}</q-item-label>
+									<q-item-label caption="">
+										{{ group.description }}
+									</q-item-label>
+								</q-item-section>
+								<q-item-section side>
+									<q-toggle
+										color="green-10"
+										v-model="group.value"
+										:true-value="true"
+										:false-value="false"
+										@click="
+											setGroup(
+												group.key,
+												group.title,
+												group.value,
+											)
+										"
+									/>
+								</q-item-section>
+							</q-item>
+						</q-list>
 					</q-item-section>
 				</q-item>
 			</q-list>
@@ -164,6 +192,7 @@
 		<q-separator />
 		<q-card-actions align="right">
 			<q-btn
+				v-if="userId"
 				label="Hapus"
 				no-caps=""
 				color="negative"
@@ -175,109 +204,121 @@
 </template>
 
 <script setup>
-import { useQuasar } from 'quasar';
-import { api } from 'src/boot/axios';
+import User from 'src/models/User';
+import UserGroup from 'src/models/UserGroup';
 import { forceRerender } from 'src/utils/buttons-click';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import { notifyConfirm, notifySuccess } from 'src/utils/notify';
 import { reactive, ref, watch } from 'vue';
 
 const props = defineProps({
 	userId: {
 		type: [String, Number],
-		required: true,
+		required: false,
 	},
 });
 
 const user = reactive({});
-const $q = useQuasar();
+const groups = reactive([]);
 const loading = ref(false);
+
+async function fetchUser(id) {
+	try {
+		loading.value = true;
+		const response = await User.getById({ id });
+		if (!response) return;
+		Object.assign(user, response.data.user);
+		Object.assign(groups, response.data.groups);
+	} catch (error) {
+		console.log('🚀 ~ fetchUser ~ error:', error);
+	} finally {
+		loading.value = false;
+	}
+}
 
 watch(
 	() => props.userId,
-	async (newUserId) => {
-		if (newUserId) {
-			loading.value = true;
-			try {
-				const response = await api.get(`users/${newUserId}`);
-				Object.assign(user, response.data.data.user);
-			} catch (error) {
-				toArray(error.response.data.message).forEach((message) => {
-					notifyError(message);
-				});
-			} finally {
-				loading.value = false;
-			}
+	async (newUserId, oldUserId) => {
+		if (newUserId && newUserId !== oldUserId) {
+			await fetchUser(newUserId);
 		}
 	},
 	{ immediate: true },
 );
 
 const updateMemberId = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: 'Update Member ID',
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.put(`users/${id}`, {
-				member_id: user.member_id,
-			});
-			notifySuccess(response.data.message);
-			forceRerender();
-		} catch (error) {
-			toArray(error.response.data.message).forEach((message) => {
-				notifyError(message);
-			});
-		}
-	});
+	const isConfirmed = await notifyConfirm('Update Member ID', true);
+	if (!isConfirmed) return;
+
+	try {
+		loading.value = true;
+		await User.update({
+			id,
+			data: { member_id: user.member_id },
+		});
+
+		forceRerender();
+	} catch (error) {
+		console.log('🚀 ~ updateMemberId ~ error:', error);
+	} finally {
+		loading.value = false;
+	}
 };
 
 const updateUserPhone = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: 'Update Nomor Telepon (WA)?',
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.put(`users/${id}`, {
-				phone: user.phone,
-			});
-			notifySuccess(response.data.message);
-			forceRerender();
-		} catch (error) {
-			toArray(error.response.data.message).forEach((message) => {
-				notifyError(message);
-			});
-		}
-	});
+	const isConfirmed = await notifyConfirm('Update Nomor Telepon (WA)', true);
+	if (!isConfirmed) return;
+
+	try {
+		loading.value = true;
+		await User.update({
+			id,
+			data: { phone: user.phone },
+		});
+
+		forceRerender();
+	} catch (error) {
+		console.log('🚀 ~ updateUserPhone ~ error:', error);
+	} finally {
+		loading.value = false;
+	}
 };
 
 const callPhone = (phone) => {
 	window.open(`https://wa.me/${phone.replace(/^0/, '62')}`, '_blank');
 };
 
+const setGroup = async (group, title, value) => {
+	let message = null;
+	if (value) message = `Tetapkan sebagai <strong>${title}</strong>?`;
+	else message = `Hapus dari group <strong>${title}</strong>?`;
+	// console.log("🚀 ~ setGroup ~ message:", message);
+
+	if (value) {
+		await UserGroup.addToGroup({
+			userId: user.id,
+			group,
+			message,
+		});
+	} else {
+		await UserGroup.removeFromGroup({
+			userId: user.id,
+			group,
+			message,
+		});
+	}
+
+	forceRerender();
+};
+
 const deleteUser = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: 'Hapus user ini?',
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.delete(`users/${id}`);
-			notifySuccess(response.data.message);
-		} catch (error) {
-			toArray(error.response.data.message).forEach((message) => {
-				notifyError(message);
-			});
-		} finally {
-			forceRerender();
-		}
-	});
+	try {
+		loading.value = true;
+		const response = await User.remove({ id });
+		if (!response) return;
+		notifySuccess(response.message);
+	} finally {
+		loading.value = false;
+		forceRerender();
+	}
 };
 </script>

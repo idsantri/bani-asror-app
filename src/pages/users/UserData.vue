@@ -25,7 +25,7 @@
 			</q-table>
 		</q-card-section>
 	</q-card>
-	<user-detail :userId="userId" />
+	<user-detail :userId="userId" v-if="userId" />
 </template>
 
 <script setup>
@@ -76,7 +76,7 @@ const fetchUsers = async () => {
 		Object.assign(users, response.data.data.users);
 		// console.log(users);
 	} catch (error) {
-		notifyError('Gagal memuat data pengguna');
+		notifyError(error.response.data.message || error.message);
 		console.log('Not Found: users -> users', error.response);
 	}
 };
