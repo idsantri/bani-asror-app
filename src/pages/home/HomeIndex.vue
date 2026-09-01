@@ -36,7 +36,7 @@
 	</q-dialog>
 </template>
 <script setup>
-import { apiTokened } from 'src/config/api';
+import api from 'src/models';
 import { useAuthStore } from 'src/stores/auth-store';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watchEffect } from 'vue';
@@ -58,7 +58,7 @@ watchEffect(() => {
 
 onMounted(async () => {
 	try {
-		const response = await apiTokened.get('settings/article-introduction');
+		const response = await api.get('settings/article-introduction');
 		article.value = response.data.data.setting.val;
 	} catch (error) {
 		toArray(error.response.data.message).forEach((errorMessage) => {
@@ -79,7 +79,7 @@ const showButtonEdit = () => {
 
 const save = async () => {
 	try {
-		const response = await apiTokened.put('settings/article-introduction', {
+		const response = await api.put('settings/article-introduction', {
 			val: articleEdit.value,
 		});
 		notifySuccess(response.data.message);

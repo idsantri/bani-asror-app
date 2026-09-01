@@ -67,14 +67,10 @@
 
 <script setup>
 import { reactive, toRefs, ref } from 'vue';
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
-import {
-	notifySuccess,
-	notifyError,
-	notifyWarningExpired,
-} from '../../utils/notify';
+import { notifySuccess, notifyError } from '../../utils/notify';
 import { showModalSearch, forceRerender } from 'src/utils/buttons-click';
 import { useQuasar } from 'quasar';
 
@@ -88,19 +84,13 @@ const props = defineProps({
 });
 if (props.memberId || props.memberId === 0) {
 	try {
-		const response = await apiTokened.get(`members/${props.memberId}`);
+		const response = await api.get(`members/${props.memberId}`);
 		// console.log(response.data.data.member);
 		Object.assign(member, response.data.data.member);
 		Object.assign(parent, response.data.data.member);
 	} catch (error) {
-		// console.log("Not Found: member -> detail", error.response);
 		const errMsg = toArray(error.response.data.message);
-		const exp = errMsg.some((item) =>
-			item.toLowerCase().includes('expired'),
-		);
-		if (exp) notifyWarningExpired();
-		else if (error.response.status == 404) console.log(error.response);
-		else errMsg.forEach((message) => notifyError(message));
+		errMsg.forEach((message) => notifyError(message));
 	}
 }
 const { id, nama, lp } = toRefs(member);
@@ -138,10 +128,7 @@ const deletePasangan = async () => {
 		html: true,
 	}).onOk(async () => {
 		try {
-			const response = await apiTokened.put(
-				`families/${props.familyId}`,
-				data,
-			);
+			const response = await api.put(`families/${props.familyId}`, data);
 			// console.log('hapus pasangan', response.data);
 			notifySuccess(response.data.message);
 			forceRerender();

@@ -75,7 +75,7 @@
 
 <script setup>
 import { toArray } from '../../utils/array';
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useQuasar } from 'quasar';
@@ -95,7 +95,7 @@ const familyId = route.params.id;
 const modalInfo = ref(false);
 
 try {
-	const response = await apiTokened.get(`families/${familyId}`);
+	const response = await api.get(`families/${familyId}`);
 	Object.assign(family, response.data.data.family);
 	familyState().family = family;
 } catch (error) {
@@ -119,7 +119,7 @@ const deleteFamily = async () => {
 		html: true,
 	}).onOk(async () => {
 		try {
-			const response = await apiTokened.delete(`families/${familyId}`);
+			const response = await api.delete(`families/${familyId}`);
 			// console.log('hapus family', response.data);
 			notifySuccess(response.data.message);
 			history.back();

@@ -93,15 +93,11 @@
 </template>
 
 <script setup>
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { toArray } from '../../utils/array';
-import {
-	notifyError,
-	notifySuccess,
-	notifyWarningExpired,
-} from 'src/utils/notify';
+import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import { showModalSearch } from 'src/utils/buttons-click';
 import { useQuasar } from 'quasar';
@@ -111,16 +107,12 @@ const route = useRoute();
 const familyId = route.params.id.toString();
 
 try {
-	const response = await apiTokened.get(`families/${familyId}/children`);
+	const response = await api.get(`families/${familyId}/children`);
 	Object.assign(children, response.data.data.children);
 	// console.log(response.data.data.children);
 } catch (error) {
-	// console.log("Not Found: family -> children", error.response)
 	const errMsg = toArray(error.response.data.message);
-	const exp = errMsg.some((item) => item.toLowerCase().includes('expired'));
-	if (exp) notifyWarningExpired();
-	else if (error.response.status == 404) console.log(error.response);
-	else errMsg.forEach((message) => notifyError(message));
+	errMsg.forEach((message) => notifyError(message));
 }
 
 const $q = useQuasar();
@@ -133,7 +125,7 @@ const deleteChild = async (id) => {
 		html: true,
 	}).onOk(async () => {
 		try {
-			const response = await apiTokened.delete(`children/${id}`);
+			const response = await api.delete(`children/${id}`);
 			// console.log(response.data);
 			notifySuccess(response.data.message);
 			forceRerender();
@@ -155,7 +147,7 @@ const addChild = () => {
 
 const submitUrut = async (id, urut) => {
 	try {
-		const response = await apiTokened.put(`children/${id}/short`, {
+		const response = await api.put(`children/${id}/short`, {
 			urut: urut,
 		});
 		// console.log(response.data);

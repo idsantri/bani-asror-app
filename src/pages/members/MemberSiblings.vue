@@ -66,23 +66,19 @@
 </template>
 <script setup>
 import { toArray } from 'src/utils/array';
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import { notifyError, notifyWarningExpired } from 'src/utils/notify';
+import { notifyError } from 'src/utils/notify';
 
 const siblings = reactive([]);
 const route = useRoute();
 const memberId = route.params.id.toString();
 try {
-	const response = await apiTokened.get(`members/${memberId}/siblings`);
+	const response = await api.get(`members/${memberId}/siblings`);
 	Object.assign(siblings, response.data.data.siblings);
 } catch (error) {
-	// console.log("Not Found: member -> siblings", error.response)
 	const errMsg = toArray(error.response.data.message);
-	const exp = errMsg.some((item) => item.toLowerCase().includes('expired'));
-	if (exp) notifyWarningExpired();
-	else if (error.response.status == 404) console.log(error.response);
-	else errMsg.forEach((message) => notifyError(message));
+	errMsg.forEach((message) => notifyError(message));
 }
 </script>

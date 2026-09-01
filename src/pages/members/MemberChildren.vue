@@ -39,23 +39,19 @@
 </template>
 <script setup>
 import { toArray } from 'src/utils/array';
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import { notifyError, notifyWarningExpired } from 'src/utils/notify';
+import { notifyError } from 'src/utils/notify';
 
 const children = reactive([]);
 const route = useRoute();
 const memberId = route.params.id.toString();
 try {
-	const response = await apiTokened.get(`members/${memberId}/children`);
+	const response = await api.get(`members/${memberId}/children`);
 	Object.assign(children, response.data.data.children);
 } catch (error) {
-	// console.log("Not Found: member -> children", error.response)
 	const errMsg = toArray(error.response.data.message);
-	const exp = errMsg.some((item) => item.toLowerCase().includes('expired'));
-	if (exp) notifyWarningExpired();
-	else if (error.response.status == 404) console.log(error.response);
-	else errMsg.forEach((message) => notifyError(message));
+	errMsg.forEach((message) => notifyError(message));
 }
 </script>

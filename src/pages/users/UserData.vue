@@ -265,7 +265,7 @@
 </template>
 
 <script setup>
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { reactive, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { notifyError, notifySuccess } from 'src/utils/notify';
@@ -314,7 +314,7 @@ const isGuest = ref(false);
 const $q = useQuasar();
 
 try {
-	const response = await apiTokened.get('users');
+	const response = await api.get('users');
 	Object.assign(users, response.data.data.users);
 	// console.log(users);
 } catch (error) {
@@ -378,7 +378,7 @@ async function updateGroup(id, group, value) {
 	// console.log(data);
 	// return;
 	try {
-		const response = await apiTokened.post('user-group', data);
+		const response = await api.post('user-group', data);
 		// console.log(response.data);
 		notifySuccess(response.data.message);
 	} catch (error) {
@@ -399,7 +399,7 @@ const updateMemberId = async (id) => {
 		html: true,
 	}).onOk(async () => {
 		try {
-			const response = await apiTokened.put(`users/${id}`, {
+			const response = await api.put(`users/${id}`, {
 				member_id: user.member_id,
 			});
 			notifySuccess(response.data.message);
@@ -421,7 +421,7 @@ const updateUserPhone = async (id) => {
 		html: true,
 	}).onOk(async () => {
 		try {
-			const response = await apiTokened.put(`users/${id}`, {
+			const response = await api.put(`users/${id}`, {
 				phone: user.phone,
 			});
 			notifySuccess(response.data.message);
@@ -447,7 +447,7 @@ const deleteUser = async (id) => {
 		html: true,
 	}).onOk(async () => {
 		try {
-			const response = await apiTokened.delete(`users/${id}`);
+			const response = await api.delete(`users/${id}`);
 			notifySuccess(response.data.message);
 		} catch (error) {
 			toArray(error.response.data.message).forEach((message) => {

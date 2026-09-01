@@ -81,7 +81,7 @@
 	</q-list>
 </template>
 <script setup>
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { reactive } from 'vue';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
@@ -95,7 +95,7 @@ emit('showButtonSearch', true);
 const reports = reactive({});
 
 try {
-	const response = await apiTokened.get('reports/introduction');
+	const response = await api.get('reports/introduction');
 	Object.assign(reports, response.data.data.reports);
 	// console.log(reports);
 } catch (error) {
@@ -111,7 +111,7 @@ const submitIntroduction = async (id, userId, memberId) => {
 	};
 	try {
 		// return console.log(data);
-		const response = await apiTokened.put('reports/introduction', data);
+		const response = await api.put('reports/introduction', data);
 		notifySuccess(response.data.message);
 		forceRerender();
 	} catch (error) {
@@ -123,7 +123,7 @@ const submitIntroduction = async (id, userId, memberId) => {
 
 const checkDone = async (id) => {
 	try {
-		const response = await apiTokened.put(`reports/${id}`, {
+		const response = await api.put(`reports/${id}`, {
 			is_responded: true,
 		});
 		console.log(response.data);

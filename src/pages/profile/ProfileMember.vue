@@ -67,7 +67,7 @@
 
 <script setup>
 import constanta from '../../config/constanta';
-import { apiTokened } from 'src/config/api';
+import api from 'src/models';
 import { toArray } from 'src/utils/array';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { reactive, ref } from 'vue';
@@ -84,7 +84,7 @@ const messageLabel = `Tulis Jalur Anda ke ${constanta.ANCESTOR}! *`;
 
 try {
 	if (memberId) {
-		const response = await apiTokened.get(`members/${memberId}`);
+		const response = await api.get(`members/${memberId}`);
 		Object.assign(member, response.data.data.member);
 		emit('memberName', response.data.data.member.nama);
 	}
@@ -94,7 +94,7 @@ try {
 
 const introduceMySelf = async () => {
 	try {
-		const response = await apiTokened.post('reports', {
+		const response = await api.post('reports', {
 			user_id: userId,
 			category: 'introduction',
 			message: message.value,

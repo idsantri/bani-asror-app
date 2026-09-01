@@ -103,7 +103,6 @@ import memberState from '../../stores/member-store';
 import { useRoute } from 'vue-router';
 import DropDownTab from 'src/components/DropDownTab.vue';
 import { storeToRefs } from 'pinia';
-
 const state = memberState();
 const { member } = storeToRefs(state);
 

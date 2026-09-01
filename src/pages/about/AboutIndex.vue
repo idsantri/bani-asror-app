@@ -73,7 +73,7 @@
 	</q-card>
 </template>
 <script setup>
-import { apiTokened } from 'src/config/api';
+import api from 'src/models';
 import { onMounted, reactive } from 'vue';
 
 const admins = reactive({});
@@ -84,7 +84,7 @@ emit('showButtonSearch', false);
 
 onMounted(async () => {
 	try {
-		const response = await apiTokened.get('user-group/list/admin');
+		const response = await api.get('user-group/list/admin');
 		// console.log(response.data.data.users)
 		Object.assign(admins, response.data.data.users);
 		// console.log(users);

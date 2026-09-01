@@ -111,12 +111,12 @@
 </template>
 
 <script setup>
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../../utils/array';
 import memberState from '../../stores/member-store';
-import { notifyError, notifyWarningExpired } from 'src/utils/notify';
+import { notifyError } from 'src/utils/notify';
 import { useQuasar } from 'quasar';
 
 const families = reactive([]);
@@ -125,16 +125,12 @@ const route = useRoute();
 const memberId = route.params.id.toString();
 
 try {
-	const response = await apiTokened.get(`members/${memberId}/families`);
+	const response = await api.get(`members/${memberId}/families`);
 	Object.assign(families, response.data.data.families);
 	// console.log(families)
 } catch (error) {
-	// console.log("Not Found: member -> families", error.response);
 	const errMsg = toArray(error.response.data.message);
-	const exp = errMsg.some((item) => item.toLowerCase().includes('expired'));
-	if (exp) notifyWarningExpired();
-	else if (error.response.status == 404) console.log(error.response);
-	else errMsg.forEach((message) => notifyError(message));
+	errMsg.forEach((message) => notifyError(message));
 }
 
 const $q = useQuasar();
@@ -151,7 +147,7 @@ const createFamily = async () => {
 		html: true,
 	}).onOk(async () => {
 		try {
-			const response = await apiTokened.post('families', {
+			const response = await api.post('families', {
 				member_id: memberId,
 			});
 			// console.log('new family', response.data)

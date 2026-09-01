@@ -112,7 +112,7 @@
 </template>
 <script setup>
 import { reactive, toRefs, watch } from 'vue';
-import { apiTokened } from 'src/config/api';
+import api from 'src/models';
 import { notifyAlert, notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import { toArray } from 'src/utils/array';
@@ -121,7 +121,7 @@ const emit = defineEmits(['username']);
 const user = reactive({});
 
 try {
-	const response = await apiTokened.get('user');
+	const response = await api.get('user');
 	Object.assign(user, response.data.data.user);
 	emit('username', response.data.data.user.username);
 } catch (error) {
@@ -133,7 +133,7 @@ watch(phone, async (newValue, oldValue) => {
 	// console.log(newValue);
 	if (newValue != oldValue) {
 		try {
-			const response = await apiTokened.put('user', {
+			const response = await api.put('user', {
 				phone: newValue,
 			});
 			notifySuccess(response.data.message);
@@ -153,18 +153,13 @@ watch(phone, async (newValue, oldValue) => {
 watch(username, async (newValue, oldValue) => {
 	if (newValue != oldValue) {
 		try {
-			const response = await apiTokened.put('user', {
+			const response = await api.put('user', {
 				username: newValue,
 			});
 			notifySuccess(response.data.message);
 		} catch (error) {
 			const errMsg = toArray(error.response.data.message);
-			const exp = errMsg.some((item) =>
-				item.toLowerCase().includes('expired'),
-			);
-			if (exp) notifyWarningExpired();
-			else if (error.response.status == 404) console.log(error.response);
-			else errMsg.forEach((message) => notifyError(message));
+			errMsg.forEach((message) => notifyError(message));
 			forceRerender();
 		}
 	}
