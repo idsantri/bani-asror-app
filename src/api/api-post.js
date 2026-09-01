@@ -4,6 +4,9 @@ import { buildTextError } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyConfirm, notifyError, notifySuccess } from 'src/utils/notify';
 
+/**
+ * @deprecated
+ */
 async function postData({ endPoint, data, rerender, loading, notify, params }) {
 	try {
 		api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;

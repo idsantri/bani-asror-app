@@ -3,6 +3,9 @@ import getToken from './get-token';
 import { buildTextError } from 'src/utils/array-object';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 
+/**
+ * @deprecated
+ */
 async function apiGet({ endPoint, loading, params, notify = false }) {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	try {

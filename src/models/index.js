@@ -2,20 +2,24 @@ import axios from 'axios';
 import { useAuthStore } from 'src/stores/auth-store';
 import { notifyError } from 'src/utils/notify';
 import { routerInstance } from 'src/router/index';
-import ax from 'src/api';
+import config from 'src/config';
+
+const url =
+	process.env.NODE_ENV == 'development'
+		? 'http://localhost:8080'
+		: config.BASE_API;
+
 const api = axios.create({
-	baseURL: ax.defaults.baseURL,
+	baseURL: url,
 	// withCredentials: true, // no need to send cookies, stateless
 });
 
 const authStore = useAuthStore();
 
 api.interceptors.request.use((config) => {
-	const token = authStore.getToken;
-	if (token) {
-		config.headers.Authorization = `Bearer ${token}`;
+	if (authStore.token) {
+		config.headers.Authorization = `Bearer ${authStore.token}`;
 	}
-
 	const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 	config.headers['X-Timezone'] = timezone;
 	return config;

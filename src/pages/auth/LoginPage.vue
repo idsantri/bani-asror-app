@@ -90,7 +90,6 @@ import { toArray } from '../../utils/array';
 import { useAuthStore } from '../../stores/auth-store';
 import { notifySuccess } from 'src/utils/notify';
 import Auth from 'src/models/Auth';
-import UserCurrent from 'src/models/UserCurrent';
 
 const router = useRouter();
 const username = ref('');

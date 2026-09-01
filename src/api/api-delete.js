@@ -4,6 +4,9 @@ import { buildTextError } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess, notifyConfirm } from 'src/utils/notify';
 
+/**
+ * @deprecated
+ */
 async function deleteData({ endPoint, loading, notify, rerender, params }) {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	try {

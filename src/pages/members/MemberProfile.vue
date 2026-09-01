@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import { apiTokened } from '../../config/api';
+import api from 'src/models';
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ParentComponent from 'src/components/ParentComponent.vue';
@@ -87,7 +87,7 @@ import memberState from '../../stores/member-store';
 import memberCrudState from '../../stores/member-crud-store';
 import { showModalCrud } from 'src/utils/buttons-click';
 import { toArray } from 'src/utils/array';
-import { notifyError, notifyWarningExpired } from 'src/utils/notify';
+import { notifyError } from 'src/utils/notify';
 
 const member = reactive({});
 const parent = reactive({});
@@ -106,7 +106,7 @@ const editMember = () => {
 // };
 
 try {
-	const response = await apiTokened.get(`members/${memberId}`);
+	const response = await api.get(`members/${memberId}`);
 	Object.assign(member, response.data.data.member);
 	Object.assign(parent, response.data.data.member);
 	memberState().member = member;
@@ -114,12 +114,8 @@ try {
 	if (member?.lp?.toUpperCase() == 'L') sexIcon.value = 'man';
 	if (member?.lp?.toUpperCase() == 'P') sexIcon.value = 'woman';
 } catch (error) {
-	// console.log("Not Found: member -> detail", error.response);
 	const errMsg = toArray(error.response.data.message);
-	const exp = errMsg.some((item) => item.toLowerCase().includes('expired'));
-	if (exp) notifyWarningExpired();
-	else if (error.response.status == 404) console.log(error.response);
-	else errMsg.forEach((message) => notifyError(message));
+	errMsg.forEach((message) => notifyError(message));
 }
 
 const { alamat, alias, nama, nama_arab, tgl_wafat, usia_wafat, catatan, lp } =

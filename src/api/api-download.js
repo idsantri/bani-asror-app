@@ -2,6 +2,9 @@ import api from '.';
 import getToken from './get-token';
 import { notifyConfirm } from 'src/utils/notify';
 
+/**
+ * @deprecated
+ */
 async function apiDownload({
 	message = 'Download data yang dicetak?',
 	endPoint,

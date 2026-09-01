@@ -11,6 +11,9 @@ const url =
 const baseUrl = axios.create({ baseURL: url });
 // baseUrl.defaults.withCredentials = true;
 
+/**
+ * @deprecated
+ */
 const api = baseUrl;
 // Tambahkan interceptor untuk menangani kesalahan
 api.interceptors.response.use(
