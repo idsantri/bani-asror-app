@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ParentComponent from 'src/components/ParentComponent.vue';

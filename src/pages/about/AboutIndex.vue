@@ -73,7 +73,7 @@
 	</q-card>
 </template>
 <script setup>
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { onMounted, reactive } from 'vue';
 
 const admins = reactive({});

@@ -67,7 +67,7 @@
 
 <script setup>
 import { reactive, toRefs, ref } from 'vue';
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { toArray } from '../../utils/array';
 import ParentComponent from 'src/components/ParentComponent.vue';
 import { notifySuccess, notifyError } from '../../utils/notify';

@@ -81,7 +81,7 @@
 	</q-list>
 </template>
 <script setup>
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { reactive } from 'vue';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';

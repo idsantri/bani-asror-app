@@ -264,7 +264,7 @@ import constanta from 'src/config/constanta';
 import AsideContent from 'src/components/AsideContent.vue';
 import MemberDataTable from '../components/MemberDataTables.vue';
 import MemberCrud from 'src/components/MemberCrud.vue';
-import apiTokened from 'src/models';
+import { api } from 'src/boot/axios';
 import { useAuthStore } from 'src/stores/auth-store';
 import { useQuasar } from 'quasar';
 import { notifySuccess } from 'src/utils/notify';
@@ -328,7 +328,7 @@ watchEffect(() => {
  */
 const checkReport = async () => {
 	try {
-		const response = await apiTokened.get('reports/count/0');
+		const response = await api.get('reports/count/0');
 		const reports = response.data.data.reports_count;
 		if (reports > 0) showNotification.value = true;
 		else showNotification.value = false;

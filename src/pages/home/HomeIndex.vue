@@ -36,7 +36,7 @@
 	</q-dialog>
 </template>
 <script setup>
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { useAuthStore } from 'src/stores/auth-store';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watchEffect } from 'vue';

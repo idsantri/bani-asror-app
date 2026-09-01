@@ -30,31 +30,16 @@
 						<q-td key="username" :props="props">
 							{{ props.row.username }}
 						</q-td>
-						<q-td key="nama" :props="props">
-							{{ props.row.nama }}
+						<q-td key="member_nama" :props="props">
+							{{ props.row.member_nama }}
 						</q-td>
-						<q-td key="groups" :props="props">
-							[{{ props.row.groups }}]
+						<q-td key="roles" :props="props">
+							[{{ props.row.roles }}]
 						</q-td>
 						<q-td key="email" :props="props">
 							{{ props.row.email }}
 						</q-td>
 					</q-tr>
-
-					<!-- <q-tr v-show="props.expand" :props="props">
-           <q-td colspan="100%">
-             <div class="text-left">
-               Email: {{ props.row.email }}
-             </div>
-             <div class="text-left">
-               Akses:
-               <q-toggle v-model="isMember" color="green" label="Anggota"
-                 @click="toggleClick(props.row.username, 'member', isMember)" />
-               <q-toggle v-model="isAdmin" color="green" label="Admin" @click="toggleClick('admin', isAdmin)" />
-               <q-toggle v-model="isRoot" color="green" label="Root" @click="toggleClick('root', isRoot)" />
-             </div>
-           </q-td>
-         </q-tr> -->
 				</template>
 			</q-table>
 		</q-card-section>
@@ -265,15 +250,14 @@
 </template>
 
 <script setup>
-import api from 'src/models';
-import { reactive, ref } from 'vue';
+import { inject, reactive, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { toArray } from 'src/utils/array';
 import { forceRerender } from 'src/utils/buttons-click';
 
+const api = inject('api');
 const columns = [
-	// { name: '', align: 'center', label: '!', field: '', sortable: false },
 	{
 		name: 'username',
 		align: 'left',
@@ -282,17 +266,17 @@ const columns = [
 		sortable: true,
 	},
 	{
-		name: 'nama',
+		name: 'member_nama',
 		label: 'Nama',
 		align: 'left',
-		field: 'nama',
+		field: 'member_nama',
 		sortable: true,
 	},
 	{
-		name: 'groups',
+		name: 'roles',
 		label: 'Group',
 		align: 'left',
-		field: 'groups',
+		field: 'roles',
 		sortable: false,
 	},
 	{
@@ -313,13 +297,18 @@ const isMember = ref(false);
 const isGuest = ref(false);
 const $q = useQuasar();
 
-try {
-	const response = await api.get('users');
-	Object.assign(users, response.data.data.users);
-	// console.log(users);
-} catch (error) {
-	console.log('Not Found: users -> users', error.response);
-}
+const fetchUsers = async () => {
+	try {
+		const response = await api.get('users');
+		console.log(response.data.data.users);
+		Object.assign(users, response.data.data.users);
+		// console.log(users);
+	} catch (error) {
+		notifyError('Gagal memuat data pengguna');
+		console.log('Not Found: users -> users', error.response);
+	}
+};
+fetchUsers();
 
 const onRowClick = (row) => {
 	Object.assign(user, row);

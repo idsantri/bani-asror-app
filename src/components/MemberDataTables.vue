@@ -30,7 +30,7 @@ import DataTablesLib from 'datatables.net-dt';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import memberCrud from '../stores/member-crud-store';
 import { useRouter } from 'vue-router';
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { toArray } from '../utils/array';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender, closeModalSearch } from '../utils/buttons-click';

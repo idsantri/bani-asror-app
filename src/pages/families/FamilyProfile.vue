@@ -75,7 +75,7 @@
 
 <script setup>
 import { toArray } from '../../utils/array';
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useQuasar } from 'quasar';

@@ -112,7 +112,7 @@
 </template>
 <script setup>
 import { reactive, toRefs, watch } from 'vue';
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { notifyAlert, notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import { toArray } from 'src/utils/array';

@@ -119,7 +119,7 @@
 <script setup>
 import memberCrudState from '../stores/member-crud-store';
 import { toRefs, reactive, ref, computed, watchEffect } from 'vue';
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../utils/array';
 import { useQuasar } from 'quasar';

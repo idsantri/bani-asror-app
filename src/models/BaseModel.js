@@ -1,5 +1,5 @@
 import { notifyConfirm, notifyError } from 'src/utils/notify';
-import api from '.';
+import { api } from 'src/boot/axios';
 
 export default class BaseModel {
 	constructor(path) {

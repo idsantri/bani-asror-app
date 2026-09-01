@@ -67,7 +67,7 @@
 
 <script setup>
 import constanta from '../../config/constanta';
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { toArray } from 'src/utils/array';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { reactive, ref } from 'vue';

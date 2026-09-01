@@ -111,7 +111,7 @@
 </template>
 
 <script setup>
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../../utils/array';

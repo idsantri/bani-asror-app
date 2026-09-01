@@ -66,7 +66,7 @@
 </template>
 <script setup>
 import { toArray } from 'src/utils/array';
-import api from 'src/models';
+import { api } from 'src/boot/axios';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { notifyError } from 'src/utils/notify';
