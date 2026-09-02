@@ -10,11 +10,11 @@
 				<ul class="q-gutter-y-sm">
 					<li v-for="(admin, index) in admins" :key="index">
 						<div>
-							{{ admin.nama ? admin.nama : '?' }}
+							{{ admin.member_nama ? admin.member_nama : '?' }}
 							<span
-								v-show="admin.alamat"
+								v-show="admin.member_alamat"
 								class="text-italic text-caption"
-								>&mdash; {{ admin.alamat }}</span
+								>&mdash; {{ admin.member_alamat }}</span
 							>
 						</div>
 						<div class="text-caption">
@@ -73,8 +73,8 @@
 	</q-card>
 </template>
 <script setup>
-import { api } from 'src/boot/axios';
 import { onMounted, reactive } from 'vue';
+import UserGroup from 'src/models/UserGroup';
 
 const admins = reactive({});
 const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
@@ -84,10 +84,9 @@ emit('showButtonSearch', false);
 
 onMounted(async () => {
 	try {
-		const response = await api.get('user-group/list/admin');
-		// console.log(response.data.data.users)
-		Object.assign(admins, response.data.data.users);
-		// console.log(users);
+		const response = await UserGroup.getByGroup('admin');
+		// console.log('🚀 ~ onMounted ~ response:', response);
+		Object.assign(admins, response.data.users);
 	} catch (error) {
 		console.log('Not Found: user-group -> users', error.response);
 	}

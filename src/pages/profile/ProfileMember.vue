@@ -2,16 +2,23 @@
 	<q-card v-if="member.id" class="bg-green-3 text-green-10">
 		<q-card-section>
 			<q-list separator>
-				<q-item
-					v-ripple
-					clickable
-					:to="member.id ? '/members/' + member.id : null"
-				>
+				<q-item>
 					<q-item-section>
 						<q-item-label class="text-green-10" caption
 							>Nama:</q-item-label
 						>
 						<q-item-label>{{ member.nama }}</q-item-label>
+					</q-item-section>
+					<q-item-section side>
+						<q-btn
+							class="bg-green-11 text-green-10 q-px-sm"
+							outline
+							:glossy="!!member.id"
+							:to="member.id ? '/members/' + member.id : null"
+							icon="person"
+							:disable="!member.id"
+						>
+						</q-btn>
 					</q-item-section>
 				</q-item>
 				<q-item>
@@ -24,6 +31,21 @@
 							&mdash;
 							{{ member.ibu ? member.ibu : '?' }}
 						</q-item-label>
+					</q-item-section>
+					<q-item-section side>
+						<q-btn
+							class="bg-green-11 text-green-10 q-px-sm"
+							outline
+							:glossy="!!member.keluarga_id"
+							:to="
+								member.keluarga_id
+									? '/families/' + member.keluarga_id
+									: null
+							"
+							icon="family_restroom"
+							:disable="!member.keluarga_id"
+						>
+						</q-btn>
 					</q-item-section>
 				</q-item>
 			</q-list>

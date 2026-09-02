@@ -157,8 +157,10 @@
 							<q-item
 								tag="label"
 								v-ripple
-								v-for="(group, index) in groups"
-								:key="index"
+								v-for="group in groups.filter(
+									(item) => item.key !== 'superadmin',
+								)"
+								:key="group.key"
 							>
 								<q-item-section>
 									<q-item-label>{{
