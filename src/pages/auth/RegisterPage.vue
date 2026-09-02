@@ -2,7 +2,7 @@
 	<div class="q-pa-xs">
 		<form @submit.prevent="register">
 			<div class="q-gutter-y-md column">
-				<q-input
+				<!-- <q-input
 					bg-color="green-1"
 					outlined
 					v-model="name"
@@ -13,7 +13,7 @@
 					:rules="[(val) => !!val || 'Nama wajib diisi']"
 					name="name"
 					type="text"
-				/>
+				/> -->
 				<q-input
 					bg-color="green-1"
 					outlined
@@ -112,7 +112,7 @@ import { notifyAlert } from 'src/utils/notify';
 import Auth from 'src/models/Auth';
 
 const router = useRouter();
-const name = ref('');
+// const name = ref('');
 const email = ref('');
 const password = ref('');
 const password_confirm = ref('');
@@ -133,7 +133,7 @@ const register = async () => {
 	try {
 		showSpinner.value = true;
 		const response = await Auth.register({
-			name: name.value,
+			// name: name.value,
 			email: email.value.toLowerCase(),
 			password: password.value,
 		});
