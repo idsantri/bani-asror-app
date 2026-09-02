@@ -19,10 +19,10 @@
 						<q-item clickable v-ripple class="no-padding" to="/">
 							<q-item-section>
 								<q-item-label class="q-py-sm">
-									<p class="header header-1">
-										<span class="header-span">{{
-											constanta.APP_NAME_1
-										}}</span>
+									<p class="header header-1 text-green-11">
+										<span class="header-span text-green-1">
+											{{ constanta.APP_NAME_1 }}
+										</span>
 										{{ constanta.APP_NAME_2 }}
 									</p>
 									<p class="header header-2">
