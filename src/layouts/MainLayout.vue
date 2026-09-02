@@ -124,6 +124,8 @@
 			<AsideContent />
 		</q-drawer>
 
+		<q-ajax-bar position="top" color="green-12" size="2px" />
+
 		<q-page-container :key="componentKey">
 			<div class="q-pa-sm">
 				<div class="q-gutter-y-sm">
