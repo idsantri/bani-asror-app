@@ -151,6 +151,35 @@ export default configure((/* ctx */) => {
 		// https://v2.quasar.dev/quasar-cli-webpack/developing-pwa/configuring-pwa
 		pwa: {
 			workboxMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
+			workboxOptions: {
+				runtimeCaching: [
+					{
+						// Pastikan index.html selalu segar
+						urlPattern: /index\.html/,
+						handler: 'NetworkFirst',
+						options: {
+							cacheName: 'html-cache',
+							expiration: {
+								maxEntries: 5,
+								maxAgeSeconds: 60, // 1 menit, bisa disesuaikan
+							},
+						},
+					},
+					{
+						// Aset statis hashed (JS/CSS/Font/Images)
+						urlPattern:
+							/\.(?:js|css|woff2?|ttf|eot|png|jpg|jpeg|svg|gif)$/,
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'assets-cache',
+							expiration: {
+								maxEntries: 100,
+								maxAgeSeconds: 31536000, // 1 tahun
+							},
+						},
+					},
+				],
+			},
 			// swFilename: 'sw.js',
 			// manifestFilename: 'manifest.json'
 			// extendManifestJson (json) {},
