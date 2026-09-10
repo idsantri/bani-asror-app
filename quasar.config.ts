@@ -154,6 +154,7 @@ export default configure((/* ctx */) => {
 			workboxOptions: {
 				skipWaiting: true,
 				clientsClaim: true,
+				cleanupOutdatedCaches: true,
 				runtimeCaching: [
 					{
 						// Semua navigasi SPA (index.html dan route lain)
