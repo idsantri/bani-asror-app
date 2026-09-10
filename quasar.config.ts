@@ -152,6 +152,8 @@ export default configure((/* ctx */) => {
 		pwa: {
 			workboxMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
 			workboxOptions: {
+				skipWaiting: true,
+				clientsClaim: true,
 				runtimeCaching: [
 					{
 						// Semua navigasi SPA (index.html dan route lain)
