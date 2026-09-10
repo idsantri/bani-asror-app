@@ -154,19 +154,20 @@ export default configure((/* ctx */) => {
 			workboxOptions: {
 				runtimeCaching: [
 					{
-						// Pastikan index.html selalu segar
-						urlPattern: /index\.html/,
+						// Semua navigasi SPA (index.html dan route lain)
+						urlPattern: ({ request }: { request: Request }) =>
+							request.mode === 'navigate',
 						handler: 'NetworkFirst',
 						options: {
 							cacheName: 'html-cache',
 							expiration: {
-								maxEntries: 5,
+								maxEntries: 10,
 								maxAgeSeconds: 60, // 1 menit, bisa disesuaikan
 							},
 						},
 					},
 					{
-						// Aset statis hashed (JS/CSS/Font/Images)
+						// Aset statis hasil build (JS/CSS/Font/Images)
 						urlPattern:
 							/\.(?:js|css|woff2?|ttf|eot|png|jpg|jpeg|svg|gif)$/,
 						handler: 'CacheFirst',
