@@ -155,6 +155,7 @@ export default configure((/* ctx */) => {
 				skipWaiting: true,
 				clientsClaim: true,
 				cleanupOutdatedCaches: true,
+				globIgnores: ['**/.htaccess', '**/_redirects'],
 				runtimeCaching: [
 					{
 						// Semua navigasi SPA (index.html dan route lain)
