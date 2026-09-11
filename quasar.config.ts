@@ -25,7 +25,7 @@ export default configure((/* ctx */) => {
 		// app boot file (/src/boot)
 		// --> boot files are part of "main.js"
 		// https://v2.quasar.dev/quasar-cli-webpack/boot-files
-		boot: ['pinia', 'axios'],
+		boot: ['pinia', 'axios', 'register-sw'],
 
 		// https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
 		css: ['app.scss'],
@@ -155,6 +155,7 @@ export default configure((/* ctx */) => {
 				skipWaiting: true,
 				clientsClaim: true,
 				cleanupOutdatedCaches: true,
+				globIgnores: ['**/.htaccess', '**/_redirects'],
 				runtimeCaching: [
 					{
 						// Semua navigasi SPA (index.html dan route lain)
