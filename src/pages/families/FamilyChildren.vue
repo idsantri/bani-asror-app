@@ -97,10 +97,10 @@ import { api } from 'src/boot/axios';
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { toArray } from '../../utils/array';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import { notifyError } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import { showModalSearch } from 'src/utils/buttons-click';
-import { useQuasar } from 'quasar';
+import Child from 'src/models/Child';
 
 const children = reactive([]);
 const route = useRoute();
@@ -115,27 +115,11 @@ try {
 	errMsg.forEach((message) => notifyError(message));
 }
 
-const $q = useQuasar();
 const deleteChild = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: 'Hapus yang bersangkutan dari daftar anak?',
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.delete(`children/${id}`);
-			// console.log(response.data);
-			notifySuccess(response.data.message);
-			forceRerender();
-		} catch (error) {
-			// console.log("error hapus anak:", error.response);
-			toArray(error.response.data.message).forEach((errorMessage) => {
-				notifyError(errorMessage);
-			});
-		}
-	});
+	const response = await Child.remove(id);
+	if (response) {
+		forceRerender();
+	}
 };
 
 const addChild = () => {
@@ -146,20 +130,8 @@ const addChild = () => {
 };
 
 const submitUrut = async (id, urut) => {
-	try {
-		const response = await api.put(`children/${id}/short`, {
-			urut: urut,
-		});
-		// console.log(response.data);
-		notifySuccess(response.data.message);
-		// document.getElementById('btn-force-rerender').click()
-	} catch (error) {
-		toArray(error.response.data.message).forEach((errorMessage) => {
-			notifyError(errorMessage);
-		});
-	} finally {
-		forceRerender();
-	}
+	await Child.updateUrut(id, urut);
+	forceRerender();
 };
 </script>
 
