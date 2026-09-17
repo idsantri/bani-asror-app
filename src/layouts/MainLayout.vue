@@ -233,17 +233,31 @@
 			</button>
 		</div>
 
-		<q-footer bordered class="bg-green-9 text-green-1">
-			<!-- TOMBOL CARI -->
+		<!-- TOMBOL CARI -->
+		<q-page-sticky position="bottom-left" :offset="[12, 12]">
 			<q-btn
+				fab-mini
+				glossy
 				v-show="showButtonSearch"
 				round
 				color="green-7"
-				class="absolute absolute-bottom-left q-ml-md q-mb-xl"
+				class=""
 				icon="search"
 				@click="clickSearch"
 			/>
-			<p class="text-center no-margin q-pa-xs">
+		</q-page-sticky>
+
+		<q-footer bordered class="">
+			<p
+				class="bg-green-8 text-green-11 text-center no-margin q-pa-xs text-caption"
+				style="letter-spacing: 0.2em"
+			>
+				<span style="user-select: all">baniasror.net</span>
+				| <span style="user-select: all">baniasror.web.app</span>
+			</p>
+			<p
+				class="bg-green-9 text-green-11 text-center no-margin q-pa-xs text-caption"
+			>
 				&copy;
 				<a
 					href="https://fb.me/idsantri.page"
@@ -259,7 +273,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, computed, onMounted } from 'vue';
+import { ref, watchEffect, computed, onMounted, onUnmounted } from 'vue';
 import { showModalSearch, showModalCrud } from 'src/utils/buttons-click';
 import memberCrudState from '../stores/member-crud-store';
 import constanta from 'src/config/constanta';
@@ -339,18 +353,24 @@ const checkReport = async () => {
 		console.log(error);
 	}
 };
+
 const isAdmin = useAuthStore().isAdminOrSuperAdmin;
-if (isAdmin) {
-	//init
-	checkReport();
-	// continues
-	setInterval(
-		async () => {
-			checkReport();
-		},
-		1000 * 60 * 2,
-	);
-}
+let intervalId = null;
+onMounted(() => {
+	if (isAdmin) {
+		//init
+		checkReport();
+		// continues
+		intervalId = setInterval(
+			async () => {
+				checkReport();
+			},
+			1000 * 60 * 2, // 2 menit
+		);
+	}
+});
+
+onUnmounted(() => clearInterval(intervalId));
 
 /**
  * ----------------------------------
