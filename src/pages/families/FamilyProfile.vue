@@ -3,18 +3,20 @@
 		<!-- SUAMI -->
 		<div>
 			<FamilyProfileSplit
-				:member-id="parseInt(suami_id)"
-				:family-id="parseInt(id)"
+				:member-id="parseInt(family.suami_id) || null"
+				:family-id="parseInt(family.id) || null"
 				member-sex="L"
+				key="suami"
 			/>
 		</div>
 
 		<!-- ISTRI -->
 		<div class="q-mt-md">
 			<FamilyProfileSplit
-				:member-id="parseInt(istri_id)"
-				:family-id="parseInt(id)"
+				:member-id="parseInt(family.istri_id) || null"
+				:family-id="parseInt(family.id) || null"
 				member-sex="P"
+				key="istri"
 			/>
 		</div>
 
@@ -27,10 +29,10 @@
 						color="green-10"
 						style="width: 46px; height: 46px"
 						@click="modalInfo = true"
-						:class="id ? 'text-green-11' : null"
-						:glossy="id ? true : false"
-						:disable="id ? false : true"
-						:outline="!id > 0"
+						:class="family.id ? 'text-green-11' : null"
+						:glossy="family.id ? true : false"
+						:disable="family.id ? false : true"
+						:outline="!family.id > 0"
 					/>
 				</q-avatar>
 			</template>
@@ -41,20 +43,19 @@
 						<td class="text-left text-italic" style="width: 56px">
 							Alamat
 						</td>
-						<td>{{ alamat ? alamat : '-' }}</td>
+						<td>{{ family.alamat ? family.alamat : '-' }}</td>
 					</tr>
 					<tr>
 						<td class="text-left text-italic" style="width: 56px">
 							Catatan
 						</td>
 						<td>
-							{{ catatan ? catatan : '-' }}
+							{{ family.catatan ? family.catatan : '-' }}
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</q-banner>
-
 		<q-btn
 			class="glossy btn-float text-green-11"
 			round
@@ -74,62 +75,37 @@
 </template>
 
 <script setup>
-import { toArray } from '../../utils/array';
-import { api } from 'src/boot/axios';
-import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useQuasar } from 'quasar';
-import {
-	notifySuccess,
-	notifyError,
-	notifyWarningExpired,
-} from 'src/utils/notify';
+import { notifySuccess } from 'src/utils/notify';
 import FamilyProfileSplit from './FamilyProfileSplit.vue';
 import FamilyInfoHomeModal from './FamilyInfoHomeModal.vue';
 import { forceRerender } from 'src/utils/buttons-click';
 import familyState from 'src/stores/family-store';
+import Family from 'src/models/Family';
+import { onMounted, reactive, ref } from 'vue';
 
 const family = reactive({});
 const route = useRoute();
 const familyId = route.params.id;
 const modalInfo = ref(false);
 
-try {
-	const response = await api.get(`families/${familyId}`);
-	Object.assign(family, response.data.data.family);
-	familyState().family = family;
-} catch (error) {
-	// console.log("Not Found: family -> detail", error.response);
-	const errMsg = toArray(error.response.data.message);
-	const exp = errMsg.some((item) => item.toLowerCase().includes('expired'));
-	if (exp) notifyWarningExpired();
-	else if (error.response.status == 404) console.log(error.response);
-	else errMsg.forEach((message) => notifyError(message));
+async function getFamilyDetail() {
+	const response = await Family.getById({ id: familyId });
+	if (response) {
+		// console.log(response.data.family);
+		Object.assign(family, response.data.family);
+		familyState().family = family;
+	}
 }
-const { suami_id, istri_id, id, alamat, catatan } = toRefs(family);
 
-const $q = useQuasar();
+onMounted(async () => await getFamilyDetail());
+
 const deleteFamily = async () => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: `Hapus Keluaga? <br/>
-    <strong>Aksi ini tidak dapat dibatalkan.</strong>`,
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.delete(`families/${familyId}`);
-			// console.log('hapus family', response.data);
-			notifySuccess(response.data.message);
-			history.back();
-		} catch (error) {
-			// console.log("error create family:", error.response);
-			toArray(error.response.data.message).forEach((errorMessage) => {
-				notifyError(errorMessage);
-			});
-		}
-	});
+	const response = await Family.remove({ id: familyId });
+	if (response) {
+		notifySuccess(response.message);
+		history.back();
+	}
 };
 </script>
 

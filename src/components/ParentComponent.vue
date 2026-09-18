@@ -7,11 +7,11 @@
 						icon="family_restroom"
 						color="green-10"
 						style="width: 46px; height: 46px"
-						:class="keluarga_id ? 'text-green-11' : null"
-						:to="/families/ + keluarga_id"
-						:disable="!keluarga_id > 0"
-						:glossy="keluarga_id > 0"
-						:outline="!keluarga_id > 0"
+						:class="parent?.keluarga_id ? 'text-green-11' : null"
+						:to="'/families/' + parent?.keluarga_id"
+						:disable="!parent?.keluarga_id > 0"
+						:glossy="parent?.keluarga_id > 0"
+						:outline="!parent?.keluarga_id > 0"
 					/>
 				</q-item-section>
 				<q-item-section>
@@ -25,7 +25,7 @@
 									Ayah
 								</td>
 								<td class="text-left text-weight-medium">
-									{{ ayah ? ayah : '?' }}
+									{{ parent?.ayah ? parent?.ayah : '?' }}
 								</td>
 								<td class="text-right">
 									<q-btn
@@ -33,16 +33,24 @@
 										color="green-10"
 										dense
 										:class="
-											ayah_id ? 'text-green-11' : null
-										"
-										:to="
-											ayah_id
-												? '/members/' + ayah_id
+											parent?.ayah_id
+												? 'text-green-11'
 												: null
 										"
-										:outline="ayah_id ? false : true"
-										:glossy="!ayah_id ? false : true"
-										:disable="!ayah_id ? true : false"
+										:to="
+											parent?.ayah_id
+												? '/members/' + parent?.ayah_id
+												: null
+										"
+										:outline="
+											parent?.ayah_id ? false : true
+										"
+										:glossy="
+											!parent?.ayah_id ? false : true
+										"
+										:disable="
+											!parent?.ayah_id ? true : false
+										"
 									/>
 								</td>
 							</tr>
@@ -54,20 +62,28 @@
 									Ibu
 								</td>
 								<td class="text-left text-weight-medium">
-									{{ ibu ? ibu : '?' }}
+									{{ parent?.ibu ? parent?.ibu : '?' }}
 								</td>
 								<td class="text-right">
 									<q-btn
 										icon="info"
 										color="green-10"
 										dense
-										:class="ibu_id ? 'text-green-11' : null"
-										:to="
-											ibu_id ? '/members/' + ibu_id : null
+										:class="
+											parent?.ibu_id
+												? 'text-green-11'
+												: null
 										"
-										:outline="ibu_id ? false : true"
-										:glossy="!ibu_id ? false : true"
-										:disable="!ibu_id ? true : false"
+										:to="
+											parent?.ibu_id
+												? '/members/' + parent?.ibu_id
+												: null
+										"
+										:outline="parent?.ibu_id ? false : true"
+										:glossy="!parent?.ibu_id ? false : true"
+										:disable="
+											!parent?.ibu_id ? true : false
+										"
 									/>
 								</td>
 							</tr>
@@ -79,17 +95,6 @@
 	</q-banner>
 </template>
 <script setup>
-import { toRefs } from 'vue';
-
-const props = defineProps({ parent: { type: Object } });
-
-// Object.assign(parent, props.parent);
-const {
-	keluarga_id = null,
-	ayah_id = null,
-	ibu_id = null,
-	ayah = '',
-	ibu = '',
-} = toRefs(props.parent);
+defineProps({ parent: { type: Object, default: () => {} } });
 </script>
 <style scoped></style>

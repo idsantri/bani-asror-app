@@ -93,27 +93,26 @@
 </template>
 
 <script setup>
-import { api } from 'src/boot/axios';
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import { toArray } from '../../utils/array';
-import { notifyError } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import { showModalSearch } from 'src/utils/buttons-click';
 import Child from 'src/models/Child';
+import Family from 'src/models/Family';
 
 const children = reactive([]);
 const route = useRoute();
 const familyId = route.params.id.toString();
 
-try {
-	const response = await api.get(`families/${familyId}/children`);
-	Object.assign(children, response.data.data.children);
-	// console.log(response.data.data.children);
-} catch (error) {
-	const errMsg = toArray(error.response.data.message);
-	errMsg.forEach((message) => notifyError(message));
+function getChildren() {
+	Family.getChildren(familyId).then((response) => {
+		if (response?.data?.children) {
+			Object.assign(children, response.data.children);
+		}
+	});
 }
+
+onMounted(() => getChildren());
 
 const deleteChild = async (id) => {
 	const response = await Child.remove(id);

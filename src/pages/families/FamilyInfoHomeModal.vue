@@ -48,7 +48,7 @@
 	</q-card>
 </template>
 <script setup>
-import apiUpdate from 'src/api/api-update';
+import Family from 'src/models/Family';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({ data: { type: Object } });
@@ -58,15 +58,15 @@ const loading = ref(false);
 
 async function onSubmit() {
 	const data = { alamat: input.value.alamat, catatan: input.value.catatan };
-
-	const upd = await apiUpdate({
-		endPoint: `families/${input.value.id}`,
-		data,
-		loading,
-	});
-	if (upd) {
-		emit('onSubmit');
-		document.getElementById('btn-close-modal').click();
+	try {
+		loading.value = true;
+		const upt = await Family.update({ id: input.value.id, data });
+		if (upt) {
+			emit('onSubmit');
+			document.getElementById('btn-close-modal').click();
+		}
+	} finally {
+		loading.value = false;
 	}
 }
 

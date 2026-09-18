@@ -7,11 +7,11 @@
 						:icon="memberSex == 'L' ? 'man' : 'woman'"
 						color="green-10"
 						style="width: 46px; height: 46px"
-						:to="id ? '/members/' + id : null"
-						:disable="!id ? true : false"
-						:glossy="id ? true : false"
-						:outline="!id ? true : false"
-						:class="id ? 'text-green-11' : null"
+						:to="member.id ? '/members/' + member.id : null"
+						:disable="!member.id ? true : false"
+						:glossy="member.id ? true : false"
+						:outline="!member.id ? true : false"
+						:class="member.id ? 'text-green-11' : null"
 					/>
 				</q-item-section>
 				<q-item-section>
@@ -20,7 +20,7 @@
 							{{ memberSex == 'L' ? 'Suami' : 'Istri' }}
 						</div>
 						<div class="text-h6 text-weight-regular">
-							{{ nama ? nama : '?' }}
+							{{ member.nama ? member.nama : '?' }}
 						</div>
 					</q-item-label>
 				</q-item-section>
@@ -44,7 +44,7 @@
 							@click="editPasangan"
 						/>
 						<q-fab-action
-							v-if="id"
+							v-if="member.id"
 							padding="5px"
 							external-label
 							label-position="bottom"
@@ -61,39 +61,44 @@
 
 	<!-- ORTU  -->
 	<q-banner class="q-pa-sm bg-green-3 text-dark">
-		<ParentComponent :parent="parent" />
+		<ParentComponent :parent="member" />
 	</q-banner>
 </template>
 
 <script setup>
-import { reactive, toRefs, ref } from 'vue';
-import { api } from 'src/boot/axios';
-import { toArray } from '../../utils/array';
+import { reactive, ref, watch } from 'vue';
 import ParentComponent from 'src/components/ParentComponent.vue';
-import { notifySuccess, notifyError } from '../../utils/notify';
+import { notifySuccess } from '../../utils/notify';
 import { showModalSearch, forceRerender } from 'src/utils/buttons-click';
-import { useQuasar } from 'quasar';
+import Family from 'src/models/Family';
+import Member from 'src/models/Member';
 
 const fab = ref(false);
 const member = reactive({});
-const parent = reactive({});
 const props = defineProps({
 	memberId: { type: Number, default: null },
 	familyId: { type: Number, default: null },
 	memberSex: { type: String, default: '' },
 });
-if (props.memberId || props.memberId === 0) {
-	try {
-		const response = await api.get(`members/${props.memberId}`);
-		// console.log(response.data.data.member);
-		Object.assign(member, response.data.data.member);
-		Object.assign(parent, response.data.data.member);
-	} catch (error) {
-		const errMsg = toArray(error.response.data.message);
-		errMsg.forEach((message) => notifyError(message));
+
+watch(
+	() => props.memberId,
+	async (id) => {
+		if (id == null) {
+			// reset tampilan / kosongkan state
+			return;
+		}
+		await getMember(id);
+	},
+	{ immediate: true },
+);
+
+async function getMember(id) {
+	const response = await Member.getById({ id });
+	if (response?.data?.member) {
+		Object.assign(member, response.data.member);
 	}
 }
-const { id, nama, lp } = toRefs(member);
 
 const editPasangan = () => {
 	const args = { familyId: props.familyId };
@@ -102,42 +107,21 @@ const editPasangan = () => {
 	showModalSearch(args);
 };
 
-const $q = useQuasar();
 const deletePasangan = async () => {
-	if (!props.memberId) {
-		notifyError('Setidaknya ada salah satu pasangan dalam keluarga.');
-		return;
+	let spouse;
+	if (member.lp.toLowerCase() == 'l') {
+		spouse = 'husband';
 	}
 
-	let pasangan;
-	let data;
-	if (lp.value.toLowerCase() == 'l') {
-		pasangan = 'suami';
-		data = { suami_id: null };
-	}
-	if (lp.value.toLowerCase() == 'p') {
-		pasangan = 'istri';
-		data = { istri_id: null };
+	if (member.lp.toLowerCase() == 'p') {
+		spouse = 'wife';
 	}
 
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: `Hapus ${pasangan}?`,
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await api.put(`families/${props.familyId}`, data);
-			// console.log('hapus pasangan', response.data);
-			notifySuccess(response.data.message);
-			forceRerender();
-		} catch (error) {
-			toArray(error.response.data.message).forEach((errorMessage) => {
-				notifyError(errorMessage);
-			});
-		}
-	});
+	const response = await Family.removeSpouse(props.familyId, spouse);
+	if (response) {
+		notifySuccess(response.message);
+		forceRerender();
+	}
 };
 </script>
 
