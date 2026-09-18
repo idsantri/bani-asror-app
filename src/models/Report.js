@@ -17,9 +17,11 @@ class Report {
 		}
 	}
 
-	async update(id, data) {
+	async markAsDone(id) {
 		try {
-			const response = await this.api.put(`${this.path}/${id}`, data);
+			const response = await this.api.put(`${this.path}/${id}`, {
+				is_responded: true,
+			});
 			return response.data;
 		} catch (error) {
 			notifyError(error.response.data.message);

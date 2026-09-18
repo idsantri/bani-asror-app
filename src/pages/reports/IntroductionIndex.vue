@@ -119,9 +119,7 @@ const submitIntroduction = async (id, userId, memberId) => {
 };
 
 const setDone = async (id) => {
-	const response = await Report.update(id, {
-		is_responded: true,
-	});
+	const response = await Report.markAsDone(id);
 	if (response) {
 		notifySuccess(response.message);
 		forceRerender();
