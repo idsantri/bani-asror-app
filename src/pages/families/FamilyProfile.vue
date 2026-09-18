@@ -3,8 +3,8 @@
 		<!-- SUAMI -->
 		<div>
 			<FamilyProfileSplit
-				:member-id="parseInt(family.suami_id) || null"
-				:family-id="parseInt(family.id) || null"
+				:member-id="parseInt(family.suami_id) ?? null"
+				:family-id="parseInt(family.id) ?? null"
 				member-sex="L"
 				key="suami"
 			/>
@@ -13,8 +13,8 @@
 		<!-- ISTRI -->
 		<div class="q-mt-md">
 			<FamilyProfileSplit
-				:member-id="parseInt(family.istri_id) || null"
-				:family-id="parseInt(family.id) || null"
+				:member-id="parseInt(family.istri_id) ?? null"
+				:family-id="parseInt(family.id) ?? null"
 				member-sex="P"
 				key="istri"
 			/>

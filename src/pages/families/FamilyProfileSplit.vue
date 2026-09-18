@@ -84,7 +84,7 @@ const props = defineProps({
 watch(
 	() => props.memberId,
 	async (id) => {
-		if (id == null) {
+		if (isNaN(id)) {
 			// reset tampilan / kosongkan state
 			return;
 		}
