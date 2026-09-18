@@ -22,7 +22,6 @@ class UserCurrent {
 			const response = await this.api.put(`${this.path}`, data);
 			return response.data;
 		} catch (error) {
-			console.log(error);
 			notifyError(error.response.data.message);
 			return false;
 		}

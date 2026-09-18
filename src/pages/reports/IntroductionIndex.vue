@@ -24,7 +24,7 @@
 										<q-list>
 											<q-item
 												clickable
-												@click="checkDone(report.id)"
+												@click="setDone(report.id)"
 											>
 												<q-item-section
 													>Tandai sudah
@@ -81,11 +81,10 @@
 	</q-list>
 </template>
 <script setup>
-import { api } from 'src/boot/axios';
-import { reactive } from 'vue';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import { onBeforeMount, reactive } from 'vue';
+import { notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
-import { toArray } from 'src/utils/array-object';
+import Report from 'src/models/Report';
 
 const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
 emit('pageTitle', 'Laporaran Pengguna');
@@ -94,12 +93,15 @@ emit('showButtonSearch', true);
 
 const reports = reactive({});
 
-try {
-	const response = await api.get('reports/introduction');
-	Object.assign(reports, response.data.data.reports);
-	// console.log(reports);
-} catch (error) {
-	console.log('Not Found: reports -> introduction', error.response);
+onBeforeMount(async () => {
+	await getIntroductionReports();
+});
+
+async function getIntroductionReports() {
+	const response = await Report.getIntroduction();
+	if (response.data.reports) {
+		Object.assign(reports, response.data.reports);
+	}
 }
 
 const submitIntroduction = async (id, userId, memberId) => {
@@ -109,30 +111,20 @@ const submitIntroduction = async (id, userId, memberId) => {
 		member_id: memberId,
 		user_id: userId,
 	};
-	try {
-		// return console.log(data);
-		const response = await api.put('reports/introduction', data);
-		notifySuccess(response.data.message);
+	const response = await Report.acceptIntroduction(data);
+	if (response) {
+		notifySuccess(response.message);
 		forceRerender();
-	} catch (error) {
-		toArray(error.response.data.message).forEach((errorMessage) => {
-			notifyError(errorMessage);
-		});
 	}
 };
 
-const checkDone = async (id) => {
-	try {
-		const response = await api.put(`reports/${id}`, {
-			is_responded: true,
-		});
-		console.log(response.data);
-		notifySuccess(response.data.message);
+const setDone = async (id) => {
+	const response = await Report.update(id, {
+		is_responded: true,
+	});
+	if (response) {
+		notifySuccess(response.message);
 		forceRerender();
-	} catch (error) {
-		toArray(error.response.data.message).forEach((errorMessage) => {
-			notifyError(errorMessage);
-		});
 	}
 };
 </script>

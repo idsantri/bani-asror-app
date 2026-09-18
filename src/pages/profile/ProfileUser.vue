@@ -29,6 +29,10 @@
 								v-model="user.username"
 								buttons
 								v-slot="scope"
+								@save="
+									(val, initVal) =>
+										updateUserProfile('username', val)
+								"
 							>
 								<q-input
 									v-model="scope.value"
@@ -76,7 +80,14 @@
 							flat
 							class="q-pr-none"
 						>
-							<q-popup-edit v-model="user.phone" v-slot="scope">
+							<q-popup-edit
+								v-model="user.phone"
+								v-slot="scope"
+								@save="
+									(val, initVal) =>
+										updateUserProfile('phone', val)
+								"
+							>
 								<q-input
 									type="number"
 									v-model="scope.value"
@@ -111,59 +122,44 @@
 	</q-card>
 </template>
 <script setup>
-import { reactive, toRefs, watch } from 'vue';
-import { api } from 'src/boot/axios';
-import { notifyAlert, notifyError, notifySuccess } from 'src/utils/notify';
+import { onMounted, reactive } from 'vue';
+import { notifyAlert, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
-import { toArray } from 'src/utils/array';
+import UserCurrent from 'src/models/UserCurrent';
 
 const emit = defineEmits(['username']);
 const user = reactive({});
 
-try {
-	const response = await api.get('user');
-	Object.assign(user, response.data.data.user);
-	emit('username', response.data.data.user.username);
-} catch (error) {
-	console.log('Not Found: users -> profile', error.response);
+onMounted(async () => {
+	await getUserProfile();
+});
+
+async function getUserProfile() {
+	try {
+		const response = await UserCurrent.getProfile();
+		if (response) {
+			Object.assign(user, response.data.user);
+			emit('username', response.data.user.username);
+		}
+	} catch (error) {
+		console.log('Not Found: users -> profile', error.response);
+	}
 }
 
-const { phone, username } = toRefs(user);
-watch(phone, async (newValue, oldValue) => {
-	// console.log(newValue);
-	if (newValue != oldValue) {
-		try {
-			const response = await api.put('user', {
-				phone: newValue,
-			});
-			notifySuccess(response.data.message);
-		} catch (error) {
-			const errMsg = toArray(error.response.data.message);
-			const exp = errMsg.some((item) =>
-				item.toLowerCase().includes('expired'),
-			);
-			if (exp) notifyWarningExpired();
-			else if (error.response.status == 404) console.log(error.response);
-			else errMsg.forEach((message) => notifyError(message));
-			forceRerender();
-		}
-	}
-});
+async function updateUserProfile(field, value) {
+	const data = {};
+	data[field] = value;
 
-watch(username, async (newValue, oldValue) => {
-	if (newValue != oldValue) {
-		try {
-			const response = await api.put('user', {
-				username: newValue,
-			});
-			notifySuccess(response.data.message);
-		} catch (error) {
-			const errMsg = toArray(error.response.data.message);
-			errMsg.forEach((message) => notifyError(message));
-			forceRerender();
+	try {
+		const response = await UserCurrent.updateProfile(data);
+		if (response) {
+			notifySuccess(response.message);
 		}
+	} catch (error) {
+		console.log('Not Found: users -> profile', error.response);
+		forceRerender();
 	}
-});
+}
 
 const changePassword = async () => {
 	await notifyAlert(

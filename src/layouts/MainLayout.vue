@@ -280,11 +280,11 @@ import constanta from 'src/config/constanta';
 import AsideContent from 'src/components/AsideContent.vue';
 import MemberDataTable from '../components/MemberDataTables.vue';
 import MemberCrud from 'src/components/MemberCrud.vue';
-import { api } from 'src/boot/axios';
 import { useAuthStore } from 'src/stores/auth-store';
 import { useQuasar } from 'quasar';
 import { notifySuccess } from 'src/utils/notify';
 import * as v from '../../package.json';
+import Report from 'src/models/Report';
 
 const pageTitle = ref('Data');
 const pageSubTitle = ref('');
@@ -343,15 +343,10 @@ watchEffect(() => {
  * ----------------------------------
  */
 const checkReport = async () => {
-	try {
-		const response = await api.get('reports/count/0');
-		const reports = response.data.data.reports_count;
-		if (reports > 0) showNotification.value = true;
-		else showNotification.value = false;
-		// console.log(reports);
-	} catch (error) {
-		console.log(error);
-	}
+	const response = await Report.getCountNotResponded();
+	const reports = response.data.reports_count;
+	if (reports > 0) showNotification.value = true;
+	else showNotification.value = false;
 };
 
 const isAdmin = useAuthStore().isAdminOrSuperAdmin;

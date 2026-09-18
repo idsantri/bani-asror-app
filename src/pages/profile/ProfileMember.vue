@@ -89,11 +89,11 @@
 
 <script setup>
 import constanta from '../../config/constanta';
-import { api } from 'src/boot/axios';
-import { toArray } from 'src/utils/array';
-import { notifyError, notifySuccess } from 'src/utils/notify';
-import { reactive, ref } from 'vue';
+import { notifySuccess } from 'src/utils/notify';
+import { onBeforeMount, reactive, ref } from 'vue';
 import { useAuthStore as authState } from '../../stores/auth-store';
+import Member from 'src/models/Member';
+import Report from 'src/models/Report';
 
 const memberId = authState().getUser.member_id;
 const userId = authState().getUser.id;
@@ -104,29 +104,29 @@ const emit = defineEmits(['memberName']);
 const messagePlaceholder = `Saya Fulan bin/binti Fulan ... bin ${constanta.ANCESTOR}, atau &#10;Saya Fulan bin/binti Fulan,  istri/suami dari Fulan bin/binti Fulan ... bin ${constanta.ANCESTOR}`;
 const messageLabel = `Tulis Jalur Anda ke ${constanta.ANCESTOR}! *`;
 
-try {
+onBeforeMount(async () => {
 	if (memberId) {
-		const response = await api.get(`members/${memberId}`);
-		Object.assign(member, response.data.data.member);
-		emit('memberName', response.data.data.member.nama);
+		await getMember(memberId);
 	}
-} catch (error) {
-	console.log('Not Found: users -> profile', error.response);
+});
+
+async function getMember(id) {
+	const response = await Member.getById({ id });
+	if (response?.data?.member) {
+		Object.assign(member, response.data.member);
+		emit('memberName', response.data.member.nama);
+	}
 }
 
 const introduceMySelf = async () => {
-	try {
-		const response = await api.post('reports', {
-			user_id: userId,
-			category: 'introduction',
-			message: message.value,
-		});
-		notifySuccess(response.data.message);
+	const response = await Report.create({
+		user_id: userId,
+		category: 'introduction',
+		message: message.value,
+	});
+	if (response) {
+		notifySuccess(response.message);
 		document.getElementById('btn-submit').setAttribute('disabled', '');
-	} catch (error) {
-		toArray(error.response.data.message).forEach((errorMessage) => {
-			notifyError(errorMessage);
-		});
 	}
 };
 </script>
