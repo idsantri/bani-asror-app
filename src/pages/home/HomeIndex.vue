@@ -5,43 +5,48 @@
 				<span v-html="article"></span>
 			</q-card-section>
 		</q-card>
-		<!-- {{ article }} -->
+
+		<!-- TOMBOL CARI -->
+		<q-page-sticky position="bottom-left" :offset="[12, 12]">
+			<q-btn
+				fab-mini
+				v-if="showButtonEdit()"
+				@click="showModal = true"
+				round
+				glossy
+				color="green-7"
+				icon="edit"
+				class=""
+			/>
+		</q-page-sticky>
+
+		<q-dialog v-model="showModal" maximized>
+			<q-card>
+				<q-card-section>
+					<div class="text-h6 text-green-10">Edit Artikel</div>
+				</q-card-section>
+				<q-card-section class="q-pt-none">
+					<q-editor
+						v-model="articleEdit"
+						min-height="5rem"
+						:dense="$q.screen.lt.md"
+						:toolbar="toolbar"
+					/>
+				</q-card-section>
+				<q-card-actions align="right" class="bg-white text-green">
+					<q-btn color="positive" label="Simpan" @click="save" />
+					<q-btn color="negative" label="Gagal" v-close-popup />
+				</q-card-actions>
+			</q-card>
+		</q-dialog>
 	</div>
-	<q-btn
-		v-if="showButtonEdit()"
-		@click="showModal = true"
-		round
-		color="green-8"
-		icon="edit"
-		class="absolute-bottom-left q-ml-md q-mb-xl"
-	/>
-	<q-dialog v-model="showModal" maximized>
-		<q-card>
-			<q-card-section>
-				<div class="text-h6 text-green-10">Edit Artikel</div>
-			</q-card-section>
-			<q-card-section class="q-pt-none">
-				<q-editor
-					v-model="articleEdit"
-					min-height="5rem"
-					:dense="$q.screen.lt.md"
-					:toolbar="toolbar"
-				/>
-			</q-card-section>
-			<q-card-actions align="right" class="bg-white text-green">
-				<q-btn color="positive" label="Simpan" @click="save" />
-				<q-btn color="negative" label="Gagal" v-close-popup />
-			</q-card-actions>
-		</q-card>
-	</q-dialog>
 </template>
 <script setup>
-import { api } from 'src/boot/axios';
 import { useAuthStore } from 'src/stores/auth-store';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import { notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watchEffect } from 'vue';
 import { useQuasar } from 'quasar';
-import { toArray } from 'src/utils/array';
+import Article from 'src/models/Article';
 
 const $q = useQuasar();
 const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
@@ -58,13 +63,9 @@ watchEffect(() => {
 });
 
 onMounted(async () => {
-	try {
-		const response = await api.get('settings/article-introduction');
-		article.value = response.data.data.setting.val;
-	} catch (error) {
-		toArray(error.response.data.message).forEach((errorMessage) => {
-			notifyError(errorMessage);
-		});
+	const response = await Article.get();
+	if (response) {
+		article.value = response.data.setting.val;
 	}
 });
 
@@ -72,20 +73,18 @@ const showButtonEdit = () => useAuthStore().isAdminOrSuperAdmin;
 
 const save = async () => {
 	try {
-		const response = await api.put('settings/article-introduction', {
+		const response = await Article.update({
 			val: articleEdit.value,
 		});
-		notifySuccess(response.data.message);
-		article.value = response.data.data.setting.val;
-	} catch (error) {
-		// console.log(error);
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
-		});
+		if (response) {
+			article.value = response.data.setting.val;
+			notifySuccess(response.message);
+		}
 	} finally {
 		showModal.value = false;
 	}
 };
+
 const toolbar = [
 	[
 		{
