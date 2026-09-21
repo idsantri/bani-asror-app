@@ -8,6 +8,30 @@ class Child {
 		this._api = api;
 	}
 
+	async getByMember(memberId) {
+		try {
+			const response = await this._api.get(
+				`${this._path}?member_id=${memberId}`,
+			);
+			return response.data;
+		} catch (error) {
+			notifyError(error.response.data.message);
+			return false;
+		}
+	}
+
+	async getByFamily(familyId) {
+		try {
+			const response = await this._api.get(
+				`${this._path}?family_id=${familyId}`,
+			);
+			return response.data;
+		} catch (error) {
+			notifyError(error.response.data.message);
+			return false;
+		}
+	}
+
 	async updateUrut(id, urut) {
 		try {
 			const response = await this._api.put(`${this._path}/${id}/short`, {

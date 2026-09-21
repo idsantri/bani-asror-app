@@ -18,6 +18,12 @@ class Family extends BaseModel {
 		}
 	}
 
+	/**
+	 * @deprecated
+	 * @param {*} familyId
+	 * @param {*} data
+	 * @returns
+	 */
 	async addChild(familyId, data) {
 		try {
 			const response = await this._api.post(
