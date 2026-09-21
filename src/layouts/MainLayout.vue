@@ -150,7 +150,7 @@
 								flat
 								color="green-1"
 								icon="search"
-								@click="clickSearch"
+								to="/members/search"
 							/>
 						</template>
 					</q-banner>

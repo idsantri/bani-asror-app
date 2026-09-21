@@ -46,32 +46,42 @@ const routes = [
 		children: [
 			//MEMBERS
 			{
-				path: 'members/:id',
+				path: 'members',
+				redirect: { name: 'Member Search' },
+			},
+			{
+				path: 'members/search',
+				name: 'Member Search',
+				component: () => import('../pages/members/MemberSearch.vue'),
+				meta: { title: 'Cari Anggota' },
+			},
+			{
+				path: 'members/:id(\\d+)',
 				redirect: { name: 'Member Profile' },
 				// name: "Member",
 				// component: () => import("../pages/members/MemberIndex.vue"),
 				// meta: { title: "Halaman Anggota" },
 			},
 			{
-				path: 'members/:id/profile',
+				path: 'members/:id(\\d+)/profile',
 				name: 'Member Profile',
 				component: () => import('../pages/members/MemberIndex.vue'),
 				meta: { title: 'Halaman Anggota (Profil)' },
 			},
 			{
-				path: 'members/:id/families',
+				path: 'members/:id(\\d+)/families',
 				name: 'Member Families',
 				component: () => import('../pages/members/MemberIndex.vue'),
 				meta: { title: 'Halaman Anggota (Keluarga)' },
 			},
 			{
-				path: 'members/:id/children',
+				path: 'members/:id(\\d+)/children',
 				name: 'Member Children',
 				component: () => import('../pages/members/MemberIndex.vue'),
 				meta: { title: 'Halaman Anggota (Anak)' },
 			},
 			{
-				path: 'members/:id/siblings',
+				path: 'members/:id(\\d+)/siblings',
 				name: 'Member Siblings',
 				component: () => import('../pages/members/MemberIndex.vue'),
 				meta: { title: 'Halaman Anggota (Saudara)' },
@@ -79,20 +89,20 @@ const routes = [
 
 			//FAMILIES
 			{
-				path: 'families/:id',
+				path: 'families/:id(\\d+)',
 				redirect: { name: 'Family Profile' },
 				// name: "Family",
 				// component: () => import("../pages/families/FamilyIndex.vue"),
 				// meta: { title: "Halaman Keluarga" }
 			},
 			{
-				path: 'families/:id/profile',
+				path: 'families/:id(\\d+)/profile',
 				name: 'Family Profile',
 				component: () => import('../pages/families/FamilyIndex.vue'),
 				meta: { title: 'Halaman Keluarga (Profil)' },
 			},
 			{
-				path: 'families/:id/children',
+				path: 'families/:id(\\d+)/children',
 				name: 'Family Children',
 				component: () => import('../pages/families/FamilyIndex.vue'),
 				meta: { title: 'Halaman Keluarga (Anak)' },

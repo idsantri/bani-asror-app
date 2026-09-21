@@ -17,7 +17,7 @@ import UserData from './UserData.vue';
 const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
 emit('pageTitle', 'Data Pengguna');
 emit('pageSubTitle', null);
-emit('showButtonSearch', true);
+emit('showButtonSearch', false);
 </script>
 <style scoped>
 .spinner {
