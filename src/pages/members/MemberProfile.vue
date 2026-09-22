@@ -83,7 +83,7 @@ import { api } from 'src/boot/axios';
 import { toRefs, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ParentComponent from 'src/components/ParentComponent.vue';
-import memberState from '../../stores/member-store';
+import { useMemberStore as memberState } from '../../stores/member-store';
 import memberCrudState from '../../stores/member-crud-store';
 import { showModalCrud } from 'src/utils/buttons-click';
 import { toArray } from 'src/utils/array';

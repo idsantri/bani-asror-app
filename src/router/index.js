@@ -39,23 +39,29 @@ export default route(function (/* { store, ssrContext } */) {
 		),
 	});
 
-	Router.beforeEach((to, from, next) => {
-		if (to.fullPath == '/') {
-			return next('/home');
+	Router.beforeEach((to) => {
+		// redirect root ke /home
+		if (to.fullPath === '/') {
+			return '/home';
 		}
 
 		const store = useAuthStore();
 		const authRoutes = ['Register', 'Login', 'Forgot', 'Reset'];
 		const toAuthRoutes = authRoutes.includes(to.name);
-		const isAuthenticate = store.getToken && store.getToken.length > 0;
+		const isAuthenticated = store.getToken?.length > 0;
 
-		if (!toAuthRoutes && !isAuthenticate) {
-			next('/login');
-		} else if (toAuthRoutes && isAuthenticate) {
-			history.go(-1);
-		} else {
-			next();
+		// belum login & mengakses halaman terproteksi
+		if (!toAuthRoutes && !isAuthenticated) {
+			return { name: 'Login', query: { redirect: to.fullPath } };
 		}
+
+		// sudah login tapi mengakses halaman auth
+		if (toAuthRoutes && isAuthenticated) {
+			return '/home';
+		}
+
+		// lanjutkan navigasi
+		return true;
 	});
 
 	const DEFAULT_TITLE = constanta.APP_NAME_2;

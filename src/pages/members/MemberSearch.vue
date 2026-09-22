@@ -2,20 +2,26 @@
 	<q-card flat bordered>
 		<q-card-section class="bg-green-1 q-pa-sm">
 			<q-input
-				label="Cari Anggota"
+				label="* = karakter apapun"
 				outlined
 				dense
 				v-model="filter"
 				type="search"
 				clearable
 			/>
+			<!-- <q-btn @click="reload" icon="sync" /> -->
+		</q-card-section>
+		<q-card-section
+			v-if="!realtime"
+			class="text-caption bg-green-4 q-pa-xs text-italic text-center text-green-10"
+		>
+			Data tidak realtime! Klik muat ulang untuk data terbaru.
 		</q-card-section>
 		<q-card-section class="q-pa-sm">
 			<q-table
 				flat
 				:loading="loading"
-				:rows="members"
-				:filter="filter"
+				:rows="filteredMembers"
 				:rows-per-page-options="[10]"
 				:columns="columns"
 			>
@@ -87,7 +93,8 @@
 	<!-- <pre>{{ members[6] }}</pre> -->
 </template>
 <script setup>
-import Member from 'src/models/Member';
+import { storeToRefs } from 'pinia';
+import { useMemberStore } from 'src/stores/member-store';
 import { onMounted, ref } from 'vue';
 
 const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
@@ -95,39 +102,19 @@ emit('pageTitle', 'Cari Anggota');
 emit('pageSubTitle', null);
 emit('showButtonSearch', false);
 
-const members = ref([]);
-const loading = ref(false);
-const filter = ref('');
+const store = useMemberStore();
+const { members, loading, filter, filteredMembers } = storeToRefs(store);
+const realtime = ref(false);
 
-async function getMembers() {
-	try {
-		loading.value = true;
-		const response = await Member.getAll();
-		if (response) {
-			const data = response.data.members.map((i) => {
-				i.spouse_json = safeParse(i.spouse_json);
-				return i;
-			});
-			members.value = data;
-		}
-	} catch (error) {
-		console.log(error);
-	} finally {
-		loading.value = false;
-	}
+async function reload() {
+	await store.loadMembers();
+	realtime.value = true;
+	filter.value = '';
 }
 
-function safeParse(val) {
-	try {
-		const arr = JSON.parse(val ?? '[]');
-		return Array.isArray(arr) ? arr : [];
-	} catch {
-		return [];
-	}
-}
-
-onMounted(() => {
-	getMembers();
+onMounted(async () => {
+	realtime.value = false;
+	if (!members.value.length) await reload();
 });
 
 const columns = [
@@ -151,10 +138,6 @@ const columns = [
 		},
 		sortable: true,
 		align: 'left',
-		// format: (row) =>
-		// 	JSON.parse(row.spouse_json)
-		// 		.map((item) => item.name)
-		// 		.join(', '),
 	},
 	{
 		name: 'parent1_name',

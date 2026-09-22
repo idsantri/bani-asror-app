@@ -99,7 +99,7 @@ import MemberProfile from './MemberProfile.vue';
 import MemberFamilies from './MemberFamilies.vue';
 import MemberChildren from './MemberChildren.vue';
 import MemberSiblings from './MemberSiblings.vue';
-import memberState from '../../stores/member-store';
+import { useMemberStore as memberState } from '../../stores/member-store';
 import { useRoute } from 'vue-router';
 import DropDownTab from 'src/components/DropDownTab.vue';
 import { storeToRefs } from 'pinia';

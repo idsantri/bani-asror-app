@@ -115,7 +115,7 @@ import { api } from 'src/boot/axios';
 import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { toArray } from '../../utils/array';
-import memberState from '../../stores/member-store';
+import { useMemberStore as memberState } from '../../stores/member-store';
 import { notifyError } from 'src/utils/notify';
 import { useQuasar } from 'quasar';
 
@@ -135,9 +135,9 @@ try {
 
 const $q = useQuasar();
 const createFamily = async () => {
-	const nama = memberState().getMember.nama;
+	const nama = memberState().member.nama;
 	const pasangan =
-		memberState().getMember.lp.toUpperCase() == 'L' ? 'istri' : 'suami';
+		memberState().member.lp.toUpperCase() == 'L' ? 'istri' : 'suami';
 
 	$q.dialog({
 		title: 'Konfirmasi',
