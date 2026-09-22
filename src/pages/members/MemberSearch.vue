@@ -15,8 +15,25 @@
 					v-model="filter"
 					type="search"
 					clearable
-				/>
+				>
+					<template #after>
+						<q-btn
+							flat
+							dense
+							icon="info"
+							@click="showTooltip = !showTooltip"
+						>
+						</q-btn>
+						<q-tooltip
+							v-model="showTooltip"
+							class="bg-green-14 text-green-10"
+						>
+							* = karakter apapun
+						</q-tooltip>
+					</template>
+				</q-input>
 			</q-card-section>
+
 			<q-card-section
 				v-if="!realtime"
 				class="text-caption bg-green-4 q-pa-xs text-italic text-center text-green-10"
@@ -115,6 +132,7 @@ emit('showButtonSearch', false);
 const store = useMemberStore();
 const { members, loading, filter, filteredMembers } = storeToRefs(store);
 const realtime = ref(false);
+const showTooltip = ref(false);
 
 async function reload() {
 	await store.loadMembers();

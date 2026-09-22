@@ -38,7 +38,7 @@ importers:
         version: 2.3.8
       datatables.net-vue3:
         specifier: ^3.0.4
-        version: 3.0.7(datatables.net@2.3.8)(vue@3.5.43(typescript@5.9.3))
+        version: 3.0.7(datatables.net@3.1.1)(vue@3.5.43(typescript@5.9.3))
       pinia:
         specifier: ^3.0.4
         version: 3.0.4(typescript@5.9.3)(vue@3.5.43(typescript@5.9.3))
@@ -2472,6 +2472,9 @@ packages:
 
   datatables.net@2.3.8:
     resolution: {integrity: sha512-uhViowhlDlheAuo5a8TrkQqADsjrtGeOyvrigvr4t0+K3MyAWqClORXWAYIcN9VLX6iIX0C8O9gwJNd01hITRg==}
+
+  datatables.net@3.1.1:
+    resolution: {integrity: sha512-dETxh14+KkQrFTZFIVtnKuIcNuglSLnraITbvrkztA+2yM6AeNtEAiMVucZ5o6vkJnJrtoApSALggSmc0czs0w==}
 
   debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -8122,14 +8125,16 @@ snapshots:
       datatables.net: 2.3.8
       jquery: 4.0.0
 
-  datatables.net-vue3@3.0.7(datatables.net@2.3.8)(vue@3.5.43(typescript@5.9.3)):
+  datatables.net-vue3@3.0.7(datatables.net@3.1.1)(vue@3.5.43(typescript@5.9.3)):
     dependencies:
-      datatables.net: 2.3.8
+      datatables.net: 3.1.1
       vue: 3.5.43(typescript@5.9.3)
 
   datatables.net@2.3.8:
     dependencies:
       jquery: 4.0.0
+
+  datatables.net@3.1.1: {}
 
   debounce@1.2.1: {}
 
