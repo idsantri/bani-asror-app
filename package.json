@@ -1,6 +1,6 @@
 {
 	"name": "bani-asror-app",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "Silsilah Bani Asror",
 	"productName": "Bani Asror",
 	"author": "idsantri <idsantri.mail@gmail.com>",
@@ -13,18 +13,18 @@
 		"build": "quasar build"
 	},
 	"dependencies": {
-		"@quasar/extras": "^1.17.0",
+		"@quasar/extras": "^1.18.0",
 		"autoprefixer": "^10.4.24",
-		"axios": "^1.13.5",
+		"axios": "^1.20.0",
 		"core-js": "^3.48.0",
 		"datatables.net-dt": "^2.3.7",
 		"datatables.net-vue3": "^3.0.4",
-		"pinia": "^2.3.1",
-		"pinia-plugin-persistedstate": "^3.2.3",
+		"pinia": "^3.0.4",
+		"pinia-plugin-persistedstate": "^4.7.1",
 		"quasar": "^2.33.0",
 		"register-service-worker": "^1.7.2",
-		"vue": "^3.5.28",
-		"vue-router": "^4.6.4"
+		"vue": "^3.5.43",
+		"vue-router": "^5.3.1"
 	},
 	"devDependencies": {
 		"@quasar/app-webpack": "^4.3.2",

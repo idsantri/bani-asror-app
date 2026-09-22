@@ -283,7 +283,7 @@ import MemberCrud from 'src/components/MemberCrud.vue';
 import { useAuthStore } from 'src/stores/auth-store';
 import { useQuasar } from 'quasar';
 import { notifySuccess } from 'src/utils/notify';
-import * as v from '../../package.json';
+import v from '../../package.json';
 import Report from 'src/models/Report';
 
 const pageTitle = ref('Data');
