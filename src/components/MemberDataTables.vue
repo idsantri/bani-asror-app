@@ -2,6 +2,7 @@
 	<Suspense>
 		<template #default>
 			<data-table
+				style="min-width: 800px"
 				class="display table"
 				:options="options"
 				id="member-data-table"
@@ -101,7 +102,7 @@ const options = ref({
 		paginate: { first: '↑', previous: '←', next: '→', last: '↓' },
 		lengthMenu: '_MENU_ Perhalaman',
 	},
-	autoWidth: false,
+	autoWidth: true,
 	// dom: 'bftip',
 });
 

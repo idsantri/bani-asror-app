@@ -166,6 +166,11 @@
 						Cari Anggota {{ familyStatus }}
 					</div>
 				</q-card-section>
+				<q-card-section
+					class="bg-green-14 text-green-10 q-pa-xs text-caption text-italic text-center"
+				>
+					% = karakter apapun
+				</q-card-section>
 				<q-card-section style="max-height: 75vh" class="scroll">
 					<MemberDataTable />
 				</q-card-section>
