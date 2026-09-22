@@ -1,44 +1,51 @@
 <template>
-	<div class="text-green-10">
-		<q-card>
-			<q-card-section>
-				<span v-html="article"></span>
-			</q-card-section>
-		</q-card>
-
-		<!-- TOMBOL CARI -->
-		<q-page-sticky position="bottom-left" :offset="[12, 12]">
-			<q-btn
-				fab-mini
-				v-if="showButtonEdit()"
-				@click="showModal = true"
-				round
-				glossy
-				color="green-7"
-				icon="edit"
-				class=""
-			/>
-		</q-page-sticky>
-
-		<q-dialog v-model="showModal" maximized>
+	<div>
+		<banner-app
+			page-title="Ahlan wa Sahlan …"
+			:show-search-members="false"
+			:show-reload="false"
+		/>
+		<div class="text-green-10">
 			<q-card>
 				<q-card-section>
-					<div class="text-h6 text-green-10">Edit Artikel</div>
+					<span v-html="article"></span>
 				</q-card-section>
-				<q-card-section class="q-pt-none">
-					<q-editor
-						v-model="articleEdit"
-						min-height="5rem"
-						:dense="$q.screen.lt.md"
-						:toolbar="toolbar"
-					/>
-				</q-card-section>
-				<q-card-actions align="right" class="bg-white text-green">
-					<q-btn color="positive" label="Simpan" @click="save" />
-					<q-btn color="negative" label="Gagal" v-close-popup />
-				</q-card-actions>
 			</q-card>
-		</q-dialog>
+
+			<!-- TOMBOL CARI -->
+			<q-page-sticky position="bottom-left" :offset="[12, 12]">
+				<q-btn
+					fab-mini
+					v-if="showButtonEdit()"
+					@click="showModal = true"
+					round
+					glossy
+					color="green-7"
+					icon="edit"
+					class=""
+				/>
+			</q-page-sticky>
+
+			<q-dialog v-model="showModal" maximized>
+				<q-card>
+					<q-card-section>
+						<div class="text-h6 text-green-10">Edit Artikel</div>
+					</q-card-section>
+					<q-card-section class="q-pt-none">
+						<q-editor
+							v-model="articleEdit"
+							min-height="5rem"
+							:dense="$q.screen.lt.md"
+							:toolbar="toolbar"
+						/>
+					</q-card-section>
+					<q-card-actions align="right" class="bg-white text-green">
+						<q-btn color="positive" label="Simpan" @click="save" />
+						<q-btn color="negative" label="Gagal" v-close-popup />
+					</q-card-actions>
+				</q-card>
+			</q-dialog>
+		</div>
 	</div>
 </template>
 <script setup>
@@ -47,11 +54,10 @@ import { notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watchEffect } from 'vue';
 import { useQuasar } from 'quasar';
 import Article from 'src/models/Article';
+import BannerApp from 'src/components/BannerApp.vue';
 
 const $q = useQuasar();
-const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
-emit('pageTitle', 'Ahlan wa Sahlan …');
-emit('pageSubTitle', null);
+const emit = defineEmits(['showButtonSearch']);
 emit('showButtonSearch', false);
 
 const showModal = ref(false);

@@ -1,85 +1,96 @@
 <template>
-	<q-card class="text-green-10 bg-green-11">
-		<q-card-section style="max-width: 600px">
-			<div class="text-body1">Kontak</div>
-			<ul class="q-gutter-y-sm">
-				<li>
-					Hal-hal yang terkait dengan data (konten aplikasi) hubungi
-					Admin:
-				</li>
+	<div>
+		<banner-app
+			page-title="Tentang …"
+			:show-search-members="false"
+			:show-reload="false"
+		/>
+		<q-card class="text-green-10 bg-green-11">
+			<q-card-section style="max-width: 600px">
+				<div class="text-body1">Kontak</div>
 				<ul class="q-gutter-y-sm">
-					<li v-for="(admin, index) in admins" :key="index">
-						<div>
-							{{ admin.member_nama ? admin.member_nama : '?' }}
-							<span
-								v-show="admin.member_alamat"
-								class="text-italic text-caption"
-								>&mdash; {{ admin.member_alamat }}</span
-							>
-						</div>
-						<div class="text-caption">
-							{{ admin.email }}
-							<span v-show="admin.phone"
-								><br />
-								<a
-									href="#"
-									@click.prevent="redirectToWA(admin.phone)"
-									target="_blank"
-									>{{ admin.phone }}
-									<span class="text-italic">(klik)</span>
-								</a>
-							</span>
-						</div>
+					<li>
+						Hal-hal yang terkait dengan data (konten aplikasi)
+						hubungi Admin:
+					</li>
+					<ul class="q-gutter-y-sm">
+						<li v-for="(admin, index) in admins" :key="index">
+							<div>
+								{{
+									admin.member_nama ? admin.member_nama : '?'
+								}}
+								<span
+									v-show="admin.member_alamat"
+									class="text-italic text-caption"
+									>&mdash; {{ admin.member_alamat }}</span
+								>
+							</div>
+							<div class="text-caption">
+								{{ admin.email }}
+								<span v-show="admin.phone"
+									><br />
+									<a
+										href="#"
+										@click.prevent="
+											redirectToWA(admin.phone)
+										"
+										target="_blank"
+										>{{ admin.phone }}
+										<span class="text-italic">(klik)</span>
+									</a>
+								</span>
+							</div>
+						</li>
+					</ul>
+					<li>
+						Hal-hal yang terkait dengan fitur dan pengembangan
+						aplikasi hubungi developer (ID Santri)
 					</li>
 				</ul>
-				<li>
-					Hal-hal yang terkait dengan fitur dan pengembangan aplikasi
-					hubungi developer (ID Santri)
-				</li>
-			</ul>
-			<br />
-			<p class="text-center">***</p>
-			<p>
-				Aplikasi ini dibuat oleh perorangan secara sukarela. Dukungan
-				Anda dibutuhkan agar aplikasi ini terus dikembangkan.
-			</p>
-			<p>
-				Dukung kami dengan berdonasi pada<a
-					href="https://trakteer.id/bani-asror/tip"
-					target="_blank"
-					class="text-weight-bold text-italic"
-				>
-					tautan ini.</a
-				>
-			</p>
-			<p>Salam,</p>
-			<br />
+				<br />
+				<p class="text-center">***</p>
+				<p>
+					Aplikasi ini dibuat oleh perorangan secara sukarela.
+					Dukungan Anda dibutuhkan agar aplikasi ini terus
+					dikembangkan.
+				</p>
+				<p>
+					Dukung kami dengan berdonasi pada<a
+						href="https://trakteer.id/bani-asror/tip"
+						target="_blank"
+						class="text-weight-bold text-italic"
+					>
+						tautan ini.</a
+					>
+				</p>
+				<p>Salam,</p>
+				<br />
 
-			<p class="no-margin">ID Santri</p>
-			<ul class="no-margin text-italic q-pl-md">
-				<li>
-					<a href="https://fb.me/idsantri.page" target="_blank"
-						>https://fb.me/idsantri.page</a
-					>
-				</li>
-				<li>idsantri.mail@gmail.com</li>
-				<li>
-					<a href="https://wa.me/6285765675657" target="_blank"
-						>0857-6567-5657 (WA Only)</a
-					>
-				</li>
-			</ul>
-		</q-card-section>
-	</q-card>
+				<p class="no-margin">ID Santri</p>
+				<ul class="no-margin text-italic q-pl-md">
+					<li>
+						<a href="https://fb.me/idsantri.page" target="_blank"
+							>https://fb.me/idsantri.page</a
+						>
+					</li>
+					<li>idsantri.mail@gmail.com</li>
+					<li>
+						<a href="https://wa.me/6285765675657" target="_blank"
+							>0857-6567-5657 (WA Only)</a
+						>
+					</li>
+				</ul>
+			</q-card-section>
+		</q-card>
+	</div>
 </template>
 <script setup>
 import { onMounted, reactive } from 'vue';
 import UserGroup from 'src/models/UserGroup';
+import BannerApp from 'src/components/BannerApp.vue';
 
 const admins = reactive({});
-const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
-emit('pageTitle', 'Tentang …');
-emit('pageSubTitle', null);
+const emit = defineEmits(['showButtonSearch']);
 emit('showButtonSearch', false);
 
 onMounted(async () => {

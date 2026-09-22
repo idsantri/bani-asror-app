@@ -1,95 +1,103 @@
 <template>
-	<q-list bordered separator class="bg-green-2">
-		<q-item v-for="(report, index) in reports" :key="index" class="q-pa-sm">
-			<q-item-section class="text-green-10">
-				<q-card flat bordered class="my-card bg-green-1">
-					<q-card-section>
-						<div class="row items-center no-wrap">
-							<div class="col">
-								<!-- <div class="text-h6">Our Planet</div> -->
-								<div class="text-subtitle2">
-									{{ report.username }} | {{ report.email }} |
-									{{ report.phone }}
+	<div>
+		<banner-app
+			page-title="Laporan Pengguna"
+			@on-reload="getIntroductionReports"
+			:show-search-members="false"
+		/>
+		<q-list bordered separator class="bg-green-2">
+			<q-item
+				v-for="(report, index) in reports"
+				:key="index"
+				class="q-pa-sm"
+			>
+				<q-item-section class="text-green-10">
+					<q-card flat bordered class="my-card bg-green-1">
+						<q-card-section>
+							<div class="row items-center no-wrap">
+								<div class="col">
+									<!-- <div class="text-h6">Our Planet</div> -->
+									<div class="text-subtitle2">
+										{{ report.username }} |
+										{{ report.email }} |
+										{{ report.phone }}
+									</div>
+								</div>
+
+								<div class="col-auto">
+									<q-btn
+										color="green-10"
+										round
+										flat
+										icon="more_vert"
+									>
+										<q-menu cover auto-close>
+											<q-list>
+												<q-item
+													clickable
+													@click="setDone(report.id)"
+												>
+													<q-item-section
+														>Tandai sudah
+														selesai</q-item-section
+													>
+													<q-item-section avatar>
+														<q-icon
+															color="green"
+															name="done"
+														/>
+													</q-item-section>
+												</q-item>
+											</q-list>
+										</q-menu>
+									</q-btn>
 								</div>
 							</div>
+						</q-card-section>
 
-							<div class="col-auto">
-								<q-btn
-									color="green-10"
-									round
-									flat
-									icon="more_vert"
-								>
-									<q-menu cover auto-close>
-										<q-list>
-											<q-item
-												clickable
-												@click="setDone(report.id)"
-											>
-												<q-item-section
-													>Tandai sudah
-													selesai</q-item-section
-												>
-												<q-item-section avatar>
-													<q-icon
-														color="green"
-														name="done"
-													/>
-												</q-item-section>
-											</q-item>
-										</q-list>
-									</q-menu>
-								</q-btn>
-							</div>
-						</div>
-					</q-card-section>
+						<q-card-section>
+							<span v-html="report.message"></span>
+						</q-card-section>
 
-					<q-card-section>
-						<span v-html="report.message"></span>
-					</q-card-section>
+						<q-separator />
 
-					<q-separator />
-
-					<q-card-actions>
-						<q-input
-							type="number"
-							outlined
-							v-model="report.member_id"
-							label="ID Member"
-							placeholder="Masukkan ID Member"
-							class="green"
-						>
-							<template v-slot:after>
-								<q-btn
-									type="button"
-									label="Kirim"
-									color="green-8"
-									@click="
-										submitIntroduction(
-											report.id,
-											report.user_id,
-											report.member_id,
-										)
-									"
-								/>
-							</template>
-						</q-input>
-					</q-card-actions>
-				</q-card>
-			</q-item-section>
-		</q-item>
-	</q-list>
+						<q-card-actions>
+							<q-input
+								type="number"
+								outlined
+								v-model="report.member_id"
+								label="ID Member"
+								placeholder="Masukkan ID Member"
+								class="green"
+							>
+								<template v-slot:after>
+									<q-btn
+										type="button"
+										label="Kirim"
+										color="green-8"
+										@click="
+											submitIntroduction(
+												report.id,
+												report.user_id,
+												report.member_id,
+											)
+										"
+									/>
+								</template>
+							</q-input>
+						</q-card-actions>
+					</q-card>
+				</q-item-section>
+			</q-item>
+		</q-list>
+	</div>
 </template>
 <script setup>
 import { onBeforeMount, reactive } from 'vue';
 import { notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import Report from 'src/models/Report';
-
-const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
-emit('pageTitle', 'Laporaran Pengguna');
-emit('pageSubTitle', null);
-emit('showButtonSearch', true);
+import BannerApp from 'src/components/BannerApp.vue';
 
 const reports = reactive({});
 

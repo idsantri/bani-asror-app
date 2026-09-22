@@ -127,55 +127,35 @@
 		<q-ajax-bar position="top" color="green-12" size="2px" />
 
 		<q-page-container :key="componentKey">
-			<div class="q-pa-sm">
-				<div class="q-gutter-y-sm">
-					<q-banner
-						v-if="pageTitle"
-						class="bg-green-9 text-green-1"
-						inline-actions
-					>
-						<h2 class="text-h6 no-margin text-weight-light">
-							{{ pageTitle }}
-						</h2>
-						<p
-							class="no-margin text-weight-light"
-							v-if="pageSubTitle"
-						>
-							{{ pageSubTitle }}
-						</p>
-						<!-- TOMBOL CARI -->
-						<template v-slot:action>
-							<q-btn
-								v-show="showButtonSearch"
-								flat
-								color="green-1"
-								icon="search"
-								to="/members/search"
-							/>
-						</template>
-					</q-banner>
+			<q-page class="q-pa-sm">
+				<suspense>
+					<template #default>
+						<router-view
+							:key="$route.fullPath"
+							@show-button-search="handleShowButtonSearch"
+						/>
+					</template>
+					<template #fallback>
+						<div class="spinner">
+							<q-spinner-cube color="green-8" size="8em" />
+						</div>
+					</template>
+				</suspense>
 
-					<suspense>
-						<template #default>
-							<router-view
-								:key="$route.fullPath"
-								@page-title="handlePageTitle"
-								@page-sub-title="handlePageSubTitle"
-								@show-button-search="handleShowButtonSearch"
-							/>
-						</template>
-						<template #fallback>
-							<div class="spinner">
-								<q-spinner-cube color="green-8" size="8em" />
-							</div>
-						</template>
-					</suspense>
-				</div>
-			</div>
-
-			<!-- TOMBOL CARI -->
-			<!-- <q-btn v-show="showButtonSearch" round color="green-8" class="absolute absolute-bottom-right q-mr-lg q-mb-xl"
-        icon="search" @click="clickSearch" /> -->
+				<!-- TOMBOL CARI -->
+				<q-page-sticky position="bottom-left" :offset="[12, 12]">
+					<q-btn
+						fab-mini
+						glossy
+						v-show="showButtonSearch"
+						round
+						color="green-7"
+						class=""
+						icon="search"
+						@click="clickSearch"
+					/>
+				</q-page-sticky>
+			</q-page>
 		</q-page-container>
 
 		<!-- modal search member -->
@@ -233,20 +213,6 @@
 			</button>
 		</div>
 
-		<!-- TOMBOL CARI -->
-		<q-page-sticky position="bottom-left" :offset="[12, 12]">
-			<q-btn
-				fab-mini
-				glossy
-				v-show="showButtonSearch"
-				round
-				color="green-7"
-				class=""
-				icon="search"
-				@click="clickSearch"
-			/>
-		</q-page-sticky>
-
 		<q-footer bordered class="">
 			<p
 				class="bg-green-8 text-green-11 text-center no-margin q-pa-xs text-caption"
@@ -286,8 +252,6 @@ import { notifySuccess } from 'src/utils/notify';
 import v from '../../package.json';
 import Report from 'src/models/Report';
 
-const pageTitle = ref('Data');
-const pageSubTitle = ref('');
 const leftDrawerOpen = ref(false);
 const componentKey = ref(0);
 const showSearch = ref(false);
@@ -318,8 +282,6 @@ const addNew = () => {
 };
 
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
-const handlePageTitle = (value) => (pageTitle.value = value);
-const handlePageSubTitle = (value) => (pageSubTitle.value = value);
 const handleShowButtonSearch = (value) => (showButtonSearch.value = value);
 const forceRerender = () => componentKey.value++;
 const clickSearch = () => showModalSearch();

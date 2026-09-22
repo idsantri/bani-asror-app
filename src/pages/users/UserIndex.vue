@@ -1,27 +1,98 @@
 <template>
-	<suspense>
-		<template #default>
-			<UserData />
-		</template>
-		<template #fallback>
-			<div class="spinner">
-				<q-spinner-cube color="green-4" size="8em" />
-			</div>
-		</template>
-	</suspense>
+	<div>
+		<banner-app
+			page-title="Data Pengguna"
+			:show-search-members="false"
+			@on-reload="fetchUsers"
+		>
+		</banner-app>
+		<q-card class="bg-green-7 text-green-1">
+			<q-card-section class="q-pa-sm">
+				<q-table
+					:loading="loading"
+					title="Users"
+					:rows="users"
+					:columns="columns"
+					:filter="filter"
+					class="bg-green-1 text-green-10"
+					@row-click="(e, row) => (userId = row.id)"
+				>
+					<template v-slot:top-right>
+						<q-input
+							borderless
+							dense
+							debounce="300"
+							v-model="filter"
+							placeholder="Cari..."
+						>
+							<template v-slot:append>
+								<q-icon name="search" />
+							</template>
+						</q-input>
+					</template>
+				</q-table>
+			</q-card-section>
+		</q-card>
+		<user-detail :userId="userId" v-if="userId" />
+	</div>
 </template>
 
 <script setup>
-import UserData from './UserData.vue';
+import { inject, onMounted, reactive, ref } from 'vue';
+import { notifyError } from 'src/utils/notify';
+import UserDetail from './UserDetail.vue';
+import BannerApp from 'src/components/BannerApp.vue';
 
-const emit = defineEmits(['pageTitle', 'pageSubTitle', 'showButtonSearch']);
-emit('pageTitle', 'Data Pengguna');
-emit('pageSubTitle', null);
-emit('showButtonSearch', false);
+const columns = [
+	{
+		name: 'username',
+		align: 'left',
+		label: 'Username',
+		field: 'username',
+		sortable: true,
+	},
+	{
+		name: 'member_nama',
+		label: 'Nama',
+		align: 'left',
+		field: 'member_nama',
+		sortable: true,
+	},
+	{
+		name: 'roles',
+		label: 'Group',
+		align: 'left',
+		field: 'roles',
+		sortable: false,
+	},
+	{
+		name: 'email',
+		label: 'Email',
+		align: 'left',
+		field: 'email',
+		sortable: true,
+	},
+];
+
+const api = inject('api');
+const users = reactive([]);
+const filter = ref('');
+const userId = ref(null);
+const loading = ref(false);
+
+const fetchUsers = async () => {
+	try {
+		loading.value = true;
+		const response = await api.get('users');
+		// console.log(response.data.data.users);
+		Object.assign(users, response.data.data.users);
+		// console.log(users);
+	} catch (error) {
+		notifyError(error.response.data.message || error.message);
+		console.log('Not Found: users -> users', error.response);
+	} finally {
+		loading.value = false;
+	}
+};
+onMounted(() => fetchUsers());
 </script>
-<style scoped>
-.spinner {
-	text-align: center;
-	margin: 30px auto;
-}
-</style>
