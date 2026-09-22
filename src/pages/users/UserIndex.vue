@@ -43,6 +43,9 @@ import { notifyError } from 'src/utils/notify';
 import UserDetail from './UserDetail.vue';
 import BannerApp from 'src/components/BannerApp.vue';
 
+const emit = defineEmits(['showButtonSearch']);
+emit('showButtonSearch', true);
+
 const columns = [
 	{
 		name: 'username',

@@ -113,6 +113,9 @@ import DropDownTab from 'src/components/DropDownTab.vue';
 import { storeToRefs } from 'pinia';
 import BannerApp from 'src/components/BannerApp.vue';
 
+const emit = defineEmits(['showButtonSearch']);
+emit('showButtonSearch', true);
+
 const state = memberState();
 const { member } = storeToRefs(state);
 

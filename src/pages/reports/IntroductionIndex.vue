@@ -99,6 +99,9 @@ import { forceRerender } from 'src/utils/buttons-click';
 import Report from 'src/models/Report';
 import BannerApp from 'src/components/BannerApp.vue';
 
+const emit = defineEmits(['showButtonSearch']);
+emit('showButtonSearch', true);
+
 const reports = reactive({});
 
 onBeforeMount(async () => {

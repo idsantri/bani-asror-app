@@ -74,6 +74,9 @@ import familyState from '../../stores/family-store';
 import { storeToRefs } from 'pinia';
 import BannerApp from 'src/components/BannerApp.vue';
 
+const emit = defineEmits(['showButtonSearch']);
+emit('showButtonSearch', true);
+
 const state = familyState();
 const { family } = storeToRefs(state);
 
