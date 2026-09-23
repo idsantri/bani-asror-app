@@ -252,8 +252,7 @@ import AsideContent from 'src/components/AsideContent.vue';
 import MemberDataTable from '../components/MemberDataTables.vue';
 import MemberCrud from 'src/components/MemberCrud.vue';
 import { useAuthStore } from 'src/stores/auth-store';
-import { useQuasar } from 'quasar';
-import { notifySuccess } from 'src/utils/notify';
+import { notifyConfirm, notifySuccess } from 'src/utils/notify';
 import v from '../../package.json';
 import Report from 'src/models/Report';
 
@@ -272,18 +271,13 @@ const copyUrl = async () => {
 	notifySuccess('URL sudah disalin/dicopy ke clipboard');
 };
 
-const $q = useQuasar();
-const addNew = () => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: `Buat data baru? ${familyStatus.value}`,
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(() => {
-		showSearch.value = false;
-		showModalCrud(false);
-	});
+const addNew = async () => {
+	const isConfirmed = await notifyConfirm(
+		`Buat data baru? ${familyStatus.value}`,
+	);
+	if (!isConfirmed) return;
+	showSearch.value = false;
+	showModalCrud(false);
 };
 
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
