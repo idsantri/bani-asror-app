@@ -36,7 +36,7 @@
 
 			<q-card-section
 				v-if="!realtime"
-				class="text-caption bg-green-4 q-pa-xs text-italic text-center text-green-10"
+				class="text-caption bg-warning q-pa-xs text-italic text-center text-black"
 			>
 				Data tidak realtime! Klik muat ulang untuk data terbaru.
 			</q-card-section>
