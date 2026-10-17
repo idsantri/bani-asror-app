@@ -1,5 +1,5 @@
 import { Dialog } from 'quasar';
-
+import v from '../../package.json';
 // src/boot/register-sw.js
 export default () => {
 	if (process.env.PROD && 'serviceWorker' in navigator) {
@@ -30,10 +30,11 @@ export default () => {
 		// Atau gunakan Quasar Notify/Dialog untuk tampilan lebih elegan:
 		// import { Dialog } from 'quasar'
 		Dialog.create({
-			title: 'Update tersedia',
-			message: 'Versi baru tersedia. Muat ulang sekarang?',
+			title: 'Update',
+			message: `Versi baru tersedia. Muat ulang sekarang untuk memperbarui? <br/><small>v${v.version}</small>`,
 			cancel: true,
 			persistent: true,
+			html: true,
 		}).onOk(() => {
 			window.location.reload();
 		});
