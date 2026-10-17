@@ -1,5 +1,5 @@
 <template>
-	<div class="q-pa-xs">
+	<div class="">
 		<form @submit.prevent="reset">
 			<div class="q-gutter-y-md column">
 				<q-input

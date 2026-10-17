@@ -33,10 +33,8 @@
 					</q-item-section>
 				</q-item>
 			</q-card>
-			<q-card
-				class="bg-secondary text-green-1 q-pa-lg bg-green-7 text-green-1"
-			>
-				<q-card-section class="no-padding q-mb-md">
+			<q-card class="bg-secondary text-green-1 bg-green-7 text-green-1">
+				<q-card-section class="q-pa-lg">
 					<div class="container-title">
 						<p class="text-center text-subtitle1 no-margin">
 							Aplikasi
@@ -55,8 +53,8 @@
 
 				<q-card
 					flat
-					v-if="errors.length > 0"
-					class="q-ma-xs"
+					v-if="errors?.length > 0"
+					class="q-mx-lg q-mb-lg"
 					id="error"
 				>
 					<q-card-section class="q-pa-xs bg-red-2 text-red">
@@ -68,9 +66,30 @@
 					</q-card-section>
 				</q-card>
 
-				<q-card-section class="no-padding no-margin">
+				<q-card-section class="q-px-lg q-pb-lg q-pt-none no-margin">
 					<router-view @title="handleTitle" @errors="handleErrors" />
 				</q-card-section>
+				<q-tabs
+					v-if="route?.name?.toLowerCase() == 'login'"
+					dense
+					class="text-green-8 bg-green-3"
+					active-bg-color="green-4"
+					active-color="green-10"
+					align="justify"
+				>
+					<q-route-tab
+						name="otp"
+						label="OTP"
+						:to="{ query: { tab: 'otp' }, replace: true }"
+						exact
+					/>
+					<q-route-tab
+						name="password"
+						label="Password"
+						:to="{ query: { tab: 'password' }, replace: true }"
+						exact
+					/>
+				</q-tabs>
 			</q-card>
 			<!-- INSTALL PWA -->
 			<q-dialog v-model="modalIos">
@@ -85,11 +104,12 @@ import config from 'src/config';
 import { ref } from 'vue';
 import InfoIos from './comp/InfoIos.vue';
 import { QCard } from 'quasar';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const title = ref('Autentikasi');
 const handleTitle = (value) => (title.value = value);
 const modalIos = ref(false);
-
 const errors = ref([]);
 const handleErrors = (value) => (errors.value = value);
 
@@ -161,7 +181,7 @@ const clickIos = () => {
 	font-size: 1.7em;
 	margin: 0 auto;
 	padding: 0;
-	font-weight: 500;
+	font-weight: 400;
 	text-align: center;
 	height: 30px;
 	line-height: 30px;

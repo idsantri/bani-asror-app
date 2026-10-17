@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-	<div class="q-pa-xs">
+	<div class="">
 		<q-card class="my-card q-mb-lg" flat>
 			<q-card-section class="no-padding no-margin">
 				<p

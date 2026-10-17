@@ -41,5 +41,21 @@ class Auth {
 		const response = await this.api.post(`${this.path}/email/resend`, data);
 		return response.data;
 	}
+
+	async requestOtp(email) {
+		const response = await this.api.post(`${this.path}/otp/request`, {
+			email,
+		});
+		return response.data;
+	}
+
+	async verifyOtp(email, otp) {
+		const response = await this.api.post(`${this.path}/otp/verify`, {
+			email,
+			otp,
+		});
+		return response.data;
+	}
 }
+
 export default new Auth();
