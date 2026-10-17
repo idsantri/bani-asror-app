@@ -1,16 +1,14 @@
 <template>
-	<div class="">
-		<LoginPassword
-			v-if="route?.query?.tab == 'password'"
-			@errors="(e) => $emit('errors', e)"
-			@title="(v) => $emit('title', v)"
-		/>
-		<LoginOTP
-			v-else
-			@errors="(e) => $emit('errors', e)"
-			@title="(v) => $emit('title', v)"
-		/>
-	</div>
+	<LoginPassword
+		v-if="route?.query?.tab == 'password'"
+		@raise-error="(e) => $emit('raiseError', e)"
+		@set-title="(v) => $emit('setTitle', v)"
+	/>
+	<LoginOTP
+		v-else
+		@raise-error="(e) => $emit('raiseError', e)"
+		@set-title="(v) => $emit('setTitle', v)"
+	/>
 </template>
 
 <script setup>

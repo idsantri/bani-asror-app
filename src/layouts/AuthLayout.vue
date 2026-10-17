@@ -51,23 +51,19 @@
 					<h2 class="sub-title text-green-11">{{ title }}</h2>
 				</q-card-section>
 
-				<q-card
-					flat
-					v-if="errors?.length > 0"
-					class="q-mx-lg q-mb-lg"
-					id="error"
+				<q-banner
+					v-if="errorMessage"
+					role="alert"
+					class="q-mx-lg q-mb-lg bg-red-1 text-red"
 				>
-					<q-card-section class="q-pa-xs bg-red-2 text-red">
-						<ul class="q-my-xs">
-							<li v-for="(error, index) in errors" :key="index">
-								<span v-html="error"></span>
-							</li>
-						</ul>
-					</q-card-section>
-				</q-card>
+					{{ errorMessage }}
+				</q-banner>
 
 				<q-card-section class="q-px-lg q-pb-lg q-pt-none no-margin">
-					<router-view @title="handleTitle" @errors="handleErrors" />
+					<router-view
+						@set-title="(v) => (title = v)"
+						@raise-error="(v) => (errorMessage = v)"
+					/>
 				</q-card-section>
 				<q-tabs
 					v-if="route?.name?.toLowerCase() == 'login'"
@@ -108,10 +104,8 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const title = ref('Autentikasi');
-const handleTitle = (value) => (title.value = value);
 const modalIos = ref(false);
-const errors = ref([]);
-const handleErrors = (value) => (errors.value = value);
+const errorMessage = ref('');
 
 /**
  * -----------------------------------------
