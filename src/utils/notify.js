@@ -46,12 +46,13 @@ async function notifyConfirm(
 	message,
 	persistent = false,
 	title = 'Konfirmasi',
+	cancel = true,
 ) {
 	return new Promise((resolve) => {
 		Dialog.create({
 			title: title,
 			message: message,
-			cancel: true,
+			cancel: cancel,
 			persistent: persistent,
 			html: true,
 		})

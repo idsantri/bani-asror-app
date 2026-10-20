@@ -31,7 +31,7 @@ export default () => {
 		// import { Dialog } from 'quasar'
 		Dialog.create({
 			title: 'Update',
-			message: `Versi baru tersedia. Muat ulang sekarang untuk memperbarui? <br/><small>v${v.version}</small>`,
+			message: `Versi baru tersedia. Muat ulang sekarang untuk memperbarui? <br/><br/><small>v${v.version}</small>`,
 			cancel: true,
 			persistent: true,
 			html: true,
