@@ -38,6 +38,17 @@ class Report {
 			return false;
 		}
 	}
+	async getIntroductionByUserId(userId) {
+		try {
+			const response = await this.api.get(
+				`${this.path}/introduction/${userId}`,
+			);
+			return response.data;
+		} catch (error) {
+			notifyError(error.response.data.message);
+			return false;
+		}
+	}
 
 	async acceptIntroduction(data) {
 		try {

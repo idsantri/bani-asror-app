@@ -104,23 +104,27 @@
 			elevated
 			class="bg-green-7"
 		>
-			<q-banner class="bg-transparent q-mt-md">
-				<img
-					src="../assets/logo.png"
-					style="height: 100px; object-fit: cover"
-				/>
-				<p class="text-green-1 text-h6 text-weight-medium no-margin">
-					<span class="text-weight-light">{{
-						constanta.APP_NAME_1
-					}}</span>
-					{{ constanta.APP_NAME_2 }}
-				</p>
-				<p
-					class="text-green-1 text-subtitle1 text-weight-light text-italic"
-				>
-					({{ constanta.ANCESTOR_ALIAS }})
-				</p>
-			</q-banner>
+			<router-link to="/">
+				<q-banner class="bg-transparent q-mt-md">
+					<img
+						src="../assets/logo.png"
+						style="height: 100px; object-fit: cover"
+					/>
+					<p
+						class="text-green-1 text-h6 text-weight-medium no-margin"
+					>
+						<span class="text-weight-light">{{
+							constanta.APP_NAME_1
+						}}</span>
+						{{ constanta.APP_NAME_2 }}
+					</p>
+					<p
+						class="text-green-1 text-subtitle1 text-weight-light text-italic"
+					>
+						({{ constanta.ANCESTOR_ALIAS }})
+					</p>
+				</q-banner>
+			</router-link>
 			<AsideContent />
 		</q-drawer>
 

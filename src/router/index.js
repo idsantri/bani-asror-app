@@ -42,7 +42,7 @@ export default route(function (/* { store, ssrContext } */) {
 	Router.beforeEach((to) => {
 		// redirect root ke /home
 		if (to.fullPath === '/') {
-			return '/home';
+			return '/members/search';
 		}
 
 		const store = useAuthStore();
@@ -57,7 +57,7 @@ export default route(function (/* { store, ssrContext } */) {
 
 		// sudah login tapi mengakses halaman auth
 		if (toAuthRoutes && isAuthenticated) {
-			return '/home';
+			return '/';
 		}
 
 		// lanjutkan navigasi

@@ -66,13 +66,12 @@ import Auth from 'src/models/Auth';
 import { useAuthStore } from 'src/stores/auth-store';
 import { notifyConfirm, notifySuccess } from 'src/utils/notify';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { redirectLogin } from './auth-utils';
 
 const emit = defineEmits(['setTitle', 'raiseError']);
 emit('setTitle', 'Login OTP');
 emit('raiseError', '');
 
-const router = useRouter();
 const showSpinner = ref(false);
 const email = ref('');
 const savedEmail = ref('');
@@ -105,10 +104,11 @@ async function verifyOtp() {
 
 		notifySuccess(response.message);
 		savedEmail.value = '';
-		const memberId = response.data.user?.member_id;
-		// console.log(memberId);
-		if (memberId) router.push(`/members/${memberId}`);
-		else router.push('/profile');
+
+		const user = response.data.user;
+		const memberId = user?.member_id;
+
+		await redirectLogin(memberId, user.id);
 	} catch (error) {
 		emit('raiseError', error.response.data.message);
 	} finally {

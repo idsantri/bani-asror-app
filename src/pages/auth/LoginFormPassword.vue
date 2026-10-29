@@ -82,13 +82,12 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { useAuthStore } from '../../stores/auth-store';
 import { notifySuccess } from 'src/utils/notify';
 import Auth from 'src/models/Auth';
+import { redirectLogin } from './auth-utils';
 
-const router = useRouter();
 const username = ref('');
 const password = ref('');
 const showSpinner = ref(false);
@@ -110,9 +109,10 @@ const login = async () => {
 
 		notifySuccess(response.message);
 
-		const memberId = response.data.user?.member_id;
-		if (memberId) router.push(`/members/${memberId}`);
-		else router.push('/profile');
+		const user = response.data.user;
+		const memberId = user?.member_id;
+
+		await redirectLogin(memberId, user.id);
 	} catch (error) {
 		const res = error.response.data;
 		if (res?.data?.code == 'EMAIL_NOT_VERIFIED') {
