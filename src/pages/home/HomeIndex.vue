@@ -50,11 +50,10 @@
 </template>
 <script setup>
 import { useAuthStore } from 'src/stores/auth-store';
-import { notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watchEffect } from 'vue';
 import { useQuasar } from 'quasar';
-import Article from 'src/models/Article';
 import BannerApp from 'src/components/BannerApp.vue';
+import Var from 'src/models/Var';
 
 const $q = useQuasar();
 const emit = defineEmits(['showButtonSearch']);
@@ -69,9 +68,10 @@ watchEffect(() => {
 });
 
 onMounted(async () => {
-	const response = await Article.get();
+	const response = await Var.getTextHome();
+	// console.log('🚀 ~ response:', response);
 	if (response) {
-		article.value = response.data.setting.val;
+		article.value = response.data.vars.val;
 	}
 });
 
@@ -79,12 +79,10 @@ const showButtonEdit = () => useAuthStore().isAdminOrSuperAdmin;
 
 const save = async () => {
 	try {
-		const response = await Article.update({
-			val: articleEdit.value,
-		});
+		const response = await Var.updateTextHome(articleEdit.value);
+		// console.log('🚀 ~ save ~ response:', response);
 		if (response) {
-			article.value = response.data.setting.val;
-			notifySuccess(response.message);
+			article.value = response.data.vars.val;
 		}
 	} finally {
 		showModal.value = false;
