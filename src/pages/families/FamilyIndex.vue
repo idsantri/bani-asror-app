@@ -6,6 +6,7 @@
 			:show-search-members="true"
 			:show-reload="false"
 			icon-name="diversity_1"
+			:id="familyId"
 		/>
 		<q-card class="bg-green-8 text-green-1">
 			<q-tabs
@@ -85,9 +86,12 @@ const pageSubTitle = computed(() => {
 	return `${family.value.suami || '?'} & ${family.value.istri || '?'}`;
 });
 
+const { params } = useRoute();
+const familyId = params.id;
+
 const tab = ref('profile');
-const toProfile = '/families/' + useRoute().params.id.toString() + '/profile';
-const toChildren = '/families/' + useRoute().params.id.toString() + '/children';
+const toProfile = '/families/' + familyId + '/profile';
+const toChildren = '/families/' + familyId + '/children';
 </script>
 <style scoped>
 .spinner {

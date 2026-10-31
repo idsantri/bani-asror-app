@@ -15,6 +15,11 @@
 			<div>
 				<h2 class="text-h6 no-margin text-weight-light">
 					{{ pageTitle }}
+					<span
+						class="text-caption text-italic text-green-13"
+						v-show="id"
+						>(ID {{ id }})</span
+					>
 				</h2>
 				<p class="no-margin text-weight-light" v-if="pageSubTitle">
 					{{ pageSubTitle }}
@@ -26,6 +31,7 @@
 			<q-btn
 				v-show="showSearchMembers"
 				flat
+				dense
 				color="green-1"
 				icon="search"
 				to="/members/search"
@@ -33,6 +39,7 @@
 			<q-btn
 				v-show="showReload"
 				flat
+				dense
 				color="green-1"
 				icon="sync"
 				@click="$emit('on-reload')"
@@ -61,6 +68,10 @@ defineProps({
 	},
 	iconName: {
 		type: String,
+		default: null,
+	},
+	id: {
+		type: [String, Number],
 		default: null,
 	},
 	bgColor: {

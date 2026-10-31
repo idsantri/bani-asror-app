@@ -6,6 +6,7 @@
 			:show-search-members="true"
 			:show-reload="false"
 			icon-name="person"
+			:id="memberId"
 		/>
 		<q-card class="bg-green-8 text-green-1">
 			<q-tabs
@@ -123,12 +124,14 @@ const { member } = storeToRefs(state);
 const pageSubTitle = computed(() => {
 	return `${member.value.nama || '?'}`;
 });
+const route = useRoute();
+const memberId = route.params.id;
 
 const tab = ref('profile');
-const toProfile = '/members/' + useRoute().params.id.toString() + '/profile';
-const toFamilies = '/members/' + useRoute().params.id.toString() + '/families';
-const toChildren = '/members/' + useRoute().params.id.toString() + '/children';
-const toSiblings = '/members/' + useRoute().params.id.toString() + '/siblings';
+const toProfile = '/members/' + memberId + '/profile';
+const toFamilies = '/members/' + memberId + '/families';
+const toChildren = '/members/' + memberId + '/children';
+const toSiblings = '/members/' + memberId + '/siblings';
 </script>
 <style scoped>
 .spinner {
