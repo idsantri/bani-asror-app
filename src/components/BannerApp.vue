@@ -1,15 +1,26 @@
-<template lang="">
+<template>
 	<q-banner
 		v-if="pageTitle"
-		class="bg-green-9 text-green-11 q-mb-sm"
+		:class="bgColor + ' text-green-11 q-mb-sm'"
 		inline-actions
 	>
-		<h2 class="text-h6 no-margin text-weight-light">
-			{{ pageTitle }}
-		</h2>
-		<p class="no-margin text-weight-light" v-if="pageSubTitle">
-			{{ pageSubTitle }}
-		</p>
+		<div class="flex items-center q-gutter-x-md">
+			<q-icon v-if="iconName" :name="iconName" size="md" />
+			<img
+				v-else
+				src="/idsantri.svg"
+				alt="idsantri"
+				style="height: 30px"
+			/>
+			<div>
+				<h2 class="text-h6 no-margin text-weight-light">
+					{{ pageTitle }}
+				</h2>
+				<p class="no-margin text-weight-light" v-if="pageSubTitle">
+					{{ pageSubTitle }}
+				</p>
+			</div>
+		</div>
 		<!-- TOMBOL CARI -->
 		<template v-slot:action>
 			<q-btn
@@ -47,6 +58,14 @@ defineProps({
 	showReload: {
 		type: Boolean,
 		default: true,
+	},
+	iconName: {
+		type: String,
+		default: null,
+	},
+	bgColor: {
+		type: String,
+		default: 'bg-green-9',
 	},
 });
 </script>

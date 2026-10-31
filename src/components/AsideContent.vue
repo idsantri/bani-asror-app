@@ -11,6 +11,17 @@
 				<q-item-label caption></q-item-label>
 			</q-item-section>
 		</q-item>
+		<q-item clickable v-ripple to="/members/search">
+			<q-item-section avatar>
+				<q-avatar color="green-3" text-color="green-10">
+					<q-icon name="search" size="sm" />
+				</q-avatar>
+			</q-item-section>
+			<q-item-section class="text-green-1">
+				<q-item-label>Pencarian</q-item-label>
+				<q-item-label caption>Cari Anggota</q-item-label>
+			</q-item-section>
+		</q-item>
 		<q-separator />
 
 		<q-item
@@ -42,6 +53,18 @@
 			<q-item-section class="text-green-1">
 				<q-item-label>Users</q-item-label>
 				<q-item-label caption>Pengaturan Pengguna</q-item-label>
+			</q-item-section>
+		</q-item>
+
+		<q-item clickable v-ripple to="/admin-guide">
+			<q-item-section avatar>
+				<q-avatar color="green-3" text-color="green-10">
+					<q-icon name="info" size="sm" />
+				</q-avatar>
+			</q-item-section>
+			<q-item-section class="text-green-1">
+				<q-item-label>Panduan Admin</q-item-label>
+				<q-item-label caption>Petunjuk Input Data</q-item-label>
 			</q-item-section>
 		</q-item>
 

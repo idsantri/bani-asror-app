@@ -5,6 +5,7 @@
 			:page-sub-title="pageSubTitle"
 			:show-search-members="true"
 			:show-reload="false"
+			icon-name="diversity_1"
 		/>
 		<q-card class="bg-green-8 text-green-1">
 			<q-tabs

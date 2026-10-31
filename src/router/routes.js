@@ -114,6 +114,14 @@ const routes = [
 				component: () => import('../pages/home/HomeIndex.vue'),
 				meta: { title: 'Beranda' },
 			},
+
+			{
+				path: 'admin-guide',
+				name: 'Admin Guide',
+				component: () =>
+					import('../pages/admin-guide/AdminGuideIndex.vue'),
+				meta: { title: 'Petunjuk Input Data' },
+			},
 			{
 				path: 'users',
 				name: 'Users',

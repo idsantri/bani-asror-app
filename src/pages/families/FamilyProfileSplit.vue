@@ -109,11 +109,11 @@ const editPasangan = () => {
 
 const deletePasangan = async () => {
 	let spouse;
-	if (member.lp.toLowerCase() == 'l') {
+	if (props.memberSex?.toLowerCase() == 'l') {
 		spouse = 'husband';
 	}
 
-	if (member.lp.toLowerCase() == 'p') {
+	if (props.memberSex?.toLowerCase() == 'p') {
 		spouse = 'wife';
 	}
 

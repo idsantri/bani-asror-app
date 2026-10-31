@@ -16,6 +16,7 @@ const useAuthStore = defineStore('auth', {
 			state.roles?.some((role) =>
 				['admin', 'superadmin'].includes(role),
 			) || false,
+		isSuperAdmin: (state) => state.roles?.includes('superadmin') || false,
 	},
 	actions: {
 		setUser(payload) {

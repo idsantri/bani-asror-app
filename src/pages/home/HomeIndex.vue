@@ -62,6 +62,7 @@ emit('showButtonSearch', false);
 const showModal = ref(false);
 const article = ref('');
 const articleEdit = ref('');
+const showButtonEdit = () => useAuthStore().isSuperAdmin;
 
 watchEffect(() => {
 	if (showModal.value) articleEdit.value = article.value;
@@ -71,11 +72,9 @@ onMounted(async () => {
 	const response = await Var.getTextHome();
 	// console.log('🚀 ~ response:', response);
 	if (response) {
-		article.value = response.data.vars.val;
+		article.value = response.data?.vars?.val || '';
 	}
 });
-
-const showButtonEdit = () => useAuthStore().isAdminOrSuperAdmin;
 
 const save = async () => {
 	try {
