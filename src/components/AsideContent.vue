@@ -56,7 +56,7 @@
 			</q-item-section>
 		</q-item>
 
-		<q-item clickable v-ripple to="/admin-guide">
+		<q-item clickable v-ripple to="/admin-guide" v-if="adminGuide">
 			<q-item-section avatar>
 				<q-avatar color="green-3" text-color="green-10">
 					<q-icon name="info" size="sm" />
@@ -82,6 +82,8 @@
 	</q-list>
 </template>
 <script setup>
+import { useAuthStore } from 'src/stores/auth-store';
+
 const sideLinks = [
 	{
 		name: 'Asyiq',
@@ -126,5 +128,7 @@ const sideLinks = [
 		link: '/members/7',
 	},
 ];
+
+const adminGuide = useAuthStore().isAdminOrSuperAdmin;
 </script>
 <style lang="scss" scoped></style>
