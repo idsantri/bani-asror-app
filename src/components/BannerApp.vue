@@ -18,7 +18,7 @@
 					<span
 						class="text-caption text-italic text-green-13"
 						v-show="id"
-						>(ID {{ id }})</span
+						>&mdash; ID {{ id }}</span
 					>
 				</h2>
 				<p class="no-margin text-weight-light" v-if="pageSubTitle">

@@ -29,11 +29,11 @@
 				</p>
 				<p class="no-margin" v-if="alamat">{{ alamat }}</p>
 			</div>
-			<div
+			<!-- <div
 				class="text-caption text-italic font-weight-light absolute absolute-bottom-right q-ma-sm text-green-9"
 			>
 				ID {{ memberId }}
-			</div>
+			</div> -->
 		</q-banner>
 
 		<!-- PARENT -->
