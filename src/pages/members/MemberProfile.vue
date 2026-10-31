@@ -1,7 +1,7 @@
 <template>
 	<!-- PROFILE -->
 	<q-card-section class="bg-green-7">
-		<q-banner class="q-pa-sm bg-green-2 text-dark">
+		<q-banner class="q-pa-sm bg-green-2 text-dark relative-position">
 			<template #avatar>
 				<q-avatar rounded>
 					<q-btn
@@ -28,6 +28,11 @@
 					{{ member.nama_arab }}
 				</p>
 				<p class="no-margin" v-if="alamat">{{ alamat }}</p>
+			</div>
+			<div
+				class="text-caption text-italic font-weight-light absolute absolute-bottom-right q-ma-sm text-green-9"
+			>
+				ID {{ memberId }}
 			</div>
 		</q-banner>
 
